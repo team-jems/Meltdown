@@ -1,0 +1,25 @@
+{
+  "name": "hrgame",
+  "version": "0.0.1",
+  "homepage": "https://github.com/team-jems/hrgame",
+  "description": "The Hack Reactor Game",
+  "authors": [
+    "Sanjay Chakrapani",
+    "Julia Nocera",
+    "Mike Hsieh",
+    "Erik Hsiao"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.7",
+    "angular-ui-router": "~0.2.15"
+  }
+}
