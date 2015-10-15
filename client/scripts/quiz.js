@@ -14,10 +14,29 @@ angular.module('app.quiz', [])
   function($scope) {
     $scope.title = 'Quiz!';
     $scope.problem = {
-      name: 'BREAK FUNCTION'
+      'name': 'Break Function',
+      'responses': [
+        {
+          'text': 'Response1',
+        },
+        {
+          'text': 'Response2',
+        },
+        {
+          'text': 'Response3',
+        },
+        {
+          'text': 'Response4',
+        }
+      ],
+      'answer': 'Response2'
     }
-    $scope.checkAnswer = function(){
-      console.log('test');
+    $scope.checkAnswer = function(response){
+      if (response.text === $scope.problem['answer']){
+        alert('yay');
+      } else {
+        alert('oh noooooo');
+      }
     }
   }
 ]);

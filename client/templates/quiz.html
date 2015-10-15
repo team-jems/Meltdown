@@ -11,9 +11,6 @@
     </h4>
   </div>
   <div>
-    <div ng-click="checkAnswer()">Response 1</div>
-    <div ng-click="checkAnswer()">Response 2</div>
-    <div ng-click="checkAnswer()">Response 3</div>
-    <div ng-click="checkAnswer()">Response 4</div>
+    <div ng-click="checkAnswer(response)" ng-repeat="response in problem.responses">{{response.text}}</div>
   </div>
 </div>
