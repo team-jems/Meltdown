@@ -10,8 +10,8 @@ angular.module('app.quiz', [])
       });
   }
 
-.controller('QuizController', ['$scope',
-  function($scope) {
+.controller('QuizController', ['$scope', '$location',
+  function($scope, $location) {
     $scope.title = 'Quiz!';
     $scope.problem = {
       'name': 'Break Function',
@@ -34,6 +34,7 @@ angular.module('app.quiz', [])
     $scope.checkAnswer = function(response){
       if (response.text === $scope.problem['answer']){
         alert('yay');
+        $location.path('intro');
       } else {
         alert('oh noooooo');
       }
