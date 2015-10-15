@@ -1,4 +1,5 @@
 angular.module('app', [
   'ui.router',
-  'app.intro'
+  'app.intro',
+  'app.quiz'
 ]);
