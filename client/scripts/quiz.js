@@ -12,6 +12,12 @@ angular.module('app.quiz', [])
 
 .controller('QuizController', ['$scope',
   function($scope) {
-    $scope.title = 'I am in the quiz!';
+    $scope.title = 'Quiz!';
+    $scope.problem = {
+      name: 'BREAK FUNCTION'
+    }
+    $scope.checkAnswer = function(){
+      console.log('test');
+    }
   }
 ]);
