@@ -8,7 +8,7 @@ angular.module('app.quiz', [])
         templateUrl: 'templates/quiz.html',
         controller: 'QuizController'
       });
-  }
+}])
 
 .controller('QuizController', ['$scope', '$location',
   function($scope, $location) {
