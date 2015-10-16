@@ -1,3 +1,4 @@
+
 angular.module('app.game', [])
 
 .controller('GameController', ['$scope', 'requestNotificationChannel', 'Panel',
