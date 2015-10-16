@@ -39,7 +39,7 @@ angular.module('app.quiz', ['ui.router'])
     $scope.checkAnswer = function(response){
       if (response.text === $scope.problem['answer']){
         alert('yay');
-        $location.path('intro');
+        $location.path('/');
       } else {
         alert('oh noooooo');
       }
