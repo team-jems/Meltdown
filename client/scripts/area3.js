@@ -13,7 +13,7 @@ angular.module('app.area3', [])
 
 .controller('Area3Controller', ['$scope',
   function($scope) {
-    $scope.title = 'The Hack Reactor Game: Area 3';
+    $scope.title = 'The Hack Reactor Game: AREA 3';
   }
 ]);
 
