@@ -17,5 +17,6 @@ angular.module('app.area1', [])
     // for db to come : $scope.manual = getManual()
     //in the meantime : sample data : once working, look up how to format text in this scenario (attach to DOM in specific format)
     $scope.manual = "Coolant: var a = 0, b = 4, turnTo = a + b";
+    $scope.showManual = false;
   }
 ]);
