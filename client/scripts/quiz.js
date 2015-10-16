@@ -1,14 +1,19 @@
-angular.module('app.quiz', [])
+angular.module('app.quiz', ['ui.router'])
 
-.config(['$stateProvider',
-  function($stateProvider) {
+.config(['$stateProvider', '$urlRouterProvider',
+  function($stateProvider, $urlRouterProvider) {
+
+    // For any unmatched url, send to /route1
+    $urlRouterProvider.otherwise("/")
+
     $stateProvider
       .state('quiz', {
         url: '/quiz',
         templateUrl: 'templates/quiz.html',
         controller: 'QuizController'
       });
-}])
+  }
+])
 
 .controller('QuizController', ['$scope', '$location',
   function($scope, $location) {

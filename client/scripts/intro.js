@@ -4,7 +4,7 @@ angular.module('app.intro', [])
   function($stateProvider) {
     $stateProvider
       .state('intro', {
-        url: '',
+        url: '/',
         templateUrl: 'templates/intro.html',
         controller: 'IntroController'
       });
