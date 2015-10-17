@@ -3,4 +3,11 @@ angular.module('app', [
   'app.intro',
   'app.game',
   'app.quiz'
+])
+
+.config(['$urlRouterProvider',
+  function($urlRouterProvider) {
+    $urlRouterProvider
+      .otherwise('/');
+  }
 ]);
