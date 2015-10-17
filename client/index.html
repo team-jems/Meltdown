@@ -1,18 +1,20 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
   <title>Save Hack Reactor</title>
+  <link rel="stylesheet" href="styles/style.css" />
 </head>
 <body ng-app="app">
-  <div class='content'>
-    <div ui-view></div>
-  </div>
+  <div ui-view></div>
   <!-- Load all libraries -->
   <script type="text/javascript" src="lib/angular/angular.min.js"></script>
   <script type="text/javascript" src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script type="text/javascript" src="lib/phaser/build/phaser.min.js"></script>
   <!-- Load game scripts -->
-  <script type="text/javascript" src="scripts/quiz.js"></script>
-  <script type="text/javascript" src="scripts/game.js"></script>  <!-- Angular game entry point script -->
+  <script type="text/javascript" src="scripts/app.js"></script>  <!-- App entry point script -->
   <script type="text/javascript" src="scripts/intro.js"></script>
+  <script type="text/javascript" src="scripts/quiz.js"></script>
+  <script type="text/javascript" src="scripts/game.js"></script>
 </body>
 </html>

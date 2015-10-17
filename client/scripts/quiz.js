@@ -1,11 +1,7 @@
-angular.module('app.quiz', ['ui.router'])
+angular.module('app.quiz', [])
 
-.config(['$stateProvider', '$urlRouterProvider',
-  function($stateProvider, $urlRouterProvider) {
-
-    // For any unmatched url, send to /route1
-    $urlRouterProvider.otherwise("/")
-
+.config(['$stateProvider',
+  function($stateProvider) {
     $stateProvider
       .state('quiz', {
         url: '/quiz',
@@ -35,14 +31,14 @@ angular.module('app.quiz', ['ui.router'])
         }
       ],
       'answer': 'Response2'
-    }
+    };
     $scope.checkAnswer = function(response){
-      if (response.text === $scope.problem['answer']){
+      if (response.text === $scope.problem.answer){
         alert('yay');
         $location.path('/');
       } else {
         alert('oh noooooo');
       }
-    }
+    };
   }
 ]);

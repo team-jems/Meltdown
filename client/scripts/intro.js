@@ -4,15 +4,18 @@ angular.module('app.intro', [])
   function($stateProvider) {
     $stateProvider
       .state('intro', {
-        url: '/',
+        url: '',
         templateUrl: 'templates/intro.html',
         controller: 'IntroController'
       });
   }
 ])
 
-.controller('IntroController', ['$scope',
-  function($scope) {
+.controller('IntroController', ['$scope', '$location',
+  function($scope, $location) {
     $scope.title = 'The Hack Reactor Game';
+    $scope.loadGame = function() {
+      $location.path('/game');
+    };
   }
 ]);
