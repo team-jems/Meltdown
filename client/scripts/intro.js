@@ -11,11 +11,15 @@ angular.module('app.intro', [])
   }
 ])
 
-.controller('IntroController', ['$scope', '$location',
-  function($scope, $location) {
+.controller('IntroController', ['$scope', '$location', '$state',
+  function($scope, $location, $state) {
     $scope.title = 'The Hack Reactor Game';
     $scope.loadGame = function() {
       $location.path('/game');
+    };
+
+    $scope.loadISO = function() {
+      $state.go('isoDemo');
     };
   }
 ]);
