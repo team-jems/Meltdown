@@ -1,8 +1,19 @@
 angular.module('app.game', [])
 
-.controller('GameController', ['$scope', 'requestNotificationChannel', 'Panel',
-  'Puzzle',
-  function($scope, requestNotificationChannel, Panel, Puzzle) {
+.config(['$stateProvider',
+  function($stateProvider) {
+    $stateProvider
+      .state('game', {
+        url: '/game',
+        templateUrl: 'templates/game.html',
+        controller: 'GameController'
+      });
+  }
+])
+
+.controller('GameController', ['$scope', '$state', 'requestNotificationChannel', 'Panel', 'Puzzle',
+  function($scope, $state, requestNotificationChannel, Panel, Puzzle) {
+
     var game = new Phaser.Game(
       800, 600,
       Phaser.AUTO,
@@ -21,6 +32,8 @@ angular.module('app.game', [])
 
     var player;
     var platforms;
+    var stars;
+    var counter = 0;
 
     function create() {
 
@@ -40,6 +53,7 @@ angular.module('app.game', [])
         var ground = platforms.create(0, game.world.height - 64, 'ground');
 
         //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
+        // ground.scale.setTo(2x, 2x) basically
         ground.scale.setTo(2, 2);
 
         //  This stops it from falling away when you jump on it
@@ -51,6 +65,16 @@ angular.module('app.game', [])
 
         ledge = platforms.create(-150, 250, 'ground');  // ledge 2
         ledge.body.immovable = true;
+
+        // ======== STARS ==========
+        stars = game.add.group();
+        stars.enableBody = true;
+
+        var star = stars.create(0, 0, 'star');
+        star.body.gravity.y = 500; 
+        star.body.collideWorldBounds = true;
+        // game.physics.arcade.enable(star);
+        game.physics.enable(star, Phaser.Physics.ARCADE);
 
         // The player and its settings
         player = game.add.sprite(32, game.world.height - 150, 'dude');
@@ -84,8 +108,20 @@ angular.module('app.game', [])
 
     function update() {
 
-      //  Collide the player and the stars with the platforms
+      // Collide the player with the platforms
       game.physics.arcade.collide(player, platforms);
+
+      // Collide the stars with the platforms
+      game.physics.arcade.collide(stars, platforms);
+
+      // Collide the player with the stars
+      game.physics.arcade.collide(stars, player, collisionHandler, null, this);
+
+
+      // Player touches star
+      // game.physics.arcade.overlap(stars, player, collisionHandler, null, this);
+
+
 
       //  Reset the players velocity (movement)
       player.body.velocity.x = 0;
@@ -118,6 +154,12 @@ angular.module('app.game', [])
           player.body.velocity.y = -350;
       }
 
+    }
+
+    //  Called if the bullet hits one of the veg sprites
+    function collisionHandler (player, stars) {
+      console.log('I touched the star!!');
+      $state.go('quiz');
     }
   }
 ]);
