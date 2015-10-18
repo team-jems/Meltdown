@@ -11,8 +11,8 @@ angular.module('app.quiz', [])
   }
 ])
 
-.controller('QuizController', ['$scope', '$location',
-  function($scope, $location) {
+.controller('QuizController', ['$scope', '$state',
+  function($scope, $state) {
     $scope.title = 'Quiz!';
     $scope.problem = {
       'name': 'Break Function',
@@ -35,7 +35,8 @@ angular.module('app.quiz', [])
     $scope.checkAnswer = function(response){
       if (response.text === $scope.problem.answer){
         alert('yay');
-        $location.path('/');
+        // $location.path('/');
+        $state.go('intro');
       } else {
         alert('oh noooooo');
       }
