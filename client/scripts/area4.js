@@ -14,6 +14,9 @@ angular.module('app.area4', [])
 .controller('Area4Controller', ['$scope',
   function($scope) {
     $scope.title = 'The Hack Reactor Game: Area 4';
+    $scope.manual = "<u><strong>Coolant:</strong></u><br>var a = 0, b = 4;<br><a>turnTo</a> = a + b;";
+    $scope.showManual = false
+  
   }
 ]);
 

@@ -1,13 +1,13 @@
-<div class="container">
+<div class="container" id="area1">
   
   <h2>
     {{title}}
   </h2>
 
-	<div ng-click="showManual = !showManual" > IN CASE OF EMERGENCY REFER TO <a>MANUAL</a>
-	    <span ng-show="showManual">{{manual}}</span>
-	</div>
+	<p class="manualline"ng-click="showManual = !showManual" > IN CASE OF EMERGENCY REFER TO <a>MANUAL</a>
+	    <span ng-show="showManual" ng-bind-html="manual"></span>
+	</p>
  
-  <button id="control"><a href="/#/control">control room</a></button>
+  <button class="controlbutton2"><a href="/#/control">control room</a></button>
 
 </div>

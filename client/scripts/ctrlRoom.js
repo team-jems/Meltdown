@@ -13,6 +13,12 @@ angular.module('app.ctrlRoom', [])
 
 .controller('CtrlRoomController', ['$scope',
   function($scope) {
-    $scope.title = 'The Hack Reactor Control Room';
+    $scope.title = 'HACK REACTOR CONTROL ROOM';
+
+    $scope.heroImage = {
+        background: 'url("images/ctrlRoomCollage.jpg")'
+    };
+
+
   }
 ]);
