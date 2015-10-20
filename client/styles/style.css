@@ -1,3 +1,24 @@
+.flex{
+  display: flex;
+}
+
+.game {
+  border: 2px solid black;
+  padding: 4px;
+  margin: 0 4px;
+}
+
+.manual {
+  width: 350px;
+  border: 2px solid black;
+  padding: 4px;
+  margin: 0 4px;
+}
+
+.manual-content {
+  white-space: pre-line;
+}
+
 #game_canvas {
   margin: 0;
 }
