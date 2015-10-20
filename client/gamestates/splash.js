@@ -1,4 +1,4 @@
-var Splash = function (func) {},
+var Splash = function (game) {},
     playSound = true,
     playMusic = true,
     music;
@@ -6,12 +6,12 @@ var Splash = function (func) {},
 Splash.prototype = {
 
   loadScripts: function () {
-    this.game.load.script('WebFont', 'vendor/webfontloader.js');
-    this.game.load.script('gamemenu','states/gamemenu.js');
-    this.game.load.script('thegame', 'states/thegame.js');
-    this.game.load.script('gameover','states/gameover.js');
-    this.game.load.script('credits', 'states/credits.js');
-    this.game.load.script('options', 'states/options.js');
+    this.game.load.script('WebFont', 'lib/bower-webfontloader/webfont.js');
+    this.game.load.script('gamemenu','gamestates/gamemenu.js');
+    this.game.load.script('thegame', 'gamestates/game.js');
+    this.game.load.script('gameover','gamestates/gameover.js');
+    this.game.load.script('credits', 'gamestates/credits.js');
+    this.game.load.script('options', 'gamestates/options.js');
   },
 
   loadBgm: function () {
@@ -35,11 +35,10 @@ Splash.prototype = {
     }
   },
 
-  init: function (game) {
-    this.game = game;
-    this.loadingBar = this.game.make.sprite(game.world.centerX-(387/2), 400, "loading");
-    this.logo       = this.game.make.sprite(game.world.centerX, 200, 'brand');
-    this.status     = this.game.make.text(game.world.centerX, 380, 'Loading...', {fill: 'white'});
+  init: function () {
+    this.loadingBar = this.game.make.sprite(this.game.world.centerX-(387/2), 400, "loading");
+    this.logo       = this.game.make.sprite(this.game.world.centerX, 200, 'brand');
+    this.status     = this.game.make.text(this.game.world.centerX, 380, 'Loading...', {fill: 'white'});
     utils.centerGameObjects([this.logo, this.status]);
   },
 
@@ -58,7 +57,6 @@ Splash.prototype = {
   },
 
   addGameStates: function () {
-
     this.game.state.add("GameMenu",GameMenu);
     this.game.state.add("Game",Game);
     this.game.state.add("GameOver",GameOver);
@@ -76,9 +74,11 @@ Splash.prototype = {
     this.status.setText('Ready!');
     this.addGameStates();
     this.addGameMusic();
+    var self = this;
 
     setTimeout(function () {
-      //game.state.start("GameMenu");
-    }, 5000);
+      // load the main menu here
+      self.game.state.start("GameMenu");
+    }, 1000);
   }
 };
