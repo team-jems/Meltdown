@@ -16,7 +16,7 @@ GameMenu.prototype = {
   },
 
   init: function () {
-    this.titleText = this.game.make.text(this.game.world.centerX, 100, "Game Title", {
+    this.titleText = this.game.make.text(this.game.world.centerX, 100, "react or hack", {
       font: 'bold 60pt TheMinion',
       fill: '#FDFFB5',
       align: 'center'
@@ -27,13 +27,19 @@ GameMenu.prototype = {
   },
 
   create: function () {
-    this.game.stage.disableVisibilityChange = true;
+    var self = this;
+    // set true to prevent game from pausing
+    this.game.stage.disableVisibilityChange = false;
 
     this.game.add.sprite(0, 0, 'menu-bg');
     this.game.add.existing(this.titleText);
 
+    // add route to test game ============
+    this.game.state.add("GameTest", GameTest);
+    // ===================================
+
     this.addMenuOption('Start', function () {
-      console.log('You clicked Start!');
+      self.game.state.start("GameTest");
     });
     this.addMenuOption('Options', function () {
       console.log('You clicked Options!');

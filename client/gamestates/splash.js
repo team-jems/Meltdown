@@ -12,6 +12,9 @@ Splash.prototype = {
     this.game.load.script('gameover','gamestates/gameover.js');
     this.game.load.script('credits', 'gamestates/credits.js');
     this.game.load.script('options', 'gamestates/options.js');
+    this.game.load.script('gametest','gamestates/gametest.js');
+
+
   },
 
   loadBgm: function () {
