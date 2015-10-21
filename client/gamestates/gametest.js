@@ -1,21 +1,30 @@
 // Begin Gameplay
 
 var GameTest = function (game) {
+  this.player;
+  this.rotator;
+  this.button;
+  this.cursors;
+  this.panelKey;
 };
 
 GameTest.prototype = {
 
   preload: function(){
-
-    this.game.load.image('sky', 'assets/sky.png');
-    this.game.load.image('ground', 'assets/platform.png');
+    this.game.load.image('room', 'assets/rooms/orange2.jpg')
+    this.game.load.image('smallPanel', 'assets/cutouts/smallPanel.png');
+    this.game.load.image('tankleft', 'assets/cutouts/tank.png');
+    this.game.load.image('panel', 'assets/cutouts/controlPanel.png');
     this.game.load.image('star', 'assets/star.png');
+    this.game.load.image('panel', 'assets/panel.png');
     this.game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
-    var player;
-    var platforms;
-    var stars;
-    var counter = 0;
-
+    this.game.load.image('arrow', 'assets/cutouts/doodad.png');
+    // moved into gametest
+    // var player;
+    // var rotator;
+    // var button;
+    // var stars;
+    // var inviswall;
   },
 
   create: function(){
@@ -23,113 +32,161 @@ GameTest.prototype = {
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
     //  A simple background for our game
-    this.game.add.sprite(0, 0, 'sky');
+    this.game.add.sprite(0, 0, 'room');
 
-    //  The platforms group contains the ground and the 2 ledges we can jump on
-    platforms = this.game.add.group();
+    /********* Room Objects *****************************************/
+    //LARGE PANEL
+    roomObjs = this.game.add.group();
+    roomObjs.enableBody = true;
+    var panel = roomObjs.create(470, 0, 'panel', 3);
+    // panel.body.setSize(100, 50, 0, 0);
+    panel.body.collideWorldBounds = true;
+    this.game.physics.enable(panel, Phaser.Physics.ARCADE);
+    panel.body.immovable = true;
+    panel.body.checkCollision.left = true;
+    panel.body.checkCollision.right = true;
+    panel.body.checkCollision.down = true;
+    panel.body.checkCollision.up = true;
+    //SMALL PANEL 
+    var smallPanel = roomObjs.create(this.game.world.width/3.24, this.game.world.height/1.247, 'smallPanel', 3);
+        // panel.body.setSize(100, 50, 0, 0);
+    smallPanel.body.collideWorldBounds = true;
+    this.game.physics.enable(smallPanel, Phaser.Physics.ARCADE);
+    smallPanel.body.immovable = true;
+    smallPanel.body.checkCollision.left = true;
+    smallPanel.body.checkCollision.right = true;
+    smallPanel.body.checkCollision.down = true;
+    smallPanel.body.checkCollision.up = true;
+    //LEFT TANK
+    var tankleft = roomObjs.create(this.game.world.width/5.3, this.game.world.height/4.6, 'tankleft', 3);
+    // panel.body.setSize(100, 50, 0, 0);
+    tankleft.body.collideWorldBounds = true;
+    this.game.physics.enable(tankleft, Phaser.Physics.ARCADE);
+    tankleft.body.immovable = true;
+    tankleft.body.checkCollision.left = true;
+    tankleft.body.checkCollision.right = true;
+    tankleft.body.checkCollision.down = true;
+    tankleft.body.checkCollision.up = true;
+    //rightTank
+    var tankright = roomObjs.create(this.game.world.width/1.52, this.game.world.height/4.6, 'tankleft', 3);
+    // panel.body.setSize(100, 50, 0, 0);
+    tankright.body.collideWorldBounds = true;
+    this.game.physics.enable(tankright, Phaser.Physics.ARCADE);
+    tankright.body.immovable = true;
+    tankright.body.checkCollision.left = true;
+    tankright.body.checkCollision.right = true;
+    tankright.body.checkCollision.down = true;
+    tankright.body.checkCollision.up = true;    
 
-    //  We will enable physics for any object that is created in this group
-    platforms.enableBody = true;
+    this.rotator = this.game.add.sprite(this.game.world.width/7.8, 50, 'arrow');
+    this.game.physics.enable(this.rotator, Phaser.Physics.ARCADE);
+    this.rotator.body.collideWorldBounds = true;
+    this.rotator.body.immovable = true;
+    this.rotator.anchor.setTo(0.5, 0.5);
+    this.rotator.inputEnabled = true;
+    this.rotator.events.onInputDown.add(this.toggleRotate, this);
 
-    // Here we create the ground.
-    var ground = platforms.create(0, this.game.world.height - 64, 'ground');
 
-    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    // ground.scale.setTo(2x, 2x) basically
-    ground.scale.setTo(2, 2);
-
-    //  This stops it from falling away when you jump on it
-    ground.body.immovable = true;
-
-    //  Now let's create two ledges
-    var ledge = platforms.create(400, 400, 'ground');  // ledge 1
-    ledge.body.immovable = true;
-
-    ledge = platforms.create(-150, 250, 'ground');  // ledge 2
-    ledge.body.immovable = true;
-
-    // ======== STARS ==========
-    stars = this.game.add.group();
-    stars.enableBody = true;
-
-    var star = stars.create(0, 0, 'star');
-    star.body.gravity.y = 500; 
-    star.body.collideWorldBounds = true;
-    // game.physics.arcade.enable(star);
-    this.game.physics.enable(star, Phaser.Physics.ARCADE);
-
-    // The player and its settings
-    player = this.game.add.sprite(32, this.game.world.height - 150, 'dude');
+    /***-------------  The player and its settings --------------------------------***/
+    this.player = this.game.add.sprite(this.game.world.width/2, this.game.world.height/2, 'dude');
 
     //  We need to enable physics on the player
-    this.game.physics.arcade.enable(player);
+    this.game.physics.arcade.enable(this.player);
 
     //  Player physics properties. Give the little guy a slight bounce.
-    player.body.bounce.y = 0.2;
-    player.body.gravity.y = 300;
-    player.body.collideWorldBounds = true;
+    // player.body.bounce.y = 0.2;
+    // player.body.gravity.y = 1;
+    this.player.body.collideWorldBounds = true;
 
     //  Our two animations, walking left and right.
-    player.animations.add('left', [0, 1, 2, 3], 10, true);
-    player.animations.add('right', [5, 6, 7, 8], 10, true);
+    this.player.animations.add('left', [0,1,2,3], 10, true);
+    this.player.animations.add('right', [5,6,7,8], 10, true);
+    this.player.animations.add('up');
+    this.player.animations.add('down');
 
     //  Our controls.
-    cursors = this.game.input.keyboard.createCursorKeys();
-    
+    this.cursors = this.game.input.keyboard.createCursorKeys();
+    this.panelKey = this.game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+
+    // passing angular modules from game.js
+    var Puzzle = this.game.state.states['Main'].puzzle;
+    var Panel = this.game.state.states['Main'].panel;
+    var requestNotificationChannel = this.game.state.states['Main'].requestNotificationChannel;
+
+    var puzzle1 = Puzzle.generateBinaryLever();
+
+    requestNotificationChannel.loadManual(puzzle1.manual);
+    Panel.init(this.game, [puzzle1.puzzle]);
+
+    this.panelKey.onDown.add(function(key) {
+      requestNotificationChannel.loadPuzzle(0);
+      Panel.toggle();
+    }, this);
   },
 
   update: function(){
-      // Collide the player with the platforms
-      this.game.physics.arcade.collide(player, platforms);
+     
+    // Collide the player with the stars
 
-      // Collide the stars with the platforms
-      this.game.physics.arcade.collide(stars, platforms);
-
-      // Collide the player with the stars
-      this.game.physics.arcade.collide(stars, player, this.collisionHandler, null, this);
-
-
-      // Player touches star
-      // game.physics.arcade.overlap(stars, player, collisionHandler, null, this);
-
-
+    this.game.physics.arcade.collide(roomObjs, this.player, objCollisionHandler, null, this);
+    this.game.physics.arcade.collide(this.rotator, this.player, objCollisionHandler, null, this);
 
       //  Reset the players velocity (movement)
-      player.body.velocity.x = 0;
+      this.player.body.velocity.x = 0;
 
-      if (cursors.left.isDown)
-      {
+      if (this.cursors.left.isDown) {
           //  Move to the left
-          player.body.velocity.x = -150;
+          this.player.body.velocity.x = -150;
 
-          player.animations.play('left');
-      }
-      else if (cursors.right.isDown)
-      {
+          this.player.animations.play('left');
+      } else if (this.cursors.right.isDown) {
           //  Move to the right
-          player.body.velocity.x = 150;
+          this.player.body.velocity.x = 150;
 
-          player.animations.play('right');
+          this.player.animations.play('right');
+      } 
+      if (this.cursors.up.isDown) {
+        this.player.body.velocity.y -= 3;
+
+        this.player.animations.play('up');
+
+      } else if (this.cursors.down.isDown) {
+        this.player.body.velocity.y += 3;
+
+        this.player.animations.play('down');
+
       }
-      else
-      {
+       else {
           //  Stand still
-          player.animations.stop();
+          this.player.body.velocity.y = 0;
 
-          player.frame = 4;
+          this.player.animations.stop();
+
+          this.player.frame = 4;
       }
 
-      //  Allow the player to jump if they are touching the ground.
-      if (cursors.up.isDown && player.body.touching.down)
-      {
-          player.body.velocity.y = -350;
+      function objCollisionHandler (player, panel) {
+        console.log('hit a room object')
       }
+      // if($scope.rotate) {
+      //   this.rotator.angle += 1;
+      // }
   },
 
-  //  Called if the bullet hits one of the veg sprites
-  collisionHandler: function(player, stars){
-    console.log('I touched the star!!');
-  }
+  toggleRotate: function(){
+    console.log('angle: ', rotator.angle);
+    console.log('rotation: ', rotator.rotation);
+    console.log($scope.rotate);
+    $scope.rotate = !$scope.rotate;
+  },
+
+  actionOnClick: function() {
+    if (rotator.angle > 0 && rotator.angle < 90) {
+      console.log('You saved the reactor!');
+    } else {
+      console.log('Boom!');
+    }
+  },
 
 };
 
