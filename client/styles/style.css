@@ -26,6 +26,10 @@
   height: 420px;
 }
 
+.panel-center {
+  text-align: center;
+}
+
 .manual {
   width: 350px;
   border: 2px solid black;

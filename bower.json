@@ -21,6 +21,8 @@
   "dependencies": {
     "angular": "~1.4.7",
     "angular-ui-router": "~0.2.15",
-    "phaser": "~2.4.4"
+    "phaser": "~2.4.4",
+    "jquery": "~2.1.4",
+    "aterrien/jQuery-Knob": "jquery-knob#~1.2.11"
   }
 }
