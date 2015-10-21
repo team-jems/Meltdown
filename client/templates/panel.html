@@ -9,6 +9,16 @@
     <h3>Knob!</h3>
     <knob knob-data="knobData.value"></knob>
     <p></p>
-    <button ng-click="checkKnob()">Fixed</button>
+    <button ng-click="checkKnob()">Knob Check</button>
+    <p></p>
+    <p></p>
+    <div>
+      <rzslider rz-slider-model="sliderData.value"
+                        rz-slider-floor="sliderData.floor"
+                        rz-slider-ceil="sliderData.ceil"
+                        rz-slider-always-show-bar="true"></rzslider>
+    </div>
+    <p></p>
+    <button ng-click="checkSlider()">Slider Check</button>
   </div>
 </div>
