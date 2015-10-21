@@ -6,6 +6,7 @@ angular.module('app', [
   'app.game',
   'app.manual',
   'app.rotator',
+  'app.game2',
   'app.quiz'
 ])
 
