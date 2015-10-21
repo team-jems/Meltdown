@@ -35,18 +35,15 @@ GameMenu.prototype = {
 
   create: function () {
     var self = this;
+
     // set true to prevent game from pausing
     this.game.stage.disableVisibilityChange = false;
 
     this.game.add.sprite(0, 0, 'menu-bg');
     this.game.add.existing(this.titleText);
 
-    // add route to test game ============
-    this.game.state.add("GameTest", GameTest);
-    // ===================================
-
     this.addMenuOption('Start', function () {
-      self.game.state.start("GameTest");
+      self.game.state.start('Game');
     });
     this.addMenuOption('Options', function () {
       console.log('You clicked Options!');

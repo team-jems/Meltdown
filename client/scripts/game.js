@@ -39,6 +39,7 @@ angular.module('app.game', [])
 
     };
 
+    // Starts up main state as the first state
     game.state.add('Main', Main);
     game.state.start('Main');
   }
