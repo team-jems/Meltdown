@@ -1,10 +1,14 @@
+//Splash screen is the loading screen
+
 var Splash = function (game) {},
+
     playSound = true,
     playMusic = true,
     music;
 
 Splash.prototype = {
 
+  // Scripts are loaded in splash screen so that user can see something loading
   loadScripts: function () {
     this.game.load.script('WebFont', 'lib/bower-webfontloader/webfont.js');
     this.game.load.script('gamemenu','gamestates/gamemenu.js');
@@ -13,22 +17,23 @@ Splash.prototype = {
     this.game.load.script('credits', 'gamestates/credits.js');
     this.game.load.script('options', 'gamestates/options.js');
     this.game.load.script('gametest','gamestates/gametest.js');
-
-
   },
 
+  // Background music
   loadBgm: function () {
-    // thanks Kevin Macleod at http://incompetech.com/
+    // source: Kevin Macleod at http://incompetech.com/
     this.game.load.audio('dangerous', 'assets/bgm/Dangerous.mp3');
     this.game.load.audio('exit', 'assets/bgm/Exit the Premises.mp3');
   },
-  // varios freebies found from google image search
+
+  // Images for backgrounds
   loadImages: function () {
     this.game.load.image('menu-bg', 'assets/images/menu-bg.jpg');
     this.game.load.image('options-bg', 'assets/images/options-bg.jpg');
     this.game.load.image('gameover-bg', 'assets/images/gameover-bg.jpg');
   },
 
+  // Font
   loadFonts: function () {
     WebFontConfig = {
       custom: {
@@ -38,6 +43,7 @@ Splash.prototype = {
     }
   },
 
+  // Initialize
   init: function () {
     this.loadingBar = this.game.make.sprite(this.game.world.centerX-(387/2), 400, "loading");
     this.logo       = this.game.make.sprite(this.game.world.centerX, 200, 'brand');
@@ -59,6 +65,7 @@ Splash.prototype = {
 
   },
 
+  // Add routes to game instance
   addGameStates: function () {
     this.game.state.add("GameMenu",GameMenu);
     this.game.state.add("Game",Game);
@@ -67,6 +74,7 @@ Splash.prototype = {
     this.game.state.add("Options",Options);
   },
 
+  // Game Music
   addGameMusic: function () {
     music = this.game.add.audio('dangerous');
     music.loop = true;
@@ -82,6 +90,6 @@ Splash.prototype = {
     setTimeout(function () {
       // load the main menu here
       self.game.state.start("GameMenu");
-    }, 1000);
+    }, 3000);
   }
 };

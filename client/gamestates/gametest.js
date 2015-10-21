@@ -1,3 +1,5 @@
+// Begin Gameplay
+
 var GameTest = function (game) {
 };
 

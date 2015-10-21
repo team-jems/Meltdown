@@ -1,7 +1,10 @@
+// Game Menu
+
 var GameMenu = function(game) {};
 
 GameMenu.prototype = {
 
+  // Add an option to menu
   addMenuOption: function(text, callback) {
     var txt = this.game.add.text(30, (this.optionCount * 80) + 200, text, style.navitem.default);
     txt.inputEnabled = true;
@@ -15,9 +18,13 @@ GameMenu.prototype = {
     this.optionCount ++;
   },
 
+  // Initialize and set title
   init: function () {
-    this.titleText = this.game.make.text(this.game.world.centerX, 100, "react or hack", {
-      font: 'bold 60pt TheMinion',
+    // *** second choice *** title
+    // this.titleText = this.game.make.text(this.game.world.centerX, 100, "react or hack", {
+    // *** first choice *** title
+    this.titleText = this.game.make.text(this.game.world.centerX, 100, "hack react or cry", {
+      font: 'bold 50pt TheMinion',
       fill: '#FDFFB5',
       align: 'center'
     });

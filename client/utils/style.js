@@ -1,6 +1,7 @@
+// style for game font/menu
+
 var style;
 
-// this is a wrapped function
 (function () {
 
   // the variables declared here will not be scoped anywhere and will only be accessible in this wrapped function
