@@ -7,13 +7,7 @@ angular.module('app', [
   'app.manual',
   'app.rotator',
   'app.game2',
-  'app.quiz', 
-  'app.ctrlRoom', 
-  'app.area1',
-  'app.area2',
-  'app.area3',
-  'app.area4',
-  'app.area5'
+  'app.quiz'
 ])
 
 .config(['$urlRouterProvider',

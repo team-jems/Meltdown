@@ -8,7 +8,7 @@ angular.module('app.game', [])
   $scope.rotate = true;
 
     var game = new Phaser.Game(
-      800, 600,
+      800, 533,
       Phaser.AUTO,
       'game_canvas',
       { preload: preload, create: create, update: update });
@@ -23,7 +23,6 @@ angular.module('app.game', [])
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
         
         game.load.image('arrow', 'assets/cutouts/doodad.png');
-        game.load.spritesheet('button', 'assets/submitters.png', 193, 71);
 
   }
 
@@ -104,8 +103,6 @@ angular.module('app.game', [])
     rotator.inputEnabled = true;
     rotator.events.onInputDown.add(toggleRotate, this);
 
-    button = game.add.button(game.world.width/21, 70, 'button', actionOnClick, this, 1, 2, 3);
-    button.scale.setTo(0.8, 0.8);
 
 /***-------------  The player and its settings --------------------------------***/
         player = game.add.sprite(game.world.width/2, game.world.height/2, 'dude');
