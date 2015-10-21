@@ -1,4 +1,4 @@
-angular.module('app.panel', ['ui.knob'])
+angular.module('app.panel', ['ui.knob', 'rzModule'])
 
 .factory('Panel', function() {
   var panels;
@@ -53,16 +53,27 @@ angular.module('app.panel', ['ui.knob'])
     };
 
     $scope.knobData = {
-        value: 40,
-        options: {
-          readOnly: true,
-          width: 100,
-          height: 100
-        }
+      value: 40,
+      options: {
+        readOnly: true,
+        width: 100,
+        height: 100
+      }
     };
 
     $scope.checkKnob = function() {
       console.log('Knob set at: ', $scope.knobData.value);
     };
+
+    $scope.sliderData = {
+      value: 0,
+      floor: 0,
+      ceil: 500
+    };
+
+    $scope.checkSlider = function() {
+      console.log('Slider set at: ', $scope.sliderData.value);
+    };
+
   }
 ]);
