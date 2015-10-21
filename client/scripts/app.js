@@ -8,8 +8,6 @@ angular.module('app', [
   'app.gameFrame',
   'app.game',
   'app.manual',
-  'app.game2',
-  'app.quiz'
 ])
 
 .config(['$urlRouterProvider',
