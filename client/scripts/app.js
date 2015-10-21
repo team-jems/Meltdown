@@ -8,7 +8,6 @@ angular.module('app', [
   'app.gameFrame',
   'app.game',
   'app.manual',
-  'app.rotator',
   'app.game2',
   'app.quiz'
 ])

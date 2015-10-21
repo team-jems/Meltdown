@@ -2,6 +2,7 @@
 
 var GameTest = function (game) {
   this.player;
+  this.rotate = true;
   this.rotator;
   this.button;
   this.cursors;
@@ -19,12 +20,6 @@ GameTest.prototype = {
     this.game.load.image('panel', 'assets/panel.png');
     this.game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
     this.game.load.image('arrow', 'assets/cutouts/doodad.png');
-    // moved into gametest
-    // var player;
-    // var rotator;
-    // var button;
-    // var stars;
-    // var inviswall;
   },
 
   create: function(){
@@ -125,59 +120,61 @@ GameTest.prototype = {
   },
 
   update: function(){
-     
+
+    // Rotate arrow
+    if(this.rotate) {
+      this.rotator.angle += 1;
+    }
+
     // Collide the player with the stars
 
     this.game.physics.arcade.collide(roomObjs, this.player, objCollisionHandler, null, this);
     this.game.physics.arcade.collide(this.rotator, this.player, objCollisionHandler, null, this);
 
-      //  Reset the players velocity (movement)
-      this.player.body.velocity.x = 0;
+    //  Reset the players velocity (movement)
+    this.player.body.velocity.x = 0;
 
-      if (this.cursors.left.isDown) {
-          //  Move to the left
-          this.player.body.velocity.x = -150;
+    if (this.cursors.left.isDown) {
+        //  Move to the left
+        this.player.body.velocity.x = -150;
 
-          this.player.animations.play('left');
-      } else if (this.cursors.right.isDown) {
-          //  Move to the right
-          this.player.body.velocity.x = 150;
+        this.player.animations.play('left');
+    } else if (this.cursors.right.isDown) {
+        //  Move to the right
+        this.player.body.velocity.x = 150;
 
-          this.player.animations.play('right');
-      } 
-      if (this.cursors.up.isDown) {
-        this.player.body.velocity.y -= 3;
+        this.player.animations.play('right');
+    }
+    if (this.cursors.up.isDown) {
+      this.player.body.velocity.y -= 3;
 
-        this.player.animations.play('up');
+      this.player.animations.play('up');
 
-      } else if (this.cursors.down.isDown) {
-        this.player.body.velocity.y += 3;
+    } else if (this.cursors.down.isDown) {
+      this.player.body.velocity.y += 3;
 
-        this.player.animations.play('down');
+      this.player.animations.play('down');
 
-      }
-       else {
-          //  Stand still
-          this.player.body.velocity.y = 0;
+    }
+     else {
+        //  Stand still
+        this.player.body.velocity.y = 0;
 
-          this.player.animations.stop();
+        this.player.animations.stop();
 
-          this.player.frame = 4;
-      }
+        this.player.frame = 4;
+    }
 
-      function objCollisionHandler (player, panel) {
-        console.log('hit a room object')
-      }
-      // if($scope.rotate) {
-      //   this.rotator.angle += 1;
-      // }
+    function objCollisionHandler (player, panel) {
+      console.log('hit a room object')
+    }
+
   },
 
   toggleRotate: function(){
-    console.log('angle: ', rotator.angle);
-    console.log('rotation: ', rotator.rotation);
-    console.log($scope.rotate);
-    $scope.rotate = !$scope.rotate;
+    console.log('angle: ', this.rotator.angle);
+    console.log('rotation: ', this.rotator.rotation);
+    this.rotate = !this.rotate;
   },
 
   actionOnClick: function() {
