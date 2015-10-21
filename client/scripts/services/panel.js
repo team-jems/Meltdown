@@ -1,4 +1,4 @@
-angular.module('app.panel', [])
+angular.module('app.panel', ['ui.knob'])
 
 .factory('Panel', function() {
   var panels;
@@ -50,6 +50,19 @@ angular.module('app.panel', [])
           console.log('Wrong!');
         }
       }
+    };
+
+    $scope.knobData = {
+        value: 40,
+        options: {
+          readOnly: true,
+          width: 100,
+          height: 100
+        }
+    };
+
+    $scope.checkKnob = function() {
+      console.log('Knob set at: ', $scope.knobData.value);
     };
   }
 ]);
