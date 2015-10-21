@@ -1,0 +1,6 @@
+<div class="panel-content" ng-show="puzzle.type === 'binaryLever'">
+  <h3>ooh it's a binary lever!</h3>
+  <h3 ng-repeat="reading in puzzle.readings">Meter {{$index + 1}}: {{reading}}</h3>
+  <button ng-click="checkSolution(true)">true</button>
+  <button ng-click="checkSolution(false)">false</button>
+</div>

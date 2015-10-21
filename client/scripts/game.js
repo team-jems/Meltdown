@@ -74,10 +74,11 @@ angular.module('app.game', [])
         var puzzle1 = Puzzle.generateBinaryLever();
 
         requestNotificationChannel.loadManual(puzzle1.manual);
-        Panel.create(game, puzzle1.puzzle);
+        Panel.init(game, [puzzle1.puzzle]);
 
         panelKey.onDown.add(function(key) {
-          Panel.toggle(0);
+          requestNotificationChannel.loadPuzzle(0);
+          Panel.toggle();
         }, this);
     }
 

@@ -18,6 +18,10 @@ angular.module('app.gameFrame', [])
           'manual': {
             templateUrl: 'templates/manual.html',
             controller: 'ManualController'
+          },
+          'panel': {
+            templateUrl: 'templates/panel.html',
+            controller: 'PanelController'
           }
         }
       });
