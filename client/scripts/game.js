@@ -40,7 +40,7 @@ angular.module('app.game', [])
       // Route to Splash state
       create: function(){
         game.state.add('Splash', Splash);
-        game.state.start('Splash');        
+        game.state.start('Splash');
 
       }
     };
