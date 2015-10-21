@@ -12,7 +12,7 @@ angular.module('app.game', [])
       { preload: preload, create: create, update: update });
 
   function preload() {
-        game.load.image('room', 'assets/orange2.jpg')
+        game.load.image('room', 'assets/rooms/orange2.jpg')
         game.load.image('smallPanel', 'assets/cutouts/smallPanel.png');
         game.load.image('tankleft', 'assets/cutouts/tank.png');
         game.load.image('panel', 'assets/cutouts/controlPanel.png');
