@@ -35,6 +35,7 @@ angular.module('app.game', [])
       create: function(){
         game.state.add('Splash', Splash);
         game.state.start('Splash');
+
       }
 
     };
