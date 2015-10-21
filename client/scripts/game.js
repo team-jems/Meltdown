@@ -1,19 +1,8 @@
 angular.module('app.game', [])
 
-.config(['$stateProvider',
-  function($stateProvider) {
-    $stateProvider
-      .state('game', {
-        url: '/game',
-        templateUrl: 'templates/game.html',
-        controller: 'GameController'
-      });
-  }
-])
-
-.controller('GameController', ['$scope',
-  function($scope) {
-
+.controller('GameController', ['$scope', 'requestNotificationChannel', 'Panel',
+  'Puzzle',
+  function($scope, requestNotificationChannel, Panel, Puzzle) {
     var game = new Phaser.Game(
       800, 600,
       Phaser.AUTO,
@@ -25,6 +14,7 @@ angular.module('app.game', [])
         game.load.image('sky', 'assets/sky.png');
         game.load.image('ground', 'assets/platform.png');
         game.load.image('star', 'assets/star.png');
+        game.load.image('panel', 'assets/panel.png');
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 
     }
@@ -79,7 +69,17 @@ angular.module('app.game', [])
 
         //  Our controls.
         cursors = game.input.keyboard.createCursorKeys();
+        var panelKey = game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 
+        var puzzle1 = Puzzle.generateBinaryLever();
+
+        requestNotificationChannel.loadManual(puzzle1.manual);
+        Panel.init(game, [puzzle1.puzzle]);
+
+        panelKey.onDown.add(function(key) {
+          requestNotificationChannel.loadPuzzle(0);
+          Panel.toggle();
+        }, this);
     }
 
     function update() {

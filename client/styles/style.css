@@ -1,3 +1,42 @@
+.flex{
+  display: flex;
+}
+
+.game {
+  border: 2px solid black;
+  padding: 4px;
+  margin: 0 4px;
+}
+
+.panel {
+  position: absolute;
+  top: 89px;
+  left: 93px;
+  width: 650px;
+  height: 450px;
+  border-radius: 30px;
+  background: white;
+}
+
+.panel-content {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  width: 620px;
+  height: 420px;
+}
+
+.manual {
+  width: 350px;
+  border: 2px solid black;
+  padding: 4px;
+  margin: 0 4px;
+}
+
+.manual-content {
+  white-space: pre-line;
+}
+
 #game_canvas {
   margin: 0;
 }
