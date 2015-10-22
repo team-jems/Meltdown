@@ -83,8 +83,8 @@ Game.prototype = {
     //  Our two animations, walking left and right.
     this.player.animations.add('left', [0,1,2,3], 10, true);
     this.player.animations.add('right', [5,6,7,8], 10, true);
-    this.player.animations.add('up');
-    this.player.animations.add('down');
+    this.player.animations.add('up', [4]);
+    this.player.animations.add('down', [4]);
 
     //  Our controls.
     this.cursors = this.game.input.keyboard.createCursorKeys();

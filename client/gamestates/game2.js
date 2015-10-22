@@ -73,23 +73,22 @@ Game2.prototype = {
     this.player.animations.add('left', [0,1,2,3], 10, true);
     // this.player.animations.add('up', [4], 10, true);
     // this.player.animations.add('down', [4], 10, true);
-    this.player.animations.add('up');
-    this.player.animations.add('down');
+    this.player.animations.add('up', [4]);
+    this.player.animations.add('down' [4]);
 
     //  Our controls.
     this.cursors = this.game.input.keyboard.createCursorKeys();
     this.panelKey = this.game.input.keyboard.addKey(Phaser.KeyCode.ESC);
 
     // passing angular modules from game.js
-    var Puzzle = this.game.state.states['Main'].puzzle;
+    this.Puzzle = this.game.state.states['Main'].puzzle;
     this.Panel = this.game.state.states['Main'].panel;
     this.requestNotificationChannel = this.game.state.states['Main'].requestNotificationChannel;
 
-    var puzzle1 = Puzzle.generateBinaryLever();
-
-    this.requestNotificationChannel.loadManual(puzzle1.manual);
-    this.Panel.init(this.game, [puzzle1.puzzle]);
-
+    var components = this.Puzzle.generatePuzzles();
+    this.Panel.init(this.game, components.puzzles);
+    this.requestNotificationChannel.loadManual(components.manuals);
+    
     this.panelKey.onDown.add(function(key) {
       this.requestNotificationChannel.loadPuzzle(0);
       this.Panel.toggle();
