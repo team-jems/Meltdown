@@ -5,6 +5,8 @@ var Game2 = function(game){
   this.stars;
   this.inviswall;
   this.cursors;
+  this.roomObjs;
+
 };
 
 Game2.prototype = {
@@ -29,26 +31,26 @@ Game2.prototype = {
     this.game.add.sprite(0, 0, 'room');
 
     //LARGE PANEL
-    roomObjs = this.game.add.group();
-    roomObjs.enableBody = true;
-    var panel = roomObjs.create(this.game.world.width, this.game.world.height/3.7, 'panel');
+    this.roomObjs = this.game.add.group();
+    this.roomObjs.enableBody = true;
+    var panel = this.roomObjs.create(this.game.world.width, this.game.world.height/3.7, 'panel');
     // panel.body.setSize(100, 50, 0, 0);
     this.givePhysicsTo(panel, true, true, true, true, true);
     //SPIRAL CORNER 
-    var spiral = roomObjs.create(this.game.world.width, this.game.world.height, 'spiral');
+    var spiral = this.roomObjs.create(this.game.world.width, this.game.world.height, 'spiral');
     // panel.body.setSize(100, 50, 0, 0);
     this.givePhysicsTo(spiral, true, true, true, true, true);
     //ARROW CORNER
-    var arrow = roomObjs.create(this.game.world.width, 0, 'arrow');
+    var arrow = this.roomObjs.create(this.game.world.width, 0, 'arrow');
     this.givePhysicsTo(arrow, true, true, true, true, true);
     //2 HOLE CORNER
-    var holes = roomObjs.create(0, 0, 'holes');
+    var holes = this.roomObjs.create(0, 0, 'holes');
     this.givePhysicsTo(holes, true, true, true, true, true);
     //SQUARE CORNER
-    var square = roomObjs.create(0, this.game.world.height, 'square');
+    var square = this.roomObjs.create(0, this.game.world.height, 'square');
     this.givePhysicsTo(square, true, true, true, true, true);
     //CIRCULAR CENTER
-    var circle = roomObjs.create(this.game.world.width/3.73, this.game.world.height/6.5, 'circle');
+    var circle = this.roomObjs.create(this.game.world.width/3.73, this.game.world.height/6.5, 'circle');
     this.givePhysicsTo(circle, true, true, true, true, true);
 
     //  We will enable physics for any object that is created in this group
@@ -80,7 +82,7 @@ Game2.prototype = {
 
 
   update: function(){
-    this.game.physics.arcade.collide(roomObjs, this.player, this.objCollisionHandler, null, this);
+    this.game.physics.arcade.collide(this.roomObjs, this.player, this.objCollisionHandler, null, this);
     //  Reset the players velocity (movement)
     this.player.body.velocity.x = 0;
 
