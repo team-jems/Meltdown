@@ -34,3 +34,6 @@ client/lib
 
 # Minified files
 client/dist
+
+#Problem stuff
+client/problems
