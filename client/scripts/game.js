@@ -35,7 +35,6 @@ angular.module('app.game', [])
       create: function(){
         game.state.add('Splash', Splash);
         game.state.start('Splash');
-
       }
 
     };
@@ -43,5 +42,27 @@ angular.module('app.game', [])
     // Starts up main state as the first state
     game.state.add('Main', Main);
     game.state.start('Main');
-  }
+
+      function objCollisionHandler (player, panel) { 
+        // if(!panel.hasCollided){
+          requestNotificationChannel.loadPuzzle(0);
+          // Panel.on();
+          Panel.toggle();
+          // panel.hasCollided = true;
+        // }
+        //use esc key, panel show and off, not toggle
+        // if(panelKey.isDown) { //checkout mikes work which has changed this
+        //   Panel.off();
+        // }       
+        player.position.x =  panel.position.x + 5;
+        player.position.y = panel.position.y + 5;
+        //debug functionality issue with panel on and off from panel file 
+      }
+
+      if($scope.rotate) {
+        rotator.angle += 1;
+      }
+
+    }
+  
 ]);
