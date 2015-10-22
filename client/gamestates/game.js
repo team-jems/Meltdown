@@ -35,46 +35,22 @@ Game.prototype = {
     roomObjs = this.game.add.group();
     roomObjs.enableBody = true;
     var panel = roomObjs.create(470, 0, 'panel', 3);
-    // panel.body.setSize(100, 50, 0, 0);
-    panel.body.collideWorldBounds = true;
-    this.game.physics.enable(panel, Phaser.Physics.ARCADE);
-    panel.body.immovable = true;
-    panel.body.checkCollision.left = true;
-    panel.body.checkCollision.right = true;
-    panel.body.checkCollision.down = true;
-    panel.body.checkCollision.up = true;
+    this.givePhysicsTo(panel, true, true, true, true, true);
+
     //SMALL PANEL
     var smallPanel = roomObjs.create(this.game.world.width/3.24, this.game.world.height/1.247, 'smallPanel', 3);
-        // panel.body.setSize(100, 50, 0, 0);
-    smallPanel.body.collideWorldBounds = true;
-    this.game.physics.enable(smallPanel, Phaser.Physics.ARCADE);
-    smallPanel.body.immovable = true;
-    smallPanel.body.checkCollision.left = true;
-    smallPanel.body.checkCollision.right = true;
-    smallPanel.body.checkCollision.down = true;
-    smallPanel.body.checkCollision.up = true;
+    this.givePhysicsTo(smallPanel, true, true, true, true, true);
+
     //LEFT TANK
-    var tankleft = roomObjs.create(this.game.world.width/5.3, this.game.world.height/4.6, 'tankleft', 3);
-    // panel.body.setSize(100, 50, 0, 0);
-    tankleft.body.collideWorldBounds = true;
-    this.game.physics.enable(tankleft, Phaser.Physics.ARCADE);
-    tankleft.body.immovable = true;
-    tankleft.body.checkCollision.left = true;
-    tankleft.body.checkCollision.right = true;
-    tankleft.body.checkCollision.down = true;
-    tankleft.body.checkCollision.up = true;
-    //rightTank
-    var tankright = roomObjs.create(this.game.world.width/1.52, this.game.world.height/4.6, 'tankleft', 3);
-    // panel.body.setSize(100, 50, 0, 0);
-    tankright.body.collideWorldBounds = true;
-    this.game.physics.enable(tankright, Phaser.Physics.ARCADE);
-    tankright.body.immovable = true;
-    tankright.body.checkCollision.left = true;
-    tankright.body.checkCollision.right = true;
-    tankright.body.checkCollision.down = true;
-    tankright.body.checkCollision.up = true;
+    var tankLeft = roomObjs.create(this.game.world.width/5.3, this.game.world.height/4.6, 'tankleft', 3);
+    this.givePhysicsTo(tankLeft, true, true, true, true, true);
+
+    //RIGHT TANK
+    var tankRight = roomObjs.create(this.game.world.width/1.52, this.game.world.height/4.6, 'tankleft', 3);
+    this.givePhysicsTo(tankRight, true, true, true, true, true);
 
     this.rotator = this.game.add.sprite(this.game.world.width/7.8, 50, 'arrow');
+
     this.game.physics.enable(this.rotator, Phaser.Physics.ARCADE);
     this.rotator.body.collideWorldBounds = true;
     this.rotator.body.immovable = true;
@@ -170,6 +146,16 @@ Game.prototype = {
       this.game.state.start('Game2');
     }
 
+  },
+
+  givePhysicsTo: function(obj, collideWorldBounds, immovable, checkCollLeft, checkCollRight, checkCollDown, checkCollUp){
+    this.game.physics.enable(obj, Phaser.Physics.ARCADE);
+    obj.body.collideWorldBounds = collideWorldBounds;
+    obj.body.immovable = immovable;
+    obj.body.checkCollision.left = checkCollLeft;
+    obj.body.checkCollision.right = checkCollRight;
+    obj.body.checkCollision.down = checkCollDown;
+    obj.body.checkCollision.up = checkCollUp;
   },
 
 

@@ -33,60 +33,24 @@ Game2.prototype = {
     roomObjs.enableBody = true;
     var panel = roomObjs.create(this.game.world.width, this.game.world.height/3.7, 'panel');
     // panel.body.setSize(100, 50, 0, 0);
-    panel.body.collideWorldBounds = true;
-    this.game.physics.enable(panel, Phaser.Physics.ARCADE);
-    panel.body.immovable = true;
-    panel.body.checkCollision.left = true;
-    panel.body.checkCollision.right = true;
-    panel.body.checkCollision.down = true;
-    panel.body.checkCollision.up = true;
+    this.givePhysicsTo(panel, true, true, true, true, true);
     //SPIRAL CORNER 
     var spiral = roomObjs.create(this.game.world.width, this.game.world.height, 'spiral');
     // panel.body.setSize(100, 50, 0, 0);
-    spiral.body.collideWorldBounds = true;
-    this.game.physics.enable(spiral, Phaser.Physics.ARCADE);
-    spiral.body.immovable = true;
-    spiral.body.checkCollision.left = true;
-    spiral.body.checkCollision.right = true;
-    spiral.body.checkCollision.down = true;
-    spiral.body.checkCollision.up = true;
+    this.givePhysicsTo(spiral, true, true, true, true, true);
     //ARROW CORNER
     var arrow = roomObjs.create(this.game.world.width, 0, 'arrow');
-    // panel.body.setSize(100, 50, 0, 0);
-    arrow.body.collideWorldBounds = true;
-    this.game.physics.enable(arrow, Phaser.Physics.ARCADE);
-    arrow.body.immovable = true;
-    arrow.body.checkCollision.left = true;
-    arrow.body.checkCollision.right = true;
-    arrow.body.checkCollision.down = true;
-    arrow.body.checkCollision.up = true;
+    this.givePhysicsTo(arrow, true, true, true, true, true);
     //2 HOLE CORNER
     var holes = roomObjs.create(0, 0, 'holes');
-    holes.body.collideWorldBounds = true;
-    this.game.physics.enable(holes, Phaser.Physics.ARCADE);
-    holes.body.immovable = true;
-    holes.body.checkCollision.left = true;
-    holes.body.checkCollision.right = true;
-    holes.body.checkCollision.down = true;
-    holes.body.checkCollision.up = true;    
+    this.givePhysicsTo(holes, true, true, true, true, true);
     //SQUARE CORNER
     var square = roomObjs.create(0, this.game.world.height, 'square');
-    square.body.collideWorldBounds = true;
-    this.game.physics.enable(square, Phaser.Physics.ARCADE);
-    square.body.immovable = true;
-    square.body.checkCollision.left = true;
-    square.body.checkCollision.right = true;
-    square.body.checkCollision.down = true;
-    square.body.checkCollision.up = true;    
+    this.givePhysicsTo(square, true, true, true, true, true);
     //CIRCULAR CENTER
     var circle = roomObjs.create(this.game.world.width/3.73, this.game.world.height/6.5, 'circle');
-    circle.body.collideWorldBounds = true;
-    this.game.physics.enable(circle, Phaser.Physics.ARCADE);
-    circle.body.immovable = true;
-    circle.body.checkCollision.left = true;
-    circle.body.checkCollision.right = true;
-    circle.body.checkCollision.down = true;
-    circle.body.checkCollision.up = true;   
+    this.givePhysicsTo(circle, true, true, true, true, true);
+
     //  We will enable physics for any object that is created in this group
     // platforms.enableBody = true;
 
@@ -146,6 +110,16 @@ Game2.prototype = {
       this.game.state.start('Game', true, false, isPlaying);
     }
 
+  },
+
+  givePhysicsTo: function(obj, collideWorldBounds, immovable, checkCollLeft, checkCollRight, checkCollDown, checkCollUp){
+    this.game.physics.enable(obj, Phaser.Physics.ARCADE);
+    obj.body.collideWorldBounds = collideWorldBounds;
+    obj.body.immovable = immovable;
+    obj.body.checkCollision.left = checkCollLeft;
+    obj.body.checkCollision.right = checkCollRight;
+    obj.body.checkCollision.down = checkCollDown;
+    obj.body.checkCollision.up = checkCollUp;
   },
 
   objCollisionHandler: function(player, panel){
