@@ -91,6 +91,6 @@ Splash.prototype = {
     setTimeout(function () {
       // load the main menu here
       self.game.state.start("GameMenu");
-    }, 3000);
+    }, 1000);
   }
 };

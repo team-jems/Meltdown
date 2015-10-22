@@ -9,6 +9,10 @@ var Game = function (game) {
   this.cursors;
   this.panelKey;
   this.roomObjs;
+  this.timer;
+  this.timerEvent;
+  this.requestNotificationChannel;
+  this.Panel;
 };
 
 Game.prototype = {
@@ -88,18 +92,37 @@ Game.prototype = {
 
     // passing angular modules from game.js
     var Puzzle = this.game.state.states['Main'].puzzle;
-    var Panel = this.game.state.states['Main'].panel;
-    var requestNotificationChannel = this.game.state.states['Main'].requestNotificationChannel;
+    this.Panel = this.game.state.states['Main'].panel;
+    this.requestNotificationChannel = this.game.state.states['Main'].requestNotificationChannel;
 
     var puzzle1 = Puzzle.generateBinaryLever();
 
-    requestNotificationChannel.loadManual(puzzle1.manual);
-    Panel.init(this.game, [puzzle1.puzzle]);
+    this.requestNotificationChannel.loadManual(puzzle1.manual);
+    this.Panel.init(this.game, [puzzle1.puzzle]);
 
     this.panelKey.onDown.add(function(key) {
-      requestNotificationChannel.loadPuzzle(0);
-      Panel.toggle();
+      this.requestNotificationChannel.loadPuzzle(0);
+      this.Panel.toggle();
     }, this);
+
+    // Game Timer
+    this.timer = this.game.time.create();
+    //this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 10, this.endTimer, this);
+    this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 3, this.endTimer, this);
+    this.timer.start();  // timer display handled in render block
+
+  },
+
+  endTimer: function() {
+    this.timer.stop();
+    this.requestNotificationChannel.gameOver(true);
+    this.Panel.toggle();
+
+    var self = this;
+    setTimeout(function () {
+      self.Panel.toggle();
+      self.game.state.start("GameMenu");
+    }, 10000);
   },
 
   init: function(isPlaying){
@@ -178,7 +201,17 @@ Game.prototype = {
     }
   },
 
+  render: function() {
+    if (this.timer.running) {
+      this.game.debug.text(this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000)), 2, 14, "#ff0");
+    } else {
+      this.game.debug.text("Boom!", 2, 14, "#0f0");
+    }
+  },
+
+  formatTime: function(s) {
+    var minutes = "0" + Math.floor(s / 60);
+    var seconds = "0" + (s - minutes * 60);
+    return minutes.substr(-2) + ":" + seconds.substr(-2);
+  }
 };
-
-
-

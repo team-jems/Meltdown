@@ -5,6 +5,7 @@ angular.module('app.comm', [])
     // private notification messages
     var _LOAD_MANUAL_ = '_LOAD_MANUAL_';
     var _LOAD_PUZZLE_ = '_LOAD_PUZZLE_';
+    var _GAME_OVER_ = '_GAME_OVER_';
 
     // publish load manual notification
     var loadManual = function(manual) {
@@ -30,11 +31,25 @@ angular.module('app.comm', [])
       });
     };
 
+    // publish to terminate game
+    var gameOver = function(flag) {
+      $rootScope.$broadcast(_GAME_OVER_, flag);
+    };
+
+    // subscribe to terminate game
+    var onGameOver = function($scope, handler) {
+      $scope.$on(_GAME_OVER_, function(event, flag) {
+        handler(flag);
+      });
+    };
+
     return {
       loadManual: loadManual,
       onLoadManual: onLoadManual,
       loadPuzzle: loadPuzzle,
-      onLoadPuzzle: onLoadPuzzle
+      onLoadPuzzle: onLoadPuzzle,
+      gameOver: gameOver,
+      onGameOver: onGameOver
     };
   }
 ]);

@@ -1,10 +1,4 @@
 <div class="panel-content" ng-show="puzzle.type === 'binaryLever'">
-
-<!--   <h3>ooh it's a binary lever!</h3>
-  <h3 ng-repeat="reading in puzzle.readings">Meter {{$index + 1}}: {{reading}}</h3>
-  <button ng-click="checkSolution(true)">true</button>
-  <button ng-click="checkSolution(false)">false</button>
- -->
   <div class="wrapper panel-center">
     <h3>Knob!</h3>
     <knob knob-data="knobData.value"></knob>
@@ -21,4 +15,7 @@
     <p></p>
     <button ng-click="checkSlider()">Slider Check</button>
   </div>
+</div>
+
+<div class="panel-content game-over" ng-show="gameOver === true">
 </div>
