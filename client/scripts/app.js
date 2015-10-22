@@ -3,7 +3,6 @@ angular.module('app', [
   'app.comm',
   'app.panel',
   'app.puzzle',
-  // services
   'app.intro',
   'app.gameFrame',
   'app.game',
