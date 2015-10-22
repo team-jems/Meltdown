@@ -53,12 +53,6 @@ Game2.prototype = {
     var circle = this.roomObjs.create(this.game.world.width/3.73, this.game.world.height/6.5, 'circle');
     this.givePhysicsTo(circle, true, true, true, true, true);
 
-    //  We will enable physics for any object that is created in this group
-    // platforms.enableBody = true;
-
-    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    // ground.scale.setTo(20, 0);
-
 
 /***-------------  The player and its settings --------------------------------***/
     this.player = this.game.add.sprite(this.game.world.width/2.07, this.game.world.height - 96, 'dude');
