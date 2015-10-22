@@ -35,12 +35,20 @@ angular.module('app.panel', ['ui.knob', 'rzModule'])
 
 .controller('PanelController', ['$scope', 'requestNotificationChannel', 'Panel',
   function($scope, requestNotificationChannel, Panel) {
+
     var onLoadPuzzleHandler = function(index) {
       $scope.puzzle = Panel.load(index);
       $scope.$apply();
     };
 
     requestNotificationChannel.onLoadPuzzle($scope, onLoadPuzzleHandler);
+
+    var onGameOverHandler = function(flag) {
+      $scope.gameOver = flag;
+      $scope.$apply();
+    };
+
+    requestNotificationChannel.onGameOver($scope, onGameOverHandler);
 
     $scope.checkSolution = function(answer) {
       if ($scope.puzzle.type === 'binaryLever') {
