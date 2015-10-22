@@ -8,8 +8,8 @@ angular.module('app.comm', [])
     var _GAME_OVER_ = '_GAME_OVER_';
 
     // publish load manual notification
-    var loadManual = function(manual) {
-      $rootScope.$broadcast(_LOAD_MANUAL_, manual);
+    var loadManual = function(manuals) {
+      $rootScope.$broadcast(_LOAD_MANUAL_, manuals);
     };
 
     // subscribe to load manual notification

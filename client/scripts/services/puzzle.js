@@ -187,11 +187,19 @@ angular.module('app.puzzle', [])
       }
     }
 
+    for (var i = 0; i < 4; i++) {
+      if (readings[i] < 100) {
+        readings[i] = '0' + readings[i].toString();
+      }
+    }
+
     return {
       puzzle: {
         type: 'binaryLever',
         readings: readings,
-        solution: solution
+        solution: solution,
+        state: 1,
+        solved: false
       },
       manual: {
         type: 'binaryLever',
@@ -201,7 +209,21 @@ angular.module('app.puzzle', [])
     };
   };
 
+  var generatePuzzles = function() {
+    var puzzles = [];
+    var manuals = [];
+
+    var component = generateBinaryLever();
+    puzzles.push(component.puzzle);
+    manuals.push(component.manual);
+
+    return {
+      puzzles: puzzles,
+      manuals: manuals
+    };
+  }
+
   return {
-    generateBinaryLever: generateBinaryLever
+    generatePuzzles: generatePuzzles
   }
 });

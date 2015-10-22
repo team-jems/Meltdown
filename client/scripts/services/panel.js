@@ -1,4 +1,4 @@
-angular.module('app.panel', ['ui.knob', 'rzModule'])
+angular.module('app.panel', ['ui.slider', 'ui.knob'])
 
 .factory('Panel', function() {
   var panels;
@@ -35,6 +35,14 @@ angular.module('app.panel', ['ui.knob', 'rzModule'])
 
 .controller('PanelController', ['$scope', 'requestNotificationChannel', 'Panel',
   function($scope, requestNotificationChannel, Panel) {
+    $scope.knobData = {
+      value: 40,
+      options: {
+        readOnly: true,
+        width: 100,
+        height: 100
+      }
+    };
 
     var onLoadPuzzleHandler = function(index) {
       $scope.puzzle = Panel.load(index);
@@ -50,38 +58,23 @@ angular.module('app.panel', ['ui.knob', 'rzModule'])
 
     requestNotificationChannel.onGameOver($scope, onGameOverHandler);
 
-    $scope.checkSolution = function(answer) {
+    $scope.checkSolution = function() {
       if ($scope.puzzle.type === 'binaryLever') {
-        if (answer === $scope.puzzle.solution) {
-          console.log('Correct!');
-        } else {
-          console.log('Wrong!');
-        }
-      }
-    };
+        if ($scope.puzzle.state !== 1) {
+          var answer = $scope.puzzle.state === 2;
 
-    $scope.knobData = {
-      value: 40,
-      options: {
-        readOnly: true,
-        width: 100,
-        height: 100
+          if (answer === $scope.puzzle.solution) {
+            $scope.puzzle.solved = true;
+          } else {
+            $scope.puzzle.solved = false;
+            console.log('BUZZ!');
+          }
+        }
       }
     };
 
     $scope.checkKnob = function() {
       console.log('Knob set at: ', $scope.knobData.value);
     };
-
-    $scope.sliderData = {
-      value: 0,
-      floor: 0,
-      ceil: 500
-    };
-
-    $scope.checkSlider = function() {
-      console.log('Slider set at: ', $scope.sliderData.value);
-    };
-
   }
 ]);
