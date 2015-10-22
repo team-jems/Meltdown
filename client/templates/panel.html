@@ -1,24 +1,33 @@
 <div class="panel-content" ng-show="puzzle.type === 'binaryLever'">
+  <div class="wrapper panel-center">
+    <div class="meter">
+      <p class="meter-label">Meter 1                        Meter 2</p>
+      <p class="readings">{{puzzle.readings[0]}}     {{puzzle.readings[1]}}</p>
+      <p class="meter-label">Meter 3                        Meter 4</p>
+      <p class="readings">{{puzzle.readings[2]}}     {{puzzle.readings[3]}}</p>
+    </div>
+    <div class="slider">
+      <p>O                          I</p>
+      <div class="slider-element" ui-slider min="0" max="2"
+        ng-model="puzzle.state" ng-change="checkSolution()"></div>
+      <p ng-show="puzzle.solved">Solved!</p>
+    </div>
+  </div>
+</div>
 
 <!--   <h3>ooh it's a binary lever!</h3>
   <h3 ng-repeat="reading in puzzle.readings">Meter {{$index + 1}}: {{reading}}</h3>
   <button ng-click="checkSolution(true)">true</button>
   <button ng-click="checkSolution(false)">false</button>
- -->
-  <div class="wrapper panel-center">
-    <h3>Knob!</h3>
-    <knob knob-data="knobData.value"></knob>
-    <p></p>
-    <button ng-click="checkKnob()">Knob Check</button>
-    <p></p>
-    <p></p>
-    <div>
-      <rzslider rz-slider-model="sliderData.value"
-                        rz-slider-floor="sliderData.floor"
-                        rz-slider-ceil="sliderData.ceil"
-                        rz-slider-always-show-bar="true"></rzslider>
-    </div>
-    <p></p>
-    <button ng-click="checkSlider()">Slider Check</button>
+
+  <h3>Knob!</h3>
+  <knob knob-data="knobData.value"></knob>
+  <p></p>
+  <button ng-click="checkKnob()">Knob Check</button>
+  <p></p>
+  <p></p>
+  <div>
+
   </div>
-</div>
+  <p></p>
+ -->

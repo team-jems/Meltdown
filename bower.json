@@ -24,6 +24,6 @@
     "phaser": "~2.4.4",
     "jquery": "~2.1.4",
     "jquery-knob": "~1.2.11",
-    "angularjs-slider": "~1.0.0"
+    "angular-ui-slider": "~0.1.3"
   }
 }

@@ -1,3 +1,8 @@
+@font-face {
+  font-family: digital7;
+  src: url(../assets/fonts/digital-7.mono.ttf);
+}
+
 .flex{
   display: flex;
 }
@@ -10,12 +15,12 @@
 
 .panel {
   position: absolute;
-  top: 89px;
+  top: 56px;
   left: 93px;
   width: 650px;
   height: 450px;
   border-radius: 30px;
-  background: white;
+  background: #EDEBE8;
 }
 
 .panel-content {
@@ -30,22 +35,66 @@
   text-align: center;
 }
 
+.meter {
+  position: relative;
+  top: 50px;
+}
+
+.meter-label {
+  color: red;
+  white-space: pre;
+  margin: 16px 0 0 0;
+}
+
+.readings {
+  font: 40px digital7;
+  white-space: pre;
+  margin: 6px auto;
+}
+
+.slider {
+  position: relative;
+  top: 90px;
+}
+
+.slider p {
+  font-size: 28px;
+  margin: 12px 0;
+  white-space: pre;
+}
+
+.slider-element {
+  width: 200px;
+  margin: 0 auto;
+}
+
+.ui-slider a {
+  outline: none;
+}
+
 .manual {
-  width: 350px;
-  border: 2px solid black;
+  width: 380px;
+  border: 2px solid gray;
   padding: 4px;
   margin: 0 4px;
+  background: black;
+  color: #0F0;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
 }
 
 .manual-content {
-  white-space: pre-line;
+  white-space: pre-wrap;
+  font-size: 12px;
 }
 
 #game_canvas {
-  margin: 0; 
+  margin: 0;
 }
 
 #game_canvas2 {
-  margin: 0; 
+  margin: 0;
 }
 

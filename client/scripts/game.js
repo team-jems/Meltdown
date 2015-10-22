@@ -21,7 +21,7 @@ angular.module('app.game', [])
         game.load.image('star', 'assets/star.png');
         game.load.image('panel', 'assets/panel.png');
         game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
-        
+
         game.load.image('arrow', 'assets/cutouts/doodad.png');
 
   }
@@ -48,7 +48,7 @@ angular.module('app.game', [])
         // star.body.collideWorldBounds = true;
         // star.body.immovable = true;
         // // star.body.setSize(400, 50, 0, 20);
-        // // star.body.gravity.y = 500; 
+        // // star.body.gravity.y = 500;
         // game.physics.enable(star, Phaser.Physics.ARCADE);
 
 /********* Room Objects *****************************************/
@@ -64,7 +64,7 @@ angular.module('app.game', [])
     panel.body.checkCollision.right = true;
     panel.body.checkCollision.down = true;
     panel.body.checkCollision.up = true;
-    //SMALL PANEL 
+    //SMALL PANEL
     var smallPanel = roomObjs.create(game.world.width/3.24, game.world.height/1.247, 'smallPanel', 3);
         // panel.body.setSize(100, 50, 0, 0);
     smallPanel.body.collideWorldBounds = true;
@@ -93,7 +93,7 @@ angular.module('app.game', [])
     tankright.body.checkCollision.left = true;
     tankright.body.checkCollision.right = true;
     tankright.body.checkCollision.down = true;
-    tankright.body.checkCollision.up = true;    
+    tankright.body.checkCollision.up = true;
 
     rotator = game.add.sprite(game.world.width/7.8, 50, 'arrow');
     game.physics.enable(rotator, Phaser.Physics.ARCADE);
@@ -125,10 +125,9 @@ angular.module('app.game', [])
         cursors = game.input.keyboard.createCursorKeys();
         var panelKey = game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
 
-        var puzzle1 = Puzzle.generateBinaryLever();
-
-        requestNotificationChannel.loadManual(puzzle1.manual);
-        Panel.init(game, [puzzle1.puzzle]);
+        var components = Puzzle.generatePuzzles();
+        Panel.init(game, components.puzzles);
+        requestNotificationChannel.loadManual(components.manuals);
 
         panelKey.onDown.add(function(key) {
           requestNotificationChannel.loadPuzzle(0);
@@ -171,7 +170,7 @@ angular.module('app.game', [])
           player.body.velocity.x = 150;
 
           player.animations.play('right');
-      } 
+      }
       if (cursors.up.isDown) {
         player.body.velocity.y -= 3;
 

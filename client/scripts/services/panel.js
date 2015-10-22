@@ -1,4 +1,4 @@
-angular.module('app.panel', ['ui.knob', 'rzModule'])
+angular.module('app.panel', ['ui.slider', 'ui.knob'])
 
 .factory('Panel', function() {
   var panels;
@@ -35,23 +35,6 @@ angular.module('app.panel', ['ui.knob', 'rzModule'])
 
 .controller('PanelController', ['$scope', 'requestNotificationChannel', 'Panel',
   function($scope, requestNotificationChannel, Panel) {
-    var onLoadPuzzleHandler = function(index) {
-      $scope.puzzle = Panel.load(index);
-      $scope.$apply();
-    };
-
-    requestNotificationChannel.onLoadPuzzle($scope, onLoadPuzzleHandler);
-
-    $scope.checkSolution = function(answer) {
-      if ($scope.puzzle.type === 'binaryLever') {
-        if (answer === $scope.puzzle.solution) {
-          console.log('Correct!');
-        } else {
-          console.log('Wrong!');
-        }
-      }
-    };
-
     $scope.knobData = {
       value: 40,
       options: {
@@ -61,19 +44,36 @@ angular.module('app.panel', ['ui.knob', 'rzModule'])
       }
     };
 
-    $scope.checkKnob = function() {
-      console.log('Knob set at: ', $scope.knobData.value);
+    var onLoadPuzzleHandler = function(index) {
+      $scope.puzzle = Panel.load(index);
+      $scope.$apply();
     };
 
-    $scope.sliderData = {
-      value: 0,
-      floor: 0,
-      ceil: 500
+    requestNotificationChannel.onLoadPuzzle($scope, onLoadPuzzleHandler);
+
+    $scope.checkSolution = function() {
+      if ($scope.puzzle.type === 'binaryLever') {
+        if ($scope.puzzle.state !== 1) {
+          var answer = $scope.puzzle.state === 2;
+
+          if (answer === $scope.puzzle.solution) {
+            $scope.puzzle.solved = true;
+          } else {
+            $scope.puzzle.solved = false;
+            console.log('BUZZ!');
+          }
+        }
+      }
     };
 
     $scope.checkSlider = function() {
-      console.log('Slider set at: ', $scope.sliderData.value);
+      $scope.puzzle.state++;
+      console.log($scope.puzzle.state);
+      //console.log('Slider set at: ', $scope.sliderData.value);
     };
 
+    $scope.checkKnob = function() {
+      console.log('Knob set at: ', $scope.knobData.value);
+    };
   }
 ]);
