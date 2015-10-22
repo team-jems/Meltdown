@@ -2,11 +2,17 @@
 
 var Game2 = function(game){
   this.player;
-  this.stars;
-  this.inviswall;
+  this.played = false;
+  this.rotate = true;
+  this.rotator;
+  this.button;
   this.cursors;
+  this.panelKey;
   this.roomObjs;
-
+  this.timer;
+  this.timerEvent;
+  this.requestNotificationChannel;
+  this.Panel;
 };
 
 Game2.prototype = {
@@ -50,7 +56,7 @@ Game2.prototype = {
     var square = this.roomObjs.create(0, this.game.world.height, 'square');
     this.givePhysicsTo(square, true, true, true, true, true);
     //CIRCULAR CENTER
-    var circle = this.roomObjs.create(this.game.world.width/3.73, this.game.world.height/6.5, 'circle');
+    var circle = this.roomObjs.create(this.game.world.width/2.95, this.game.world.height/3.9, 'circle');
     this.givePhysicsTo(circle, true, true, true, true, true);
 
 
@@ -72,8 +78,48 @@ Game2.prototype = {
 
     //  Our controls.
     this.cursors = this.game.input.keyboard.createCursorKeys();
+    this.panelKey = this.game.input.keyboard.addKey(Phaser.KeyCode.ESC);
+
+    // passing angular modules from game.js
+    var Puzzle = this.game.state.states['Main'].puzzle;
+    this.Panel = this.game.state.states['Main'].panel;
+    this.requestNotificationChannel = this.game.state.states['Main'].requestNotificationChannel;
+
+    var puzzle1 = Puzzle.generateBinaryLever();
+
+    this.requestNotificationChannel.loadManual(puzzle1.manual);
+    this.Panel.init(this.game, [puzzle1.puzzle]);
+
+    this.panelKey.onDown.add(function(key) {
+      this.requestNotificationChannel.loadPuzzle(0);
+      this.Panel.toggle();
+      this.roomObjs.hasCollided = false;
+    }, this);
+
+    // Game Timer
+    this.timer = this.game.time.create();
+    //this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 10, this.endTimer, this);
+    this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 3, this.endTimer, this);
+    this.timer.start();  // timer display handled in render block
   },
 
+  endTimer: function() {
+    this.timer.stop();
+    this.requestNotificationChannel.gameOver(true);
+    this.Panel.toggle();
+
+    var self = this;
+    setTimeout(function () {
+      self.Panel.toggle();
+      self.game.state.start("GameMenu");
+    }, 10000);
+  },
+
+  init: function(isPlaying){
+    if (isPlaying){
+      this.played = true;
+    }
+  },
 
   update: function(){
     this.game.physics.arcade.collide(this.roomObjs, this.player, this.objCollisionHandler, null, this);
@@ -118,8 +164,40 @@ Game2.prototype = {
     obj.body.checkCollision.up = checkCollUp;
   },
 
-  objCollisionHandler: function(player, panel){
-    console.log('hit a room object');
+  objCollisionHandler: function(player, roomObjs){  
+    console.log('I hit a room object');
+    if(!this.roomObjs.hasCollided){
+      this.requestNotificationChannel.loadPuzzle(0);
+      this.Panel.toggle();
+      this.roomObjs.hasCollided = true;
+    }
+  },
+  toggleRotate: function(){
+    console.log('angle: ', this.rotator.angle);
+    console.log('rotation: ', this.rotator.rotation);
+    this.rotate = !this.rotate;
+  },
+
+  actionOnClick: function() {
+    if (this.rotator.angle > 0 && this.rotator.angle < 90) {
+      console.log('You saved the reactor!');
+    } else {
+      console.log('Boom!');
+    }
+  },
+
+  render: function() {
+    if (this.timer.running) {
+      this.game.debug.text(this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000)), 2, 14, "#ff0");
+    } else {
+      this.game.debug.text("Boom!", 2, 14, "#0f0");
+    }
+  },
+
+  formatTime: function(s) {
+    var minutes = "0" + Math.floor(s / 60);
+    var seconds = "0" + (s - minutes * 60);
+    return minutes.substr(-2) + ":" + seconds.substr(-2);
   }
 
 };

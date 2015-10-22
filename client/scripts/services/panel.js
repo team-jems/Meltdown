@@ -24,6 +24,7 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
 
   var on = function() {
     mask.visible = true;
+    console.log("panel is on")
     $('.panel').on();
   };
 
