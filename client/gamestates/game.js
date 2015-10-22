@@ -2,6 +2,7 @@
 
 var Game = function (game) {
   this.player;
+  this.played = false;
   this.rotate = true;
   this.rotator;
   this.button;
@@ -82,7 +83,13 @@ Game.prototype = {
     this.rotator.events.onInputDown.add(this.toggleRotate, this);
 
     /***-------------  The player and its settings --------------------------------***/
-    this.player = this.game.add.sprite(this.game.world.width/2, this.game.world.height/2, 'dude');
+    // if this is the start of the game, place player at room center
+    if (this.played === false){
+      this.player = this.game.add.sprite(this.game.world.width/2, this.game.world.height/2, 'dude');
+    // if the game has already started, place player at room entrance
+    } else {
+      this.player = this.game.add.sprite(this.game.world.width/2, 48, 'dude');
+    }
 
     //  We need to enable physics on the player
     this.game.physics.arcade.enable(this.player);
@@ -116,6 +123,12 @@ Game.prototype = {
       requestNotificationChannel.loadPuzzle(0);
       Panel.toggle();
     }, this);
+  },
+
+  init: function(isPlaying){
+    if (isPlaying){
+      this.played = true;
+    }
   },
 
   update: function(){
@@ -156,6 +169,7 @@ Game.prototype = {
     if (this.player.body.y === 0 && (this.player.body.x > 384 && this.player.body.x < 416)){
       this.game.state.start('Game2');
     }
+
   },
 
 

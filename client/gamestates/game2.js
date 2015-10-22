@@ -142,7 +142,8 @@ Game2.prototype = {
 
     //Room transition (might be better to do object collision instead, but refactor later)
     if (this.player.body.y === 485 && (this.player.body.x > 384 && this.player.body.x < 416)){
-      this.game.state.start('Game');
+      var isPlaying = true;
+      this.game.state.start('Game', true, false, isPlaying);
     }
 
   },
