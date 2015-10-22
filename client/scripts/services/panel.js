@@ -22,6 +22,17 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
     $('.panel').toggle();
   };
 
+  var on = function() {
+    mask.visible = true;
+    console.log("panel is on")
+    $('.panel').on();
+  };
+
+  var off = function() {
+    mask.visible = false;
+    $('.panel').off();
+  };
+
   var load = function(index) {
     return panels[index];
   };
@@ -29,7 +40,9 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
   return {
     init: init,
     toggle: toggle,
-    load: load
+    load: load, 
+    on: on,
+    off: off
   };
 })
 

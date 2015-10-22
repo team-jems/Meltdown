@@ -83,12 +83,12 @@ Game.prototype = {
     //  Our two animations, walking left and right.
     this.player.animations.add('left', [0,1,2,3], 10, true);
     this.player.animations.add('right', [5,6,7,8], 10, true);
-    this.player.animations.add('up');
-    this.player.animations.add('down');
+    this.player.animations.add('up', [4]);
+    this.player.animations.add('down', [4]);
 
     //  Our controls.
     this.cursors = this.game.input.keyboard.createCursorKeys();
-    this.panelKey = this.game.input.keyboard.addKey(Phaser.KeyCode.SPACEBAR);
+    this.panelKey = this.game.input.keyboard.addKey(Phaser.KeyCode.ESC);
 
     // passing angular modules from game.js
     this.Puzzle = this.game.state.states['Main'].puzzle;
@@ -102,6 +102,7 @@ Game.prototype = {
     this.panelKey.onDown.add(function(key) {
       this.requestNotificationChannel.loadPuzzle(0);
       this.Panel.toggle();
+      this.roomObjs.hasCollided = false;
     }, this);
 
     // Game Timer
@@ -182,8 +183,13 @@ Game.prototype = {
   },
 
 
-  objCollisionHandler: function(player, panel){
-    console.log('hit a room object');
+  objCollisionHandler: function(player, roomObjs){
+    console.log('I hit a room object');
+    if(!this.roomObjs.hasCollided){
+      this.requestNotificationChannel.loadPuzzle(0);
+      this.Panel.toggle();
+      this.roomObjs.hasCollided = true;
+    }
   },
 
   toggleRotate: function(){

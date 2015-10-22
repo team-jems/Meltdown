@@ -11,6 +11,8 @@
   border: 2px solid black;
   padding: 4px;
   margin: 0 4px;
+  margin-left: 45px;
+  width: 800px;
 }
 
 .panel {
