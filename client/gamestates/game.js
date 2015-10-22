@@ -8,6 +8,7 @@ var Game = function (game) {
   this.button;
   this.cursors;
   this.panelKey;
+  this.roomObjs;
 };
 
 Game.prototype = {
@@ -32,21 +33,21 @@ Game.prototype = {
 
     /********* Room Objects *****************************************/
     //LARGE PANEL
-    roomObjs = this.game.add.group();
-    roomObjs.enableBody = true;
-    var panel = roomObjs.create(470, 0, 'panel', 3);
+    this.roomObjs = this.game.add.group();
+    this.roomObjs.enableBody = true;
+    var panel = this.roomObjs.create(470, 0, 'panel', 3);
     this.givePhysicsTo(panel, true, true, true, true, true);
 
     //SMALL PANEL
-    var smallPanel = roomObjs.create(this.game.world.width/3.24, this.game.world.height/1.247, 'smallPanel', 3);
+    var smallPanel = this.roomObjs.create(this.game.world.width/3.24, this.game.world.height/1.247, 'smallPanel', 3);
     this.givePhysicsTo(smallPanel, true, true, true, true, true);
 
     //LEFT TANK
-    var tankLeft = roomObjs.create(this.game.world.width/5.3, this.game.world.height/4.6, 'tankleft', 3);
+    var tankLeft = this.roomObjs.create(this.game.world.width/5.3, this.game.world.height/4.6, 'tankleft', 3);
     this.givePhysicsTo(tankLeft, true, true, true, true, true);
 
     //RIGHT TANK
-    var tankRight = roomObjs.create(this.game.world.width/1.52, this.game.world.height/4.6, 'tankleft', 3);
+    var tankRight = this.roomObjs.create(this.game.world.width/1.52, this.game.world.height/4.6, 'tankleft', 3);
     this.givePhysicsTo(tankRight, true, true, true, true, true);
 
     this.rotator = this.game.add.sprite(this.game.world.width/7.8, 50, 'arrow');
@@ -115,7 +116,7 @@ Game.prototype = {
     }
 
     // Collide the player with the stars
-    this.game.physics.arcade.collide(roomObjs, this.player, this.objCollisionHandler, null, this);
+    this.game.physics.arcade.collide(this.roomObjs, this.player, this.objCollisionHandler, null, this);
     this.game.physics.arcade.collide(this.rotator, this.player, this.objCollisionHandler, null, this);
 
     // Reset the players velocity (movement)
