@@ -11,7 +11,7 @@
   border: 2px solid black;
   padding: 4px;
   margin: 0 4px;
-  margin-left: 45px;
+  margin-left: 40px;
   width: 800px;
 }
 
@@ -96,9 +96,9 @@
   margin: 0;
 }
 
-#game_canvas2 {
+/*#game_canvas2 {
   margin: 0;
-}
+}*/
 
 .game-over {
   background-image: url('http://media.giphy.com/media/uSHMDTUL7lKso/giphy.gif');

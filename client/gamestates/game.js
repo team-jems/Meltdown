@@ -32,6 +32,8 @@ Game.prototype = {
     //  We're going to be using physics, so enable the Arcade Physics system
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
+    music.pause();
+
     //  A simple background for our game
     this.game.add.sprite(0, 0, 'room');
 
@@ -164,6 +166,8 @@ Game.prototype = {
       this.player.animations.stop();
       this.player.frame = 4;
     }
+
+    
 
     //Room transition (might be better to do object collision instead, but refactor later)
     if (this.player.body.y === 0 && (this.player.body.x > 384 && this.player.body.x < 416)){

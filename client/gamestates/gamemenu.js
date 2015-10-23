@@ -23,8 +23,8 @@ GameMenu.prototype = {
     // *** second choice *** title
     // this.titleText = this.game.make.text(this.game.world.centerX, 100, "react or hack", {
     // *** first choice *** title
-    this.titleText = this.game.make.text(this.game.world.centerX, 100, "hack react or cry", {
-      font: 'bold 50pt TheMinion',
+    this.titleText = this.game.make.text(this.game.world.centerX, 100, "HACK REACTOR the game", {
+      font: 'bold 40pt TheMinion',
       fill: '#FDFFB5',
       align: 'center'
     });
