@@ -1,0 +1,23 @@
+{
+  "name": "hrgame",
+  "version": "0.0.1",
+  "description": "The Hack Reactor Game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/team-jems/hrgame.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/team-jems/hrgame/issues"
+  },
+  "homepage": "https://github.com/team-jems/hrgame#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
