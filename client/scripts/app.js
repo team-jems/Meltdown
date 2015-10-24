@@ -1,4 +1,6 @@
 angular.module('app', [
+  'firebase',
+  'app.firebase',
   'ui.router',
   'app.comm',
   'app.panel',
@@ -6,7 +8,7 @@ angular.module('app', [
   'app.intro',
   'app.gameFrame',
   'app.game',
-  'app.manual',
+  'app.manual'
 ])
 
 .config(['$urlRouterProvider',
