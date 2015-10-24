@@ -11,7 +11,7 @@
   border: 2px solid black;
   padding: 4px;
   margin: 0 4px;
-  margin-left: 45px;
+  margin-left: 40px;
   width: 800px;
 }
 
@@ -93,10 +93,6 @@
 }
 
 #game_canvas {
-  margin: 0;
-}
-
-#game_canvas2 {
   margin: 0;
 }
 

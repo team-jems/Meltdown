@@ -13,7 +13,7 @@ angular.module('app.intro', [])
 
 .controller('IntroController', ['$scope', '$location', '$state',
   function($scope, $location, $state) {
-    $scope.title = 'The Hack Reactor Game';
+    $scope.title = 'HACK REACTOR THE GAME';
     $scope.loadGame = function() {
       $state.go('gameFrame.play');
     };

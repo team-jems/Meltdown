@@ -14,6 +14,8 @@ Splash.prototype = {
     this.game.load.script('gamemenu','gamestates/gamemenu.js');
     this.game.load.script('game',    'gamestates/game.js');
     this.game.load.script('game2',   'gamestates/game2.js');
+    this.game.load.script('game3',   'gamestates/game3.js');
+    this.game.load.script('game4',   'gamestates/game4.js');
     this.game.load.script('gameover','gamestates/gameover.js');
     this.game.load.script('credits', 'gamestates/credits.js');
     this.game.load.script('options', 'gamestates/options.js');
@@ -70,6 +72,8 @@ Splash.prototype = {
     this.game.state.add("GameMenu",GameMenu);
     this.game.state.add("Game",Game);
     this.game.state.add("Game2", Game2);
+    this.game.state.add("Game3", Game3);
+    this.game.state.add("Game4", Game4);
     this.game.state.add("GameOver",GameOver);
     this.game.state.add("Credits",Credits);
     this.game.state.add("Options",Options);

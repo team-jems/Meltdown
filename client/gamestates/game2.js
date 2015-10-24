@@ -97,8 +97,8 @@ Game2.prototype = {
 
     // Game Timer
     this.timer = this.game.time.create();
-    //this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 10, this.endTimer, this);
-    this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 3, this.endTimer, this);
+    this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 10, this.endTimer, this);
+    // this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 3, this.endTimer, this);
     this.timer.start();  // timer display handled in render block
   },
 
