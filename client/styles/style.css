@@ -96,10 +96,6 @@
   margin: 0;
 }
 
-/*#game_canvas2 {
-  margin: 0;
-}*/
-
 .game-over {
   background-image: url('http://media.giphy.com/media/uSHMDTUL7lKso/giphy.gif');
   background-size: cover;

@@ -1,6 +1,6 @@
-// Begin Gameplay @ Room 1
+// Room 3
 
-var Game = function (game) {
+var Game3 = function(game){
   this.player;
   this.played = false;
   this.rotate = true;
@@ -15,49 +15,58 @@ var Game = function (game) {
   this.Panel;
 };
 
-Game.prototype = {
+
+Game3.prototype = {
 
   preload: function(){
-    this.game.load.image('room', 'assets/rooms/blueyellowroom.jpg')
-    this.game.load.image('smallPanel', 'assets/cutouts/smallPanel.png');
-    this.game.load.image('tankleft', 'assets/cutouts/tank.png');
-    this.game.load.image('panel', 'assets/cutouts/controlPanel.png');
-    this.game.load.image('star', 'assets/star.png');
-    this.game.load.image('panel', 'assets/panel.png');
     this.game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
+    this.game.load.image('room', 'assets/rooms/blue.jpg')
+    this.game.load.image('panel', 'assets/cutouts/controPanelBlueLeft.png');
     this.game.load.image('arrow', 'assets/cutouts/doodad.png');
+    this.game.load.image('topLeft', 'assets/cutouts/topLeft.png');
+    this.game.load.image('bottomRight', 'assets/cutouts/bottomRight.png');
+    this.game.load.image('topRight', 'assets/cutouts/topRight.png');
+    this.game.load.image('bottomLeft', 'assets/cutouts/bottomLeft.png');
+    this.game.load.image('center', 'assets/cutouts/center.png');
   },
+
 
   create: function(){
     //  We're going to be using physics, so enable the Arcade Physics system
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
 
-    music.pause();
-
     //  A simple background for our game
     this.game.add.sprite(0, 0, 'room');
 
-    /********* Room Objects *****************************************/
     //LARGE PANEL
     this.roomObjs = this.game.add.group();
     this.roomObjs.enableBody = true;
-    var panel = this.roomObjs.create(470, 0, 'panel', 3);
+    var panel = this.roomObjs.create(0, this.game.world.height/3.7, 'panel');
+    // panel.body.setSize(100, 50, 0, 0);
     this.givePhysicsTo(panel, true, true, true, true, true);
 
-    //SMALL PANEL
-    var smallPanel = this.roomObjs.create(this.game.world.width/3.24, this.game.world.height/1.247, 'smallPanel', 3);
-    this.givePhysicsTo(smallPanel, true, true, true, true, true);
+    //TOP LEFT
+    var topLeft = this.roomObjs.create(0, 0, 'topLeft');
+    this.givePhysicsTo(topLeft, true, true, true, true, true);
+    
+    // TOP RIGHT
+    var topRight = this.roomObjs.create(this.game.world.width, 0, 'topRight');
+    this.givePhysicsTo(topRight, true, true, true, true, true);
 
-    //LEFT TANK
-    var tankLeft = this.roomObjs.create(this.game.world.width/5.3, this.game.world.height/4.6, 'tankleft', 3);
-    this.givePhysicsTo(tankLeft, true, true, true, true, true);
-
-    //RIGHT TANK
-    var tankRight = this.roomObjs.create(this.game.world.width/1.52, this.game.world.height/4.6, 'tankleft', 3);
-    this.givePhysicsTo(tankRight, true, true, true, true, true);
-
-    this.rotator = this.game.add.sprite(this.game.world.width/7.8, 50, 'arrow');
-
+    // BOTTOM LEFT
+    var bottomLeft = this.roomObjs.create(0, this.game.world.height, 'bottomLeft');
+    this.givePhysicsTo(bottomLeft, true, true, true, true, true);
+    
+    // BOOTOM RIGHT
+    var bottomRight = this.roomObjs.create(this.game.world.width, this.game.world.height, 'bottomRight');
+    this.givePhysicsTo(bottomRight, true, true, true, true, true);
+   
+    // CIRCULAR CENTER
+    var center = this.roomObjs.create(this.game.world.width/2.5, this.game.world.height/2.8, 'center');
+    this.givePhysicsTo(center, true, true, true, true, true);
+    
+    // ROTATOR
+    this.rotator = this.game.add.sprite(this.game.world.width/3, this.game.world.height, 'arrow');
     this.game.physics.enable(this.rotator, Phaser.Physics.ARCADE);
     this.rotator.body.collideWorldBounds = true;
     this.rotator.body.immovable = true;
@@ -65,28 +74,19 @@ Game.prototype = {
     this.rotator.inputEnabled = true;
     this.rotator.events.onInputDown.add(this.toggleRotate, this);
 
-    /***-------------  The player and its settings --------------------------------***/
-    // if this is the start of the game, place player at room center
-    if (this.played === false){
-      this.player = this.game.add.sprite(this.game.world.width/2, this.game.world.height/2, 'dude');
-    // if the game has already started, place player at room entrance
-    } else {
-      this.player = this.game.add.sprite(this.game.world.width/2, 48, 'dude');
-    }
+/***-------------  The player and its settings --------------------------------***/
+    this.player = this.game.add.sprite(this.game.world.width/2.07, this.game.world.height - 96, 'dude');
 
-    //  We need to enable physics on the player
+     // We need to enable physics on the player
     this.game.physics.arcade.enable(this.player);
 
-    //  Player physics properties. Give the little guy a slight bounce.
-    // player.body.bounce.y = 0.2;
-    // player.body.gravity.y = 1;
     this.player.body.collideWorldBounds = true;
 
-    //  Our two animations, walking left and right.
-    this.player.animations.add('left', [0,1,2,3], 10, true);
+     // Our two animations, walking left and right.
     this.player.animations.add('right', [5,6,7,8], 10, true);
+    this.player.animations.add('left', [0,1,2,3], 10, true);
     this.player.animations.add('up', [4]);
-    this.player.animations.add('down', [4]);
+    this.player.animations.add('down' [4]);
 
     //  Our controls.
     this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -100,7 +100,7 @@ Game.prototype = {
     var components = this.Puzzle.generatePuzzles();
     this.Panel.init(this.game, components.puzzles);
     this.requestNotificationChannel.loadManual(components.manuals);
-
+    
     this.panelKey.onDown.add(function(key) {
       this.requestNotificationChannel.loadPuzzle(0);
       this.Panel.toggle();
@@ -109,10 +109,9 @@ Game.prototype = {
 
     // Game Timer
     this.timer = this.game.time.create();
-    //this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 10, this.endTimer, this);
+    // this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 10, this.endTimer, this);
     this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 3, this.endTimer, this);
     this.timer.start();  // timer display handled in render block
-
   },
 
   endTimer: function() {
@@ -140,20 +139,19 @@ Game.prototype = {
       this.rotator.angle += 1;
     }
 
-    // Collide the player with the stars
     this.game.physics.arcade.collide(this.roomObjs, this.player, this.objCollisionHandler, null, this);
-    this.game.physics.arcade.collide(this.rotator, this.player, this.room3ChangeCollisionHandler, null, this);
-
-    // Reset the players velocity (movement)
+    this.game.physics.arcade.collide(this.rotator, this.player, this.room4ChangeCollisionHandler, null, this);
+  
+    //  Reset the players velocity (movement)
     this.player.body.velocity.x = 0;
 
-    // Player directional movement
+    //directional movement
     if (this.cursors.left.isDown) {
-        this.player.body.velocity.x = -200;
-        this.player.animations.play('left');
+      this.player.body.velocity.x = -200;
+      this.player.animations.play('left');
     } else if (this.cursors.right.isDown) {
-        this.player.body.velocity.x = 200;
-        this.player.animations.play('right');
+      this.player.body.velocity.x = 200;
+      this.player.animations.play('right');
     } else if (this.cursors.up.isDown) {
       this.player.body.velocity.y = -200;
       this.player.animations.play('up');
@@ -167,11 +165,10 @@ Game.prototype = {
       this.player.frame = 4;
     }
 
-    
-
     //Room transition (might be better to do object collision instead, but refactor later)
-    if (this.player.body.y === 0 && (this.player.body.x > 384 && this.player.body.x < 416)){
-      this.game.state.start('Game2');
+    if (this.player.body.y === 485 && (this.player.body.x > 384 && this.player.body.x < 416)){
+      var isPlaying = true;
+      this.game.state.start('Game', true, false, isPlaying);
     }
 
   },
@@ -186,8 +183,7 @@ Game.prototype = {
     obj.body.checkCollision.up = checkCollUp;
   },
 
-
-  objCollisionHandler: function(player, roomObjs){
+  objCollisionHandler: function(player, roomObjs){  
     console.log('I hit a room object');
     if(!this.roomObjs.hasCollided){
       this.requestNotificationChannel.loadPuzzle(0);
@@ -196,8 +192,8 @@ Game.prototype = {
     }
   },
 
-  room3ChangeCollisionHandler: function(player, rotator) {
-    this.game.state.start('Game3'); 
+  room4ChangeCollisionHandler: function(player, rotator) {
+    this.game.state.start('Game4'); 
   },
 
   toggleRotate: function(){
@@ -227,4 +223,8 @@ Game.prototype = {
     var seconds = "0" + (s - minutes * 60);
     return minutes.substr(-2) + ":" + seconds.substr(-2);
   }
+
 };
+
+
+

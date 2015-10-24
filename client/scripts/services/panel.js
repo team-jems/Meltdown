@@ -30,7 +30,6 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
 
   var off = function() {
     mask.visible = false;
-    $('.panel').off();
   };
 
   var load = function(index) {
@@ -42,7 +41,8 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
     toggle: toggle,
     load: load, 
     on: on,
-    off: off
+    off: off, 
+    mask: mask
   };
 })
 
@@ -56,6 +56,7 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
         height: 100
       }
     };
+
 
     var onLoadPuzzleHandler = function(index) {
       $scope.puzzle = Panel.load(index);
