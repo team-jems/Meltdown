@@ -43,7 +43,7 @@ GameMenu.prototype = {
       self.game.state.start('Game');
     });
     this.addMenuOption('Play with others', function(){
-      console.log('Bleh!');
+      self.game.state.start('Lobby');
     })
     this.addMenuOption('Options', function () {
       console.log('You clicked Options!');
