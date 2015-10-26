@@ -34,3 +34,6 @@ angular.module('app.firebase', [])
     return timerRef;
   }
 ]);
+
+
+  
