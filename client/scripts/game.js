@@ -3,8 +3,8 @@
 angular.module('app.game', [])
 
 .controller('GameController',
-  ['$scope', '$state', 'requestNotificationChannel', 'Panel', 'Puzzle', 'Timer',
-  function($scope, $state, requestNotificationChannel, Panel, Puzzle, Timer) {
+  ['$scope', '$state', 'requestNotificationChannel', 'Panel', 'Puzzle', 'Timer', 'Players',
+  function($scope, $state, requestNotificationChannel, Panel, Puzzle, Timer, Players) {
 
     // Initializes game
     var game = new Phaser.Game(
@@ -19,6 +19,7 @@ angular.module('app.game', [])
       this.panel = Panel;
       this.requestNotificationChannel = requestNotificationChannel;
       this.timer = Timer;
+      this.players = Players;
     };
 
     Main.prototype = {
@@ -41,25 +42,10 @@ angular.module('app.game', [])
 
     };
 
-      // Starts up main state as the first state
-      game.state.add('Main', Main);
-      game.state.start('Main');
+    // Starts up main state as the first state
+    game.state.add('Main', Main);
+    game.state.start('Main');
 
-    // function objCollisionHandler (player, panel) {
-    //   // if(!panel.hasCollided){
-    //     requestNotificationChannel.loadPuzzle(0);
-    //     // Panel.on();
-    //     this.panel.toggle();
-    //     // panel.hasCollided = true;
-    //   // }
-    //   //use esc key, panel show and off, not toggle
-    //   // if(panelKey.fisDown) { //checkout mikes work which has changed this
-    //   //   Panel.off();
-    //   // }
-    //   player.position.x =  panel.position.x + 5;
-    //   player.position.y = panel.position.y + 5;
-    //   //debug functionality issue with panel on and off from panel file
-    // }
   }
 
 ]);
