@@ -26,4 +26,11 @@ angular.module('app.firebase', [])
     var playersRef = new Firebase('https://fiery-torch-1497.firebaseio.com/players');
     return $firebaseArray(playersRef);
   }
+])
+
+.factory('Timer', [
+  function() {
+    var timerRef = new Firebase('https://fiery-torch-1497.firebaseio.com/timer');
+    return timerRef;
+  }
 ]);
