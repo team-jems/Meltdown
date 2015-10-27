@@ -38,6 +38,28 @@ Lobby.prototype = {
 
       // on disconnect, remove player from array
       self.allPlayers.playersRef.child(id).onDisconnect().remove();
+      // self.allPlayers.lobbyRef.onDisconnect().set({numPlayers: self.allPlayers.arr.length, allPlayersReady: false});
+
+    }).then(function(urldb){
+      // Updates lobby on player arrival
+      var numPlayers = self.allPlayers.arr.length;
+      self.allPlayers.lobbyRef.update({numPlayers: numPlayers, allPlayersReady: false});
+      
+      // Watch for changes in player array and updates lobby on player change
+      self.allPlayers.arr.$watch(function(event){
+        var numPlayers = self.allPlayers.arr.length;
+        self.allPlayers.lobbyRef.update({numPlayers: numPlayers});
+      });
+
+      // Event listener for change to all Players Ready
+
+      self.allPlayers.lobbyRef.child('allPlayersReady').on('value', function(snapshot){
+        if(snapshot.val()){
+          self.game.state.start('Game');
+        };
+      });
+
+
     });
 
     // Room
@@ -77,13 +99,8 @@ Lobby.prototype = {
         self.allPlayers.arr.$save(self.playerIndex).then(function(ref){
           console.log('not ready on database!');
         });
-
-    };
-
-
+      };
     }
-
-
   },
 
   toggleRotate: function(){
@@ -104,12 +121,23 @@ Lobby.prototype = {
         console.log('ready on database!');
       });
 
-      // loop through number of players
-      var numPlayers = self.allPlayers.arr.length;
-      console.log(self.allPlayers.arr.length);
+      if (self.allPlayers.arr.length > 1){
+        if (self.allPlayersReady){
+        } else {
+          // loop through all players
+          var allPlayersReady = true;
+          for (var i = 0; i < self.allPlayers.arr.length; i++){
+            if (self.allPlayers.arr[i].isReady === false){
+              allPlayersReady = false;
+            }
+          }
+          if (allPlayersReady){
+            var numPlayers = self.allPlayers.arr.length;
+            self.allPlayers.lobbyRef.update({numPlayers: numPlayers, allPlayersReady: allPlayersReady});
+          }
+        }
 
-      self.allPlayers.lobbyRef.update({numPlayers: numPlayers, allPlayersReady: false});
-
+      }
     }
 
     // twist rotator 
