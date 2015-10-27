@@ -16,3 +16,4 @@ angular.module('app', [
       .otherwise('/');
   }
 ]);
+
