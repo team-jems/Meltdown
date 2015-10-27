@@ -11,8 +11,8 @@ var Game = function (game) {
   this.roomObjs;
   this.timer;
   this.timerEvent;
-  this.requestNotificationChannel;
-  this.Panel;
+  //this.requestNotificationChannel;
+  //this.Panel;
 };
 
 Game.prototype = {
@@ -31,6 +31,7 @@ Game.prototype = {
   create: function(){
     //  We're going to be using physics, so enable the Arcade Physics system
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
+    this.game.stage.disableVisibilityChange = true;
 
     music.pause();
 
@@ -108,11 +109,28 @@ Game.prototype = {
     }, this);
 
     // Game Timer
-    this.timer = this.game.time.create();
-    //this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 10, this.endTimer, this);
-    this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 3, this.endTimer, this);
-    this.timer.start();  // timer display handled in render block
+    this.fbTimer = this.game.state.states['Main'].timer;  // Firebase timer
+    this.fbTimer.child('running').set(false);  // set Firebase timer OFF
 
+    this.timer = this.game.time.create();  // Phaser timer
+    this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 30, this.endTimer, this);
+    //this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 3, this.endTimer, this);
+    //this.timer.start();  // timer display handled in render block
+
+    this.fbTimer.child('running').on('value', this.fbTimerListener, this);
+
+    // Timer starts for everybody as soon as anyone hits 'T' key
+    this.timerKey = this.game.input.keyboard.addKey(Phaser.KeyCode.T);
+    this.timerKey.onDown.add(function(key) {
+      this.fbTimer.child('running').set(true);  // set Firebase timer ON
+    }, this);
+
+  },
+
+  fbTimerListener: function(snap) {
+    if(!!snap.val()) {
+      this.timer.start();  // timer display handled in render block
+    }
   },
 
   endTimer: function() {
@@ -167,7 +185,7 @@ Game.prototype = {
       this.player.frame = 4;
     }
 
-    
+
 
     //Room transition (might be better to do object collision instead, but refactor later)
     if (this.player.body.y === 0 && (this.player.body.x > 384 && this.player.body.x < 416)){
@@ -197,7 +215,7 @@ Game.prototype = {
   },
 
   room3ChangeCollisionHandler: function(player, rotator) {
-    this.game.state.start('Game3'); 
+    this.game.state.start('Game3');
   },
 
   toggleRotate: function(){
