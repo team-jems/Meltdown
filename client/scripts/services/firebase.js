@@ -23,6 +23,7 @@ angular.module('app.firebase', [])
 
 .factory('Players', ['$firebaseArray',
   function($firebaseArray) {
+<<<<<<< HEAD
     var lobbyRef = new Firebase('https://fiery-torch-1497.firebaseio.com/lobby');
     var playersRef = new Firebase('https://fiery-torch-1497.firebaseio.com/lobby/players');
     return {
