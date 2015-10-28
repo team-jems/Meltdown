@@ -9,7 +9,7 @@ var port = process.env.PORT || 8000;
 
 var Firebase = require('firebase'); //node module firebase
 var myFirebaseRef = new Firebase("https://fiery-torch-1497.firebaseio.com/");
-var serverRef = new Firebase("https://fiery-torch-1497.firebaseio.com/server")
+var puzzleRef = new Firebase("https://fiery-torch-1497.firebaseio.com/manual")
 var timerRef = new Firebase("https://fiery-torch-1497.firebaseio.com/timer")
 
 var manual;
@@ -18,17 +18,14 @@ var players;
 
 // overwrites nodes in the database by calling the generate function
 myFirebaseRef.set({
-	server: createMP.generatePuzzles()
+	puzzle: 'test'
+	// puzzle: createMP.generatePuzzles()
 });
 
 /*** example of updating a specific child without overwriting other child nodes */
-serverRef.update({
-	testAdd : "testing update function from server line 26"
-});
-
-timerRef.update({
-	running : "changed"
-});
+// serverRef.update({
+// 	testAdd : "testing update function from server line 26"
+// });
 
 
 
