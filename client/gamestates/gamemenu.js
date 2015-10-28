@@ -6,7 +6,7 @@ GameMenu.prototype = {
 
   // Add an option to menu
   addMenuOption: function(text, callback) {
-    var txt = this.game.add.text(30, (this.optionCount * 80) + 200, text, style.navitem.default);
+    var txt = this.game.add.text(30, (this.optionCount * 80) + 150, text, style.navitem.default);
     txt.inputEnabled = true;
     txt.events.onInputUp.add(callback);
     txt.events.onInputOver.add(function (target) {
@@ -20,11 +20,8 @@ GameMenu.prototype = {
 
   // Initialize and set title
   init: function () {
-    // *** second choice *** title
-    // this.titleText = this.game.make.text(this.game.world.centerX, 100, "react or hack", {
-    // *** first choice *** title
-    this.titleText = this.game.make.text(this.game.world.centerX, 100, "HACK REACTOR the game", {
-      font: 'bold 40pt TheMinion',
+    this.titleText = this.game.make.text(this.game.world.centerX, 100, "meltdown", {
+      font: 'bold 50pt TheMinion',
       fill: '#FDFFB5',
       align: 'center'
     });
@@ -45,6 +42,9 @@ GameMenu.prototype = {
     this.addMenuOption('Start', function () {
       self.game.state.start('Game');
     });
+    this.addMenuOption('Play with others', function(){
+      self.game.state.start('Lobby');
+    })
     this.addMenuOption('Options', function () {
       console.log('You clicked Options!');
     });
