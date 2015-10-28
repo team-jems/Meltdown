@@ -72,7 +72,7 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
 
     requestNotificationChannel.onGameOver($scope, onGameOverHandler);
 
-    $scope.checkSolution = function() {
+    $scope.checkSolution = function(answer) {
       if ($scope.puzzle.type === 'binaryLever') {
         if ($scope.puzzle.state !== 1) {
           var answer = $scope.puzzle.state === 2;
@@ -83,6 +83,20 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
             $scope.puzzle.solved = false;
             console.log('BUZZ!');
           }
+        }
+      }
+
+      if ($scope.puzzle.type === 'buttonSeries') {
+        if (answer === $scope.puzzle.fbSolution[$scope.puzzle.state]) {
+          $scope.puzzle.displays[$scope.puzzle.state][1] = true;
+
+          if ($scope.puzzle.state === 3) {
+            $scope.puzzle.solved = true;
+          } else {
+            $scope.puzzle.state++;
+          }
+        } else {
+          console.log('BUZZ!');
         }
       }
     };

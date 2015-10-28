@@ -98,9 +98,9 @@ Game.prototype = {
     this.Panel = this.game.state.states['Main'].panel;
     this.requestNotificationChannel = this.game.state.states['Main'].requestNotificationChannel;
 
-    var components = this.Puzzle.generatePuzzles();
+    var components = this.Puzzle.generatePuzzles(4, 1);
     this.Panel.init(this.game, components.puzzles);
-    this.requestNotificationChannel.loadManual(components.manuals);
+    this.requestNotificationChannel.loadManual(components.manuals[0]);
 
     this.panelKey.onDown.add(function(key) {
       this.requestNotificationChannel.loadPuzzle(0);
