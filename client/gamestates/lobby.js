@@ -5,8 +5,6 @@ var Lobby = function(game){
   this.playerIndex;
 };
 
-// Room 2
-
 Lobby.prototype = {
 
   preload: function(){
@@ -24,7 +22,7 @@ Lobby.prototype = {
     // Pass firebase module to this instance
     this.allPlayers = this.game.state.states['Main'].players;
 
-    // **ASYNC add player to firebase
+    // Add player to firebase
     this.allPlayers.arr.$add({
       playerID: self.userID,
       isReady: false,
