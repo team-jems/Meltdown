@@ -9,9 +9,12 @@ var port = process.env.PORT || 8000;
 
 var Firebase = require('firebase'); //node module firebase
 var myFirebaseRef = new Firebase("https://fiery-torch-1497.firebaseio.com/");
+var serverRef = new Firebase("https://fiery-torch-1497.firebaseio.com/server")
+var timerRef = new Firebase("https://fiery-torch-1497.firebaseio.com/timer")
 
 var manual;
 var puzzle;
+var players;
 
 // overwrites nodes in the database by calling the generate function
 myFirebaseRef.set({
@@ -19,11 +22,26 @@ myFirebaseRef.set({
 });
 
 /*** example of updating a specific child without overwriting other child nodes */
-// var solvedRef = myFirebaseRef.child("server/puzzles/0");
-// solvedRef.update({
-// 	solved: "true"
+serverRef.update({
+	testAdd : "testing update function from server line 26"
+});
+
+timerRef.update({
+	running : "changed"
+});
+
+
+
+//Doesn't work, adds playerID but deletes other values (because it is an angularFire array)
+// playersRef.update({
+// 	playerID : "testing update function line 36 server.js"
 // });
 
+
+// myFirebaseRef.child("lobby/players").on("value", function(snapshot) {
+// 	players = snapshot.val();
+// 	console.log("players: ", players);
+// });
 
 myFirebaseRef.child("server/manuals").on("value", function(snapshot) {
 	manual = snapshot.val();
@@ -36,7 +54,7 @@ myFirebaseRef.child("server/puzzles").on("value", function(snapshot) {
 });
 
 myFirebaseRef.child("server/puzzles/0/solved").on("value", function(snapshot) {
-	console.log("solved:", snapshot.val());
+	console.log(" line 44: solved:", snapshot.val());
 });
 
 
@@ -84,7 +102,7 @@ var completeManual =
 	  '}'
 	].join('\n');
 
-console.log("full manual print up: ", completeManual);
+// console.log("line 92: full manual print up: ", completeManual);
 
 /*----------------------------- PUZZLE variables ------------------------------*/
 // puzzle readings
