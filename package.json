@@ -4,6 +4,7 @@
   "description": "The Hack Reactor Game",
   "main": "index.js",
   "scripts": {
+    "postinstall": "bower install",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
@@ -18,6 +19,14 @@
   },
   "homepage": "https://github.com/team-jems/hrgame#readme",
   "dependencies": {
+    "bower": "^1.6.2",
     "express": "^4.13.3"
-  }
+  },
+  "engines": {
+    "node": "0.12.7"
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "client/lib"
+  ]
 }
