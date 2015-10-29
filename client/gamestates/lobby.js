@@ -101,7 +101,7 @@ Lobby.prototype = {
     this.player.anchor.y = 0.5;
     this.player.animations.frame = 4;
 
-    // Ready Button
+    //Ready Button
     this.rotator = this.game.add.sprite(this.game.world.width/1.22, this.game.world.height * 0.5, 'arrow');
     this.rotator.anchor.x = 0.5;
     this.rotator.anchor.y = 0.5;
@@ -194,3 +194,4 @@ Lobby.prototype = {
     }
   }
 };
+
