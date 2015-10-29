@@ -45,6 +45,18 @@ Lobby.prototype = {
         if(snapshot.val() === 'puzzles ready'){
           self.game.state.states['Main'].puzzles = self.allPlayers.arr[self.playerIndex].puzzles;
           self.game.state.states['Main'].manual = self.allPlayers.arr[self.playerIndex].manual;
+
+          this.playerIsReady = false;
+          // grab index in case index has changed
+          var index = self.allPlayers.arr.$indexFor(self.keyID);
+          self.playerIndex = index;
+
+          // change ready status on local
+          self.allPlayers.arr[self.playerIndex].isReady = false;
+          self.allPlayers.arr.$save(self.playerIndex).then(function(ref){
+            console.log('not ready on database!');
+          });
+
           self.game.state.start('Game');
         };
       });
