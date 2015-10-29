@@ -55,8 +55,8 @@
       </div>
     </div>
     <div class="circuit-control">
-      <button ng-repeat="color in ['r', 'y', 'b', 'g']" ng-click="puzzle.check(color)">{{color}}</button>
-      <button ng-click="puzzle.reset()">Reset</button>
+      <button ng-repeat="color in ['r', 'y', 'b', 'g']" ng-click="checkSolution(color)">{{color}}</button>
+      <button ng-click="reset()">Reset</button>
       <p>Refer to: circuit{{puzzle.label}}(prev, current)</p>
       <p>Direct the electrical current from the upper left to the spot marked with an asterisk.<br>
       Use the function to figure out which direction each button would direct the current to.<br>

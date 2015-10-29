@@ -3,8 +3,8 @@
 angular.module('app.game', [])
 
 .controller('GameController',
-  ['$scope', '$state', 'requestNotificationChannel', 'Panel', 'Puzzle', 'Timer', 'Players',
-  function($scope, $state, requestNotificationChannel, Panel, Puzzle, Timer, Players) {
+  ['$scope', '$state', 'requestNotificationChannel', 'Panel', 'Timer', 'Players',
+  function($scope, $state, requestNotificationChannel, Panel, Timer, Players) {
 
     // Initializes game
     var game = new Phaser.Game(
@@ -15,7 +15,6 @@ angular.module('app.game', [])
     // Main game state, container to pass angular modules between states
     var Main = function(){
       this.game = game;
-      this.puzzle = Puzzle;
       this.panel = Panel;
       this.requestNotificationChannel = requestNotificationChannel;
       this.timer = Timer;
