@@ -42,7 +42,7 @@ GameMenu.prototype = {
     this.addMenuOption('Start', function () {
       self.game.state.start('Game');
     });
-    this.addMenuOption('Play with others', function(){
+    this.addMenuOption('Multiplayer', function(){
       self.game.state.start('Lobby');
     })
     this.addMenuOption('Options', function () {
