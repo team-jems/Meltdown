@@ -96,7 +96,7 @@ Game2.prototype = {
 
     // Game Timer
     this.timer = this.game.time.create();
-    this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 30, this.endTimer, this);
+    this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 60, this.endTimer, this);
     //this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 1, this.endTimer, this);
     this.timer.start();  // timer display handled in render block
   },
@@ -200,8 +200,10 @@ Game2.prototype = {
   render: function() {
     if (this.timer.running) {
       this.game.debug.text(this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000)), 2, 14, "#ff0");
+      this.game.debug.text( this.game.state.states['Main'].userID );
     } else {
       this.game.debug.text("Boom!", 2, 14, "#0f0");
+      this.game.debug.text( this.game.state.states['Main'].userID );
     }
   },
 
