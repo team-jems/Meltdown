@@ -42,7 +42,7 @@ Game2.prototype = {
     var panel = this.roomObjs.create(this.game.world.width, this.game.world.height/3.7, 'panel');
     // panel.body.setSize(100, 50, 0, 0);
     this.givePhysicsTo(panel, true, true, true, true, true);
-    //SPIRAL CORNER 
+    //SPIRAL CORNER
     var spiral = this.roomObjs.create(this.game.world.width, this.game.world.height, 'spiral');
     // panel.body.setSize(100, 50, 0, 0);
     this.givePhysicsTo(spiral, true, true, true, true, true);
@@ -85,10 +85,10 @@ Game2.prototype = {
     this.Panel = this.game.state.states['Main'].panel;
     this.requestNotificationChannel = this.game.state.states['Main'].requestNotificationChannel;
 
-    var components = this.Puzzle.generatePuzzles();
+    var components = this.Puzzle.generatePuzzles(4, 2);
     this.Panel.init(this.game, components.puzzles);
-    this.requestNotificationChannel.loadManual(components.manuals);
-    
+    this.requestNotificationChannel.loadManual(components.manuals[0]);
+
     this.panelKey.onDown.add(function(key) {
       this.requestNotificationChannel.loadPuzzle(0);
       this.Panel.toggle();
@@ -163,7 +163,7 @@ Game2.prototype = {
     obj.body.checkCollision.up = checkCollUp;
   },
 
-  objCollisionHandler: function(player, roomObjs){  
+  objCollisionHandler: function(player, roomObjs){
     console.log('I hit a room object');
     if(!this.roomObjs.hasCollided){
       this.requestNotificationChannel.loadPuzzle(0);

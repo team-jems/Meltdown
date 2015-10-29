@@ -1,1 +1,1 @@
-<p class="manual-content">{{manual}}</p>
+<p ng-class="['manual-content', {'noise': line[1]}]" ng-repeat="line in manual track by $index">{{line[0]}}</p>

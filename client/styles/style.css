@@ -37,9 +37,9 @@
   text-align: center;
 }
 
+/* binaryLever */
 .meter {
-  position: relative;
-  top: 50px;
+  padding-top: 50px;
 }
 
 .meter-label {
@@ -48,15 +48,14 @@
   margin: 16px 0 0 0;
 }
 
-.readings {
+.readings{
   font: 40px digital7;
   white-space: pre;
   margin: 6px auto;
 }
 
 .slider {
-  position: relative;
-  top: 90px;
+  padding-top: 20px;
 }
 
 .slider p {
@@ -74,8 +73,83 @@
   outline: none;
 }
 
+/* buttonSeries */
+.displays, .display{
+  display: inline-block;
+}
+
+.displays {
+  margin: 0 18px;
+}
+
+.display {
+  padding-top: 130px;
+  font: 40px digital7;
+  margin: 6px auto;
+}
+
+.buttonSeries {
+  padding-top: 5px;
+}
+
+.passed {
+  color: green;
+}
+
+/* circuit */
+.circuit {
+  padding-top: 60px;
+}
+
+.row {
+  margin-left: 0;
+}
+
+.row p {
+  display: inline-block;
+  font: 18px monospace;
+}
+
+.vertical {
+  margin: 0 9px;
+}
+
+.current {
+  color: blue;
+}
+
+.on {
+  color: green;
+}
+
+.broken {
+  color: red;
+}
+
+.circuit-control {
+  padding-top: 14px;
+}
+
+/* codex */
+.keys-container {
+  padding-top: 70px;
+}
+
+.keys {
+  display: inline-block;
+  color: gray;
+  font-size: 18px;
+  border: 2px solid gray;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  margin: 5px;
+}
+
 .manual {
   width: 380px;
+  height: 533px;
+  overflow: auto;
   border: 2px solid gray;
   padding: 4px;
   margin: 0 4px;
@@ -90,6 +164,11 @@
 .manual-content {
   white-space: pre-wrap;
   font: 12px monospace;
+  margin: 0;
+}
+
+.noise {
+  color: gray;
 }
 
 #game_canvas {

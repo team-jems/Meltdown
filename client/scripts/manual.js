@@ -2,14 +2,21 @@ angular.module('app.manual', [])
 
 .controller('ManualController', ['$scope', 'requestNotificationChannel',
   function($scope, requestNotificationChannel) {
-    $scope.manual = 'Loading Reactor BIOS...';
+    $scope.manual = [['Loading Reactor BIOS...', 0]];
 
-    var onLoadManualHandler = function(manuals) {
+    var onLoadManualHandler = function(manual) {
+      $scope.manual = manual;
+      $scope.$apply();
+      /*
       var menuPage  = ['/*',
         '  Slider:',
         '    If the control panel contains four meters',
         '    and a slider, refer to the slider() function.',
-        '*/'
+        '',
+        '  Button Series:',
+        '    If the control panel contains six labeled',
+        '    buttons, refer to the buttonSeries() function.',
+        '*\/'
       ].join('\n');
       var instructions;
       var functions;
@@ -38,10 +45,36 @@ angular.module('app.manual', [])
             '}'
           ].join('\n');
         }
+
+        if (manual.type === 'buttonSeries') {
+          instructions = 'button instructions';
+
+          functions = ['button functions',
+            manual.divisors[0],
+            manual.divisors[1],
+            manual.fbOrder[0],
+            manual.fbOrder[1],
+            manual.fbOrder[2],
+            manual.fbOrder[3]
+          ].join('\n');
+        }
+
+        if (manual.type === 'circuit') {
+          instructions = 'circuit instructions';
+
+          functions = 'circuit functions';
+        }
+
+        if (manual.type === 'codex') {
+          instructions = 'codex instructions';
+
+          functions = 'codex functions';
+        }
       }
 
       $scope.manual = menuPage + '\n\n' + instructions + '\n\n' + functions;
       $scope.$apply();
+      */
     };
 
     requestNotificationChannel.onLoadManual($scope, onLoadManualHandler);
