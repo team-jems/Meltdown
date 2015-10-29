@@ -96,21 +96,34 @@ Game2.prototype = {
 
     // Game Timer
     this.timer = this.game.time.create();
-    // this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 10, this.endTimer, this);
-    this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 1, this.endTimer, this);
+    this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 30, this.endTimer, this);
+    //this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 1, this.endTimer, this);
     this.timer.start();  // timer display handled in render block
   },
 
   endTimer: function() {
     this.timer.stop();
     this.requestNotificationChannel.gameOver(true);
-    this.Panel.toggle();
+    if (!this.Panel.isOn()) {
+      this.Panel.toggle();
+    }
 
     var self = this;
     setTimeout(function () {
       self.Panel.toggle();
+    }, 7000);
+    setTimeout(function () {
       self.game.state.start("GameMenu");
-    }, 10000);
+    }, 7500);
+    // this.timer.stop();
+    // this.requestNotificationChannel.gameOver(true);
+    // this.Panel.toggle();
+
+    // var self = this;
+    // setTimeout(function () {
+    //   self.Panel.toggle();
+    //   self.game.state.start("GameMenu");
+    // }, 10000);
   },
 
   init: function(isPlaying){

@@ -36,13 +36,18 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
     return panels[index];
   };
 
+  var isOn = function() {
+    return mask.visible;
+  };
+
   return {
     init: init,
     toggle: toggle,
     load: load,
     on: on,
     off: off,
-    mask: mask
+    mask: mask,
+    isOn: isOn
   };
 })
 
