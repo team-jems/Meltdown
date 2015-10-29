@@ -16,7 +16,7 @@ Lobby.prototype = {
   },
 
   create: function(){
-    
+
     var self = this;
 
     // Pass firebase module to this instance
@@ -25,7 +25,7 @@ Lobby.prototype = {
     // Add player to firebase
     this.allPlayers.arr.$add({
       playerID: self.userID,
-      isReady: false,
+      isReady: false
     }).then(function(urldb){
 
       // unique key id of player
@@ -40,19 +40,11 @@ Lobby.prototype = {
       // on disconnect, remove player from array
       self.allPlayers.playersRef.child(id).onDisconnect().remove();
     }).then(function(urldb){
-      // Updates lobby on player arrival
-      var numPlayers = self.allPlayers.arr.length;
-      self.allPlayers.lobbyRef.update({numPlayers: numPlayers, allPlayersReady: false});
-      
-      // Watch for changes in player array and updates lobby on player change
-      self.allPlayers.arr.$watch(function(event){
-        var numPlayers = self.allPlayers.arr.length;
-        self.allPlayers.lobbyRef.update({numPlayers: numPlayers});
-      });
-
       // Event listener for change to allPlayersReady on firebase, starts game
-      self.allPlayers.lobbyRef.child('allPlayersReady').on('value', function(snapshot){
-        if(snapshot.val()){
+      self.allPlayers.lobbyRef.child('status').on('value', function(snapshot){
+        if(snapshot.val() === 'puzzles ready'){
+          self.game.state.states['Main'].puzzles = self.allPlayers.arr[self.playerIndex].puzzles;
+          self.game.state.states['Main'].manual = self.allPlayers.arr[self.playerIndex].manual;
           self.game.state.start('Game');
         };
       });
@@ -67,7 +59,7 @@ Lobby.prototype = {
     this.player.anchor.x = 0.5;
     this.player.anchor.y = 0.5;
     this.player.animations.frame = 4;
-    
+
     // Ready Button
     this.rotator = this.game.add.sprite(this.game.world.width/2, this.game.world.height * 0.75, 'arrow');
     this.rotator.anchor.x = 0.5;
@@ -110,10 +102,19 @@ Lobby.prototype = {
       // have rotator fall back and change ready status back to false
       if (this.rotator.angle > 0){
         this.rotator.angle += -2;
-        self.allPlayers.arr[self.playerIndex].isReady = false;
-        self.allPlayers.arr.$save(self.playerIndex).then(function(ref){
-          console.log('not ready on database!');
-        });
+
+        if (this.playerIsReady) { // only update the ready status on change
+          this.playerIsReady = false;
+          // grab index in case index has changed
+          var index = self.allPlayers.arr.$indexFor(self.keyID);
+          self.playerIndex = index;
+
+          // change ready status on local
+          self.allPlayers.arr[self.playerIndex].isReady = false;
+          self.allPlayers.arr.$save(self.playerIndex).then(function(ref){
+            console.log('not ready on database!');
+          });
+        }
       };
     }
   },
@@ -128,32 +129,19 @@ Lobby.prototype = {
       // play ready animation
       this.player.animations.play('right');
 
-      this.playerIsReady = true;
-      // grab index in case index has changed
-      var index = self.allPlayers.arr.$indexFor(self.keyID);
-      self.playerIndex = index;
+      if (!this.playerIsReady) {
+        this.playerIsReady = true;
+        // grab index in case index has changed
+        var index = self.allPlayers.arr.$indexFor(self.keyID);
+        self.playerIndex = index;
 
-      // change ready status on local
-      self.allPlayers.arr[self.playerIndex].isReady = true;
+        // change ready status on local
+        self.allPlayers.arr[self.playerIndex].isReady = true;
 
-      // save change to ready status on database
-      self.allPlayers.arr.$save(self.playerIndex).then(function(ref){
-        console.log('ready on database!');
-      });
-
-      // check if all players are ready
-      if (self.allPlayers.arr.length > 1){
-        var allPlayersReady = true;
-        for (var i = 0; i < self.allPlayers.arr.length; i++){
-          if (self.allPlayers.arr[i].isReady === false){
-            allPlayersReady = false;
-          }
-        }
-        // if all players ready, update database
-        if (allPlayersReady){
-          var numPlayers = self.allPlayers.arr.length;
-          self.allPlayers.lobbyRef.update({numPlayers: numPlayers, allPlayersReady: allPlayersReady});
-        }
+        // save change to ready status on database
+        self.allPlayers.arr.$save(self.playerIndex).then(function(ref){
+          console.log('ready on database!');
+        });
       }
 
     // if rotator is not at ready status

@@ -23,8 +23,8 @@ angular.module('app.firebase', [])
 
 .factory('Players', ['$firebaseArray',
   function($firebaseArray) {
-    var lobbyRef = new Firebase('https://fiery-torch-1497.firebaseio.com/lobby');
-    var playersRef = new Firebase('https://fiery-torch-1497.firebaseio.com/lobby/players');
+    var lobbyRef = new Firebase('https://erik-test.firebaseio.com/lobby');
+    var playersRef = new Firebase('https://erik-test.firebaseio.com/lobby/players');
     return {
       arr: $firebaseArray(playersRef),
       playersRef: playersRef,
@@ -35,10 +35,9 @@ angular.module('app.firebase', [])
 
 .factory('Timer', [
   function() {
-    var timerRef = new Firebase('https://fiery-torch-1497.firebaseio.com/timer');
+    var timerRef = new Firebase('https://erik-test.firebaseio.com/timer');
     return timerRef;
   }
 ]);
 
 
-  
