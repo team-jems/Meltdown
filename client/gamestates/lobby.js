@@ -10,6 +10,7 @@ Lobby.prototype = {
   preload: function(){
 
     this.userID = prompt("What is your name?");
+    this.game.state.states['Main'].userID = this.userID;
     this.game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
     this.game.load.image('room', 'assets/rooms/lobby.jpg');
     this.game.load.image('arrow', 'assets/cutouts/enter.png');
@@ -79,15 +80,15 @@ Lobby.prototype = {
     this.rotator.inputEnabled = true;
 
     // Title Text
-    this.titleText = this.game.make.text(this.game.world.centerX, 100, "waiting on others...", {
-      font: 'bold 50pt TheMinion',
-      fill: '#FDFFB5',
-      align: 'center'
-    });
-    this.titleText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 5);
-    this.titleText.anchor.set(0.5);
-    this.optionCount = 1;
-    this.game.add.existing(this.titleText);
+    // this.titleText = this.game.make.text(this.game.world.centerX, 100, "waiting on others...", {
+    //   font: 'bold 50pt TheMinion',
+    //   fill: '#FDFFB5',
+    //   align: 'center'
+    // });
+    // this.titleText.setShadow(3, 3, 'rgba(0,0,0,0.5)', 5);
+    // this.titleText.anchor.set(0.5);
+    // this.optionCount = 1;
+    // this.game.add.existing(this.titleText);
 
 
   },
