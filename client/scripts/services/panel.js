@@ -39,9 +39,9 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
   return {
     init: init,
     toggle: toggle,
-    load: load, 
+    load: load,
     on: on,
-    off: off, 
+    off: off,
     mask: mask
   };
 })

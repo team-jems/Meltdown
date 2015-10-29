@@ -583,16 +583,6 @@ angular.module('app.puzzle', [])
           pieces[26] = noisify(pieces[26]);
         }
       }
-/*
-var circuit0 = function(prev, current) {
-  if (prev === 'red') {
-    if (current === 'red') return ??;
-    if (current === 'yellow') return ??;
-    if (current === 'blue') return ??;
-    if (current === 'green') return ??;
-  }
-};
-*/
 
       manualParts.push(pieces);
     }
