@@ -1,4 +1,4 @@
-<div class="panel-content" ng-hide="showme"ng-show="puzzle.type === 'binaryLever' && !gameOver">
+<div class="panel-content" ng-show="puzzle.type === 'binaryLever' && !gameOver">
   <div class="wrapper panel-center">
     <div class="meter">
       <p class="meter-label">Meter 1                        Meter 2</p>
@@ -18,19 +18,60 @@
 <div class="panel-content game-over" ng-show="gameOver">
 </div>
 
-<!--   <h3>ooh it's a binary lever!</h3>
-  <h3 ng-repeat="reading in puzzle.readings">Meter {{$index + 1}}: {{reading}}</h3>
-  <button ng-click="checkSolution(true)">true</button>
-  <button ng-click="checkSolution(false)">false</button>
-
-  <h3>Knob!</h3>
-  <knob knob-data="knobData.value"></knob>
-  <p></p>
-  <button ng-click="checkKnob()">Knob Check</button>
-  <p></p>
-  <p></p>
-  <div>
+<div class="panel-content" ng-show="puzzle.type === 'buttonSeries' && !gameOver">
+  <div class="wrapper panel-center">
+    <div>
+      <div class="displays" ng-repeat="display in puzzle.displays">
+        <p ng-class="['display', {'passed': display[1]}]">{{display[0]}}<p>
+      </div>
+    </div>
+    <div class="buttonSeries">
+      <button ng-repeat="button in puzzle.buttons" ng-click="checkSolution(button[1])">
+        {{button[0]}}</button>
+      <p>Refer to: buttonSeries{{puzzle.label}}(code)</p>
+      <p>From left to right, use the function to figure out the sequence of buttons to push.</p>
+      <p ng-show="puzzle.solved">Solved!</p>
+    </div>
   </div>
-  <p></p>
-  <button ng-click="checkSlider()">Slider Check</button>
- -->
+</div>
+
+<div class="panel-content" ng-show="puzzle.type === 'circuit' && !gameOver">
+  <div class="wrapper panel-center">
+    <div class="circuit">
+      <div ng-repeat="row in puzzle.state track by $index">
+        <div class="row" ng-if="$index === 0 || $index === 2 || $index === 4">
+          <p ng-class="end" ng-if="row[0] === 3">*</p>
+          <p ng-class="{'off': row[0] === 0, 'on': row[0] === 1, 'current': row[0] === 2}" ng-if="row[0] !== 3">O</p>
+          <p ng-class="{'off': row[1] === 0, 'on': row[1] === 1, 'broken': row[1] === 2}">-</p>
+          <p ng-class="{'off': row[2] === 0, 'on': row[2] === 1, 'current': row[2] === 2}">O</p>
+          <p ng-class="{'off': row[3] === 0, 'on': row[3] === 1, 'broken': row[3] === 2}">-</p>
+          <p ng-class="end" ng-if="row[4] === 3">*</p>
+          <p ng-class="{'off': row[4] === 0, 'on': row[4] === 1, 'current': row[4] === 2}" ng-if="row[4] !== 3">O</p>
+        </div>
+        <div class="row" ng-if="$index === 1 || $index === 3">
+          <p ng-class="['vertical', {'off': element === 0, 'on': element === 1, 'broken': element === 2}]"
+            ng-repeat="element in row track by $index" ng-if="$index === 0 || $index === 2 || $index === 4">|</p>
+        </div>
+      </div>
+    </div>
+    <div class="circuit-control">
+      <button ng-repeat="color in ['r', 'y', 'b', 'g']" ng-click="checkSolution(color)">{{color}}</button>
+      <button ng-click="reset()">Reset</button>
+      <p>Refer to: circuit{{puzzle.label}}(prev, current)</p>
+      <p>Direct the electrical current from the upper left to the spot marked with an asterisk.<br>
+      Use the function to figure out which direction each button would direct the current to.<br>
+      prev is the color of the previous button you pressed.<br>
+      Watch out for broken transistors (marked in red).<br>
+      Do not backtrack or you'll cause a short in the circuit!</p>
+      <p ng-show="puzzle.solved">Solved!</p>
+    </div>
+  </div>
+</div>
+
+<div class="panel-content" ng-show="puzzle.type === 'codex' && !gameOver">
+  <div class="wrapper panel-center">
+    <div class="keys-container">
+      <div class="keys" ng-repeat="key in puzzle.keys">{{key}}</div>
+    </div>
+  </div>
+</div>

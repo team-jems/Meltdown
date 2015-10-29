@@ -94,13 +94,11 @@ Game.prototype = {
     this.panelKey = this.game.input.keyboard.addKey(Phaser.KeyCode.ESC);
 
     // passing angular modules from game.js
-    this.Puzzle = this.game.state.states['Main'].puzzle;
     this.Panel = this.game.state.states['Main'].panel;
     this.requestNotificationChannel = this.game.state.states['Main'].requestNotificationChannel;
 
-    var components = this.Puzzle.generatePuzzles();
-    this.Panel.init(this.game, components.puzzles);
-    this.requestNotificationChannel.loadManual(components.manuals);
+    this.Panel.init(this.game, this.game.state.states['Main'].puzzles);
+    this.requestNotificationChannel.loadManual(this.game.state.states['Main'].manual[0]);
 
     this.panelKey.onDown.add(function(key) {
       this.requestNotificationChannel.loadPuzzle(0);

@@ -19,6 +19,7 @@ Splash.prototype = {
     this.game.load.script('gameover','gamestates/gameover.js');
     this.game.load.script('credits', 'gamestates/credits.js');
     this.game.load.script('options', 'gamestates/options.js');
+    this.game.load.script('lobby',   'gamestates/lobby.js');
   },
 
   // Background music
@@ -77,6 +78,7 @@ Splash.prototype = {
     this.game.state.add("GameOver",GameOver);
     this.game.state.add("Credits",Credits);
     this.game.state.add("Options",Options);
+    this.game.state.add('Lobby',Lobby);
   },
 
   // Game Music

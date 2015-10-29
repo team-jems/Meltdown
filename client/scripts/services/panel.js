@@ -39,9 +39,9 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
   return {
     init: init,
     toggle: toggle,
-    load: load, 
+    load: load,
     on: on,
-    off: off, 
+    off: off,
     mask: mask
   };
 })
@@ -72,7 +72,7 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
 
     requestNotificationChannel.onGameOver($scope, onGameOverHandler);
 
-    $scope.checkSolution = function() {
+    $scope.checkSolution = function(answer) {
       if ($scope.puzzle.type === 'binaryLever') {
         if ($scope.puzzle.state !== 1) {
           var answer = $scope.puzzle.state === 2;
@@ -85,7 +85,79 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
           }
         }
       }
+
+      if ($scope.puzzle.type === 'buttonSeries') {
+        if (answer === $scope.puzzle.fbSolution[$scope.puzzle.state]) {
+          $scope.puzzle.displays[$scope.puzzle.state][1] = true;
+
+          if ($scope.puzzle.state === 3) {
+            $scope.puzzle.solved = true;
+          } else {
+            $scope.puzzle.state++;
+          }
+        } else {
+          console.log('BUZZ!');
+        }
+      }
+
+      if ($scope.puzzle.type === 'circuit') {
+        var row = $scope.puzzle.current[0];
+        var col = $scope.puzzle.current[1];
+        var rowPath = row;
+        var colPath = col;
+        var rowTo = row;
+        var colTo = col;
+        var move = $scope.puzzle.controls[$scope.puzzle.previous][answer];
+
+        if (move === 'up') {
+          rowPath--;
+          rowTo -= 2;
+        } else if (move === 'left') {
+          colPath--;
+          colTo -= 2;
+        } else if (move === 'down') {
+          rowPath++;
+          rowTo += 2;
+        } else if (move === 'right') {
+          colPath++;
+          colTo += 2;
+        }
+
+        if (rowPath < 0 || rowPath > 4 || colPath < 0 || colPath > 4 || // node out of bound
+          $scope.puzzle.state[rowPath][colPath] === 2 || // broken resistor
+          $scope.puzzle.state[rowTo][colTo] === 1) {     // node already visited
+          console.log('BUZZ!');
+        } else {
+          if ($scope.puzzle.state[rowTo][colTo] === 3) {
+            $scope.puzzle.solved = true;
+          }
+
+          $scope.puzzle.state[row][col] = 1;
+          $scope.puzzle.state[rowPath][colPath] = 1;
+          $scope.puzzle.state[rowTo][colTo] = 2;
+          $scope.puzzle.current = [rowTo, colTo];
+          $scope.puzzle.previous = answer;
+        }
+      }
     };
+
+    $scope.reset = function() {
+      var copyBoard = function(board) {
+        var copy = [];
+
+        for (var i = 0; i < 5; i++) {
+          copy[i] = board[i].slice();
+        }
+
+        return copy;
+      };
+
+      if ($scope.puzzle.type === 'circuit') {
+        $scope.puzzle.state = copyBoard($scope.puzzle.board);
+        $scope.puzzle.current = [0, 0];
+        $scope.puzzle.previous = 'r';
+      }
+    }
 
     $scope.checkKnob = function() {
       console.log('Knob set at: ', $scope.knobData.value);

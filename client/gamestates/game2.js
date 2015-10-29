@@ -42,7 +42,7 @@ Game2.prototype = {
     var panel = this.roomObjs.create(this.game.world.width, this.game.world.height/3.7, 'panel');
     // panel.body.setSize(100, 50, 0, 0);
     this.givePhysicsTo(panel, true, true, true, true, true);
-    //SPIRAL CORNER 
+    //SPIRAL CORNER
     var spiral = this.roomObjs.create(this.game.world.width, this.game.world.height, 'spiral');
     // panel.body.setSize(100, 50, 0, 0);
     this.givePhysicsTo(spiral, true, true, true, true, true);
@@ -85,20 +85,19 @@ Game2.prototype = {
     this.Panel = this.game.state.states['Main'].panel;
     this.requestNotificationChannel = this.game.state.states['Main'].requestNotificationChannel;
 
-    var components = this.Puzzle.generatePuzzles();
-    this.Panel.init(this.game, components.puzzles);
-    this.requestNotificationChannel.loadManual(components.manuals);
-    
+    this.Panel.init(this.game, this.game.state.states['Main'].puzzles);
+    this.requestNotificationChannel.loadManual(this.game.state.states['Main'].manual[1]);
+
     this.panelKey.onDown.add(function(key) {
-      this.requestNotificationChannel.loadPuzzle(0);
+      this.requestNotificationChannel.loadPuzzle(1);
       this.Panel.toggle();
       this.roomObjs.hasCollided = false;
     }, this);
 
     // Game Timer
     this.timer = this.game.time.create();
-    this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 10, this.endTimer, this);
-    // this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 3, this.endTimer, this);
+    // this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 10, this.endTimer, this);
+    this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 1, this.endTimer, this);
     this.timer.start();  // timer display handled in render block
   },
 
@@ -163,10 +162,10 @@ Game2.prototype = {
     obj.body.checkCollision.up = checkCollUp;
   },
 
-  objCollisionHandler: function(player, roomObjs){  
+  objCollisionHandler: function(player, roomObjs){
     console.log('I hit a room object');
     if(!this.roomObjs.hasCollided){
-      this.requestNotificationChannel.loadPuzzle(0);
+      this.requestNotificationChannel.loadPuzzle(1);
       this.Panel.toggle();
       this.roomObjs.hasCollided = true;
     }
