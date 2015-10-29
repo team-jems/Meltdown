@@ -9,17 +9,20 @@ var port = process.env.PORT || 8000;
 
 var Firebase = require('firebase'); //node module firebase
 var myFirebaseRef = new Firebase("https://fiery-torch-1497.firebaseio.com/");
-var puzzleRef = new Firebase("https://fiery-torch-1497.firebaseio.com/manual")
+var puzzleRef = new Firebase("https://fiery-torch-1497.firebaseio.com/puzzle")
 var timerRef = new Firebase("https://fiery-torch-1497.firebaseio.com/timer")
 
 var manual;
 var puzzle;
 var players;
 
+var check = createMP.generatePuzzles();
+console.log(check.puzzles[0].readings);
+console.log(check);
+
 // overwrites nodes in the database by calling the generate function
 myFirebaseRef.set({
-	puzzle: 'test'
-	// puzzle: createMP.generatePuzzles()
+	puzzle: createMP.generatePuzzles()
 });
 
 /*** example of updating a specific child without overwriting other child nodes */
@@ -28,30 +31,18 @@ myFirebaseRef.set({
 // });
 
 
-
-//Doesn't work, adds playerID but deletes other values (because it is an angularFire array)
-// playersRef.update({
-// 	playerID : "testing update function line 36 server.js"
-// });
-
-
-// myFirebaseRef.child("lobby/players").on("value", function(snapshot) {
-// 	players = snapshot.val();
-// 	console.log("players: ", players);
-// });
-
-myFirebaseRef.child("server/manuals").on("value", function(snapshot) {
+myFirebaseRef.child("puzzle/manuals").on("value", function(snapshot) {
 	manual = snapshot.val();
-	// console.log("manual2", manual);
+	// console.log("manual", manual);
 });
 
-myFirebaseRef.child("server/puzzles").on("value", function(snapshot) {
+myFirebaseRef.child("puzzle/puzzles").on("value", function(snapshot) {
 	puzzle = snapshot.val();
 	// console.log("puzzle2", puzzle);
 });
 
-myFirebaseRef.child("server/puzzles/0/solved").on("value", function(snapshot) {
-	console.log(" line 44: solved:", snapshot.val());
+myFirebaseRef.child("lobby/players").on("value", function(snapshot) {
+	console.log("playersfrom server: ", snapshot.val());
 });
 
 
@@ -114,14 +105,6 @@ var puzzleType = puzzle[0].type;
 // console.log("puzzleSolution: ", puzzleSolution);
 // console.log("puzzleReadings: ", puzzleReadings);
 // console.log("puzzleType: ", puzzleType);
-
-/* 
-STEPS for manual and puzzle generation : 
-	a. give server.js access to puzzle and manual creation 
-	b. listen for change of value in fb db for node representing: 'ready for gameplay', trigger step 'c'
-	c. execute a callback that calls the manual and puzzle creation functions and writes the results to the database
-	d. the values will be accessed/pulled from the client side, firebase will broadcast change to clients 
-*/
 
 server.listen(port, function() {
   console.log('Running on port: ', port);
