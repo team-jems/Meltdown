@@ -23,6 +23,7 @@ Lobby.prototype = {
     // Pass firebase module to this instance
     this.allPlayers = this.game.state.states['Main'].players;
 
+
     // Add player to firebase
     this.allPlayers.arr.$add({
       playerID: self.userID,
@@ -61,6 +62,15 @@ Lobby.prototype = {
           self.game.state.start('Game');
         };
       });
+    }).then(function(){
+      // If lobby is full, redirect
+      if (self.allPlayers.arr.length > 3){
+        // get index in case it has changed
+        var index = self.allPlayers.arr.$indexFor(self.keyID);
+        self.allPlayers.arr.$remove(self.allPlayers.arr[index]).then(function(){
+          self.game.state.start('LobbyFull');
+        })
+      }
     });
 
     // Room
