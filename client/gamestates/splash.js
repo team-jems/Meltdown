@@ -21,6 +21,7 @@ Splash.prototype = {
     this.game.load.script('options', 'gamestates/options.js');
     this.game.load.script('lobby',   'gamestates/lobby.js');
     this.game.load.script('lobbyFull', 'gamestates/lobbyFull.js');
+    this.game.load.script('intro',   'gamestates/intro.js');
   },
 
   // Background music
@@ -35,6 +36,7 @@ Splash.prototype = {
     this.game.load.image('menu-bg', 'assets/images/menu-bg.jpg');
     this.game.load.image('options-bg', 'assets/images/options-bg.jpg');
     this.game.load.image('gameover-bg', 'assets/images/gameover-bg.jpg');
+    this.game.load.image('intro-bg', 'assets/images/intro-bg.jpeg');
   },
 
   // Font
@@ -79,8 +81,9 @@ Splash.prototype = {
     this.game.state.add("GameOver",GameOver);
     this.game.state.add("Credits",Credits);
     this.game.state.add("Options",Options);
-    this.game.state.add('Lobby',Lobby);
+    this.game.state.add('Lobby', Lobby);
     this.game.state.add('LobbyFull', LobbyFull);
+    this.game.state.add('Intro', Intro);
   },
 
   // Game Music
@@ -98,7 +101,7 @@ Splash.prototype = {
 
     setTimeout(function () {
       // load the main menu here
-      self.game.state.start("GameMenu");
+      self.game.state.start("Intro");
     }, 1000);
   }
 };
