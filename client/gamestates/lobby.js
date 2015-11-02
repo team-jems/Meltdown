@@ -64,7 +64,7 @@ Lobby.prototype = {
       });
     }).then(function(){
       // If lobby is full, redirect
-      if (self.allPlayers.arr.length > 3){
+      if (self.allPlayers.arr.length > 4){
         // get index in case it has changed
         var index = self.allPlayers.arr.$indexFor(self.keyID);
         self.allPlayers.arr.$remove(self.allPlayers.arr[index]).then(function(){
