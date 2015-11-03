@@ -1,16 +1,18 @@
 // Begin Gameplay @ Room 1
 
 var Game = function (game) {
-  this.player;
+  //this.player;
+  //this.players;
   this.played = false;
   this.rotate = true;
-  this.rotator;
-  this.button;
-  this.cursors;
-  this.panelKey;
-  this.roomObjs;
-  this.timer;
-  this.timerEvent;
+  //this.rotator;
+  //this.button;
+  //this.cursors;
+  //this.panelKey;
+  //this.roomObjs;
+  //this.timer;
+  //this.timerEvent;
+  //this.strike;
   //this.requestNotificationChannel;
   //this.Panel;
 };
@@ -34,6 +36,9 @@ Game.prototype = {
     this.game.stage.disableVisibilityChange = true;
 
     music.pause();
+
+    // Pass firebase module to this instance
+    this.players = this.game.state.states['Main'].players;
 
     //  A simple background for our game
     this.game.add.sprite(0, 0, 'room');
@@ -78,9 +83,7 @@ Game.prototype = {
     //  We need to enable physics on the player
     this.game.physics.arcade.enable(this.player);
 
-    //  Player physics properties. Give the little guy a slight bounce.
-    // player.body.bounce.y = 0.2;
-    // player.body.gravity.y = 1;
+    //  Player physics properties
     this.player.body.collideWorldBounds = true;
 
     //  Our two animations, walking left and right.
@@ -107,27 +110,40 @@ Game.prototype = {
     }, this);
 
     // Game Timer
-    this.fbTimer = this.game.state.states['Main'].timer;  // Firebase timer
-    this.fbTimer.child('running').set(false);  // set Firebase timer OFF
-
     this.timer = this.game.time.create();  // Phaser timer
     //this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 30, this.endTimer, this);
     this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 10, this.endTimer, this);
-    //this.timer.start();  // timer display handled in render block
+    this.timer.start();  // timer display handled in render block
 
-    this.fbTimer.child('running').on('value', this.fbTimerListener, this);
-
+    //this.fbTimer.child('running').on('value', this.fbTimerListener, this);
     // Timer starts for everybody as soon as anyone hits 'T' key
-    this.timerKey = this.game.input.keyboard.addKey(Phaser.KeyCode.T);
-    this.timerKey.onDown.add(function(key) {
-      this.fbTimer.child('running').set(true);  // set Firebase timer ON
+    // this.timerKey = this.game.input.keyboard.addKey(Phaser.KeyCode.T);
+    // this.timerKey.onDown.add(function(key) {
+    //   this.fbTimer.child('running').set(true);  // set Firebase timer ON
+    // }, this);
+
+    // Strikes
+    this.strike = this.game.state.states['Main'].strike;
+    this.strike.child('count').on('value', this.fbStrikeCountListener, this);
+
+    // Debug: Strike testing, hits 'S' key to increment strikes
+    this.strikeKey = this.game.input.keyboard.addKey(Phaser.KeyCode.S);
+    this.strikeKey.onDown.add(function(key) {
+      var self = this;
+      this.strike.child('count').once('value', function(snap) {
+        var count = snap.val();
+        count++;
+        self.strike.child('count').set(count);
+      });
     }, this);
 
   },
 
-  fbTimerListener: function(snap) {
-    if(!!snap.val()) {
-      this.timer.start();  // timer display handled in render block
+
+  fbStrikeCountListener: function(snap) {
+    this.strikeCount = snap.val();
+    if(this.strikeCount === 3) {
+      this.endTimer();
     }
   },
 
@@ -145,15 +161,6 @@ Game.prototype = {
     setTimeout(function () {
       self.game.state.start("GameMenu");
     }, 7500);
-    // this.timer.stop();
-    // this.requestNotificationChannel.gameOver(true);
-    // this.Panel.toggle();
-
-    // var self = this;
-    // setTimeout(function () {
-    //   self.Panel.toggle();
-    //   self.game.state.start("GameMenu");
-    // }, 10000);
   },
 
   init: function(isPlaying){
@@ -246,11 +253,17 @@ Game.prototype = {
   render: function() {
     if (this.timer.running) {
       this.game.debug.text(this.formatTime(Math.round((this.timerEvent.delay - this.timer.ms) / 1000)), 2, 14, "#ff0");
-      this.game.debug.text( this.game.state.states['Main'].userID );
     } else {
       this.game.debug.text("Boom!", 2, 14, "#0f0");
-      this.game.debug.text( this.game.state.states['Main'].userID );
     }
+    // display players
+    var count = 0;
+    for (var i=0;  i < this.players.arr.length; i++) {
+      this.game.debug.text(this.players.arr[i].playerID, 2, 30+count, "#0f0");
+      count+=15;
+    }
+    // display strikes
+    this.game.debug.text('Strikeouts:'+this.strikeCount, 70, 14, "#0f0");
   },
 
   formatTime: function(s) {
