@@ -1,6 +1,7 @@
 var Lobby = function(game){
-  // allPlayers is the firebase service
+  // allPlayers and strike are firebase service
   this.allPlayers;
+  this.strike;
   this.keyID;
   this.playerIndex;
 };
@@ -23,6 +24,8 @@ Lobby.prototype = {
     // Pass firebase module to this instance
     this.allPlayers = this.game.state.states['Main'].players;
 
+    // Pass firebase Strike to Lobby
+    this.strike = this.game.state.states['Main'].strike;
 
     // Add player to firebase
     this.allPlayers.arr.$add({
@@ -59,8 +62,11 @@ Lobby.prototype = {
             console.log('not ready on database!');
           });
 
+          // reset strike count before starting game
+          self.strike.child('count').set(0);
+
           self.game.state.start('Game');
-        };
+        }
       });
     }).then(function(){
       // If lobby is full, redirect
@@ -69,7 +75,7 @@ Lobby.prototype = {
         var index = self.allPlayers.arr.$indexFor(self.keyID);
         self.allPlayers.arr.$remove(self.allPlayers.arr[index]).then(function(){
           self.game.state.start('LobbyFull');
-        })
+        });
       }
     });
 
@@ -129,7 +135,7 @@ Lobby.prototype = {
         if (this.playerIsReady) { // only update the ready status on change
           this.playerIsReady = false;
           // grab index in case index has changed
-          var index = self.allPlayers.arr.$indexFor(self.keyID);
+          index = self.allPlayers.arr.$indexFor(self.keyID);
           self.playerIndex = index;
 
           // change ready status on local
@@ -138,7 +144,7 @@ Lobby.prototype = {
             console.log('not ready on database!');
           });
         }
-      };
+      }
     }
   },
 
@@ -172,4 +178,4 @@ Lobby.prototype = {
       this.rotator.angle += 6;
     }
   }
-}
+};

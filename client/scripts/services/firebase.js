@@ -23,21 +23,19 @@ angular.module('app.firebase', [])
 
 .factory('Players', ['$firebaseArray',
   function($firebaseArray) {
-    var lobbyRef = new Firebase('https://fiery-torch-1497.firebaseio.com/lobby');
-    var playersRef = new Firebase('https://fiery-torch-1497.firebaseio.com/lobby/players');
+    var lobbyRef = new Firebase('https://meltdown.firebaseio.com/lobby');
+    var playersRef = new Firebase('https://meltdown.firebaseio.com/lobby/players');
     return {
       arr: $firebaseArray(playersRef),
       playersRef: playersRef,
       lobbyRef: lobbyRef
-    }
+    };
   }
 ])
 
-.factory('Timer', [
+.factory('Strike', [
   function() {
-    var timerRef = new Firebase('https://fiery-torch-1497.firebaseio.com/timer');
-    return timerRef;
+    var strikeRef = new Firebase('https://meltdown.firebaseio.com/strike');
+    return strikeRef;
   }
 ]);
-
-
