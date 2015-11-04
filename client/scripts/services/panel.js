@@ -144,6 +144,7 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
           $scope.puzzle.previous = answer;
         }
       }
+      requestNotificationChannel.puzzleSolved($scope.puzzle.solved);
     };
 
     $scope.reset = function() {

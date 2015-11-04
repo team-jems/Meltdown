@@ -20,6 +20,7 @@ angular.module('app.game', [])
       this.players = Players;
       this.strike = Strike;
       this.levelUp = LevelUp;
+      this.$scope = $scope;
     };
 
     Main.prototype = {

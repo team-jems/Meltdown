@@ -22,17 +22,20 @@ var Game = function (game) {
 Game.prototype = {
 
   preload: function(){
-    this.game.load.image('room', 'assets/rooms/blueyellowroom.jpg')
-    this.game.load.image('smallPanel', 'assets/cutouts/smallPanel.png');
+    this.game.load.image('room', 'assets/rooms/orange2.jpg')
+    this.game.load.image('smallPanel', 'assets/cutouts/smallPanel1.png');
     this.game.load.image('tankleft', 'assets/cutouts/tank.png');
     this.game.load.image('panel', 'assets/cutouts/controlPanel.png');
     this.game.load.image('star', 'assets/star.png');
     this.game.load.image('panel', 'assets/panel.png');
     this.game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
-    this.game.load.image('arrow', 'assets/cutouts/doodad.png');
+    this.game.load.image('arrow', 'assets/cutouts/doodad2.png');
   },
 
+
+
   create: function(){
+
     //  We're going to be using physics, so enable the Arcade Physics system
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.stage.disableVisibilityChange = true;
@@ -46,11 +49,16 @@ Game.prototype = {
     this.game.add.sprite(0, 0, 'room');
 
     /********* Room Objects *****************************************/
-    //LARGE PANEL
     this.roomObjs = this.game.add.group();
     this.roomObjs.enableBody = true;
-    var panel = this.roomObjs.create(470, 0, 'panel', 3);
+
+    this.actionObjs = this.game.add.group();
+    this.actionObjs.enableBody = true;
+    
+    //LARGE PANEL
+    var panel = this.actionObjs.create(470, 0, 'panel', 3);
     this.givePhysicsTo(panel, true, true, true, true, true);
+    panel.tint = 0xff2200;
 
     //SMALL PANEL
     var smallPanel = this.roomObjs.create(this.game.world.width/3.24, this.game.world.height/1.247, 'smallPanel', 3);
@@ -64,7 +72,8 @@ Game.prototype = {
     var tankRight = this.roomObjs.create(this.game.world.width/1.52, this.game.world.height/4.6, 'tankleft', 3);
     this.givePhysicsTo(tankRight, true, true, true, true, true);
 
-    this.rotator = this.game.add.sprite(this.game.world.width/7.8, 50, 'arrow');
+    // this.rotator = this.game.add.sprite(this.game.world.width/7.8, 70, 'arrow');
+    this.rotator = this.roomObjs.create(this.game.world.width/7.6, this.game.world.height - 90, 'arrow');
 
     this.game.physics.enable(this.rotator, Phaser.Physics.ARCADE);
     this.rotator.body.collideWorldBounds = true;
@@ -108,7 +117,7 @@ Game.prototype = {
     this.panelKey.onDown.add(function(key) {
       this.requestNotificationChannel.loadPuzzle(0);
       this.Panel.toggle();
-      this.roomObjs.hasCollided = false;
+      this.actionObjs.hasCollided = false;
     }, this);
 
     // Game Timer
@@ -123,6 +132,15 @@ Game.prototype = {
     // this.timerKey.onDown.add(function(key) {
     //   this.fbTimer.child('running').set(true);  // set Firebase timer ON
     // }, this);
+    //Panel color change
+    this.redColor = this.game.input.keyboard.addKey(Phaser.KeyCode.R);
+    this.greenColor = this.game.input.keyboard.addKey(Phaser.KeyCode.G);
+    this.greenColor.onDown.add(function(key){
+      panel.tint = 0x2fff18;
+    });
+    this.redColor.onDown.add(function(key){
+      panel.tint = 0xff2200;
+    });
 
     // Strikes
     this.strike = this.game.state.states['Main'].strike;
@@ -164,6 +182,19 @@ Game.prototype = {
     // Register a Level Up Listener
     this.levelUp = this.game.state.states['Main'].levelUp;
     this.levelUp.child('isReady').on('value', this.fbLevelUpListener, this);
+
+    // update puzzled flag based on broadcast from panel and comm
+    this.$scope = this.game.state.states['Main'].$scope;
+    var self = this;
+    this.requestNotificationChannel.onPuzzleSolved(this.$scope, function(flag){
+      self.puzzled = flag;
+      if(!flag) {
+        self.strike.child('count').transaction(function(currentCount){
+          return currentCount + 1;
+        })
+      }
+      console.log('self.puzzled:', self.puzzled);
+    }); 
 
   },
 
@@ -237,7 +268,7 @@ Game.prototype = {
 
     // Collide the player with the stars
     this.game.physics.arcade.collide(this.roomObjs, this.player, this.objCollisionHandler, null, this);
-    //this.game.physics.arcade.collide(this.rotator, this.player, this.room3ChangeCollisionHandler, null, this);
+    this.game.physics.arcade.collide(this.actionObjs, this.player, this.actionCollisionHandler, null, this);
 
     // Reset the players velocity (movement)
     this.player.body.velocity.x = 0;
@@ -292,17 +323,19 @@ Game.prototype = {
 
 
   objCollisionHandler: function(player, roomObjs){
-    console.log('I hit a room object');
+    // console.log('I hit a room object');
     if(!this.roomObjs.hasCollided){
-      this.requestNotificationChannel.loadPuzzle(0);
-      this.Panel.toggle();
       this.roomObjs.hasCollided = true;
     }
   },
 
-  // room3ChangeCollisionHandler: function(player, rotator) {
-  //   this.game.state.start('Game3');
-  // },
+  actionCollisionHandler: function(player, actionObjs) {
+    if(!this.actionObjs.hasCollided){
+      this.requestNotificationChannel.loadPuzzle(0);
+      this.Panel.toggle();
+      this.actionObjs.hasCollided = true;
+    }
+  },
 
   toggleRotate: function(){
     console.log('angle: ', this.rotator.angle);
