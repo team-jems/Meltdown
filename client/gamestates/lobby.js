@@ -1,5 +1,4 @@
 var Lobby = function(game){
-<<<<<<< HEAD
   // allPlayers and strike are firebase service
   this.allPlayers;
   this.strike;
