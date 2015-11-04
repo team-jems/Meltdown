@@ -179,6 +179,7 @@ Game.prototype = {
           if (self.Panel.isOn()) {
             self.Panel.toggle();
           }
+          // update firebase that game is no longer in progress
           self.players.lobbyRef.child('inProgress').once('value', function(snapshot){
             var status = snapshot.val();
             if (status){

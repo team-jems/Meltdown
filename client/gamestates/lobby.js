@@ -80,6 +80,7 @@ Lobby.prototype = {
         if(snapshot.val()){
           self.status = true;
         }
+        // if more than 4 players, or game in progress, deny access
         if (self.allPlayers.arr.length > 4 || self.status){
           // get index in case it has changed
           var index = self.allPlayers.arr.$indexFor(self.keyID);
