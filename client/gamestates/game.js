@@ -15,6 +15,7 @@ var Game = function (game) {
   //this.strike;
   //this.requestNotificationChannel;
   //this.Panel;
+  //this.playerName;
 };
 
 Game.prototype = {
@@ -137,6 +138,9 @@ Game.prototype = {
       });
     }, this);
 
+    // Player ID
+    this.playerID = this.game.state.states['Main'].userID;
+
   },
 
 
@@ -159,7 +163,24 @@ Game.prototype = {
       self.Panel.toggle();
     }, 7000);
     setTimeout(function () {
-      self.game.state.start("GameMenu");
+      // identiy player in firebase array
+      for (var i=0;  i < self.players.arr.length; i++) {
+        if (self.players.arr[i].playerID === self.playerID) {
+          var player = self.players.arr[i];
+        }
+      }
+      // remove player from firebase array
+      self.players.arr.$remove(player)
+        .then(function (ref) {
+          // reset strike count
+          self.strike.child('count').set(0);
+          // close modal if open
+          if (self.Panel.isOn()) {
+            self.Panel.toggle();
+          }
+          // navigate to menu screen
+          self.game.state.start("GameMenu");
+        });
     }, 7500);
   },
 
