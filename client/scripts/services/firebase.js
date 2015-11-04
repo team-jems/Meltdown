@@ -38,4 +38,11 @@ angular.module('app.firebase', [])
     var strikeRef = new Firebase('https://meltdown.firebaseio.com/strike');
     return strikeRef;
   }
+])
+
+.factory('LevelUp', [
+  function() {
+    var levelUpRef = new Firebase('https://meltdown.firebaseio.com/levelUp');
+    return levelUpRef;
+  }
 ]);

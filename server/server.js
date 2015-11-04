@@ -23,17 +23,24 @@ FirebaseRef.child("lobby/players").on("value", function(snapshot) {
   var players = snapshot.val();
   var playerIDs = players ? Object.keys(players) : [];
   var allPlayersReady = true;
+  var levelUpReady = true;
 
   if (playerIDs.length > 0) {
     for (var i = 0, j = playerIDs.length; i < j; i++) {
       if (players[playerIDs[i]].isReady === false) {
         allPlayersReady = false;
       }
+      if (players[playerIDs[i]].levelUp === false) {
+        levelUpReady = false;
+      }
     }
   } else {
     allPlayersReady = false;
+    levelUpReady = false;
     FirebaseRef.child('lobby').update({inProgress: false});
   }
+
+  FirebaseRef.child('levelUp').update({isReady: levelUpReady});
 
   if (allPlayersReady) {
     FirebaseRef.child("lobby").update({numPlayers: playerIDs.length, status: 'all players ready'});
