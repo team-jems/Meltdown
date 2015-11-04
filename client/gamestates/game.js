@@ -153,6 +153,23 @@ Game.prototype = {
 
   endTimer: function() {
     this.timer.stop();
+    console.log('test');
+    
+    // delete player ref from lobby upon gameover
+    var self = this;
+    self.keyID = this.game.state.states['Main'].keyID;
+    var index = self.players.arr.$indexFor(self.keyID);
+    self.players.arr.$remove(self.players.arr[index]).then(function(){
+      // update inProgress status if necessary
+      self.players.lobbyRef.child('inProgress').once('value', function(snapshot){
+        var status = snapshot.val();
+        if (status){
+          self.players.lobbyRef.update({inProgress: false});
+        }
+      });
+    });
+
+
     this.requestNotificationChannel.gameOver(true);
     if (!this.Panel.isOn()) {
       this.Panel.toggle();

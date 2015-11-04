@@ -10,7 +10,7 @@ LobbyFull.prototype = {
   create: function(){
     this.game.add.sprite(0, 0, 'gameover-bg');
 
-    this.titleText = this.game.add.text(this.game.world.centerX, 100, "Too Many Players! \n Please Try Again Later", {
+    this.titleText = this.game.add.text(this.game.world.centerX, 100, "Game in Progress! \n Please Try Again Later", {
       font: 'bold 40pt TheMinion',
       fill: '#FDFFB5',
       align: 'center'

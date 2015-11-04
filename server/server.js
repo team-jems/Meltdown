@@ -32,6 +32,7 @@ FirebaseRef.child("lobby/players").on("value", function(snapshot) {
     }
   } else {
     allPlayersReady = false;
+    FirebaseRef.child('lobby').update({inProgress: false});
   }
 
   if (allPlayersReady) {
@@ -57,6 +58,7 @@ FirebaseRef.child("lobby/status").on("value", function(snapshot) {
 
       FirebaseRef.child("lobby/players").update(newData);
       FirebaseRef.child("lobby").update({status: 'puzzles ready'});
+      FirebaseRef.child("lobby").update({inProgress: true});
     });
   }
 });
