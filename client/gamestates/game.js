@@ -153,6 +153,7 @@ Game.prototype = {
 
   endTimer: function() {
     this.timer.stop();
+
     this.requestNotificationChannel.gameOver(true);
     if (!this.Panel.isOn()) {
       this.Panel.toggle();
@@ -178,6 +179,13 @@ Game.prototype = {
           if (self.Panel.isOn()) {
             self.Panel.toggle();
           }
+          // update firebase that game is no longer in progress
+          self.players.lobbyRef.child('inProgress').once('value', function(snapshot){
+            var status = snapshot.val();
+            if (status){
+              self.players.lobbyRef.update({inProgress: false});
+            }
+          });
           // navigate to menu screen
           self.game.state.start("GameMenu");
         });
