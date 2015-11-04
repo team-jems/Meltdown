@@ -35,7 +35,8 @@ Lobby.prototype = {
     // Add player to firebase
     this.allPlayers.arr.$add({
       playerID: self.userID,
-      isReady: false
+      isReady: false,
+      levelUp: false
     }).then(function(urldb){
 
       // unique key id of player
@@ -87,8 +88,8 @@ Lobby.prototype = {
           self.allPlayers.arr.$remove(self.allPlayers.arr[index]).then(function(){
             self.game.state.start('LobbyFull');
           });
-        }        
-      })   
+        }
+      })
     });
 
     // Room

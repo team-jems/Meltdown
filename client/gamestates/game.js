@@ -16,6 +16,7 @@ var Game = function (game) {
   //this.requestNotificationChannel;
   //this.Panel;
   //this.playerName;
+  //this.puzzled;
 };
 
 Game.prototype = {
@@ -127,7 +128,7 @@ Game.prototype = {
     this.strike = this.game.state.states['Main'].strike;
     this.strike.child('count').on('value', this.fbStrikeCountListener, this);
 
-    // Debug: Strike testing, hits 'S' key to increment strikes
+    // Debug: Strike testing, hit 'S' key to increment strikes
     this.strikeKey = this.game.input.keyboard.addKey(Phaser.KeyCode.S);
     this.strikeKey.onDown.add(function(key) {
       var self = this;
@@ -138,11 +139,40 @@ Game.prototype = {
       });
     }, this);
 
-    // Player ID
+    // Player on Firebase
     this.playerID = this.game.state.states['Main'].userID;
+    this.playerKey = this.game.state.states['Main'].keyID;
+    this.playerRecord = this.players.arr.$getRecord(this.playerKey);
+    //console.log('Player Record: ', JSON.stringify(this.playerRecord));
+
+    // Initialize Player's levelUp flag to false in Firebase
+    this.playerRecord.levelUp = false;
+    this.players.arr.$save(this.playerRecord).then(function(ref) {});
+
+    // Initialize Player has not attempted puzzle
+    this.puzzled = false;
+
+    // Debug: Puzzle testing, hit 'P' key to toggle puzzled
+    this.puzzledKey = this.game.input.keyboard.addKey(Phaser.KeyCode.P);
+    this.puzzledKey.onDown.add(function(key) {
+      this.puzzled = true;
+      // var self = this;
+      // self.playerRecord.levelUp = !self.playerRecord.levelUp;
+      // self.players.arr.$save(self.playerRecord).then(function(ref) {});
+    }, this);
+
+    // Register a Level Up Listener
+    this.levelUp = this.game.state.states['Main'].levelUp;
+    this.levelUp.child('isReady').on('value', this.fbLevelUpListener, this);
 
   },
 
+
+  fbLevelUpListener: function(snap) {
+    if(snap.val()) {
+      this.game.state.start('Game2');
+    }
+  },
 
   fbStrikeCountListener: function(snap) {
     this.strikeCount = snap.val();
@@ -207,7 +237,7 @@ Game.prototype = {
 
     // Collide the player with the stars
     this.game.physics.arcade.collide(this.roomObjs, this.player, this.objCollisionHandler, null, this);
-    this.game.physics.arcade.collide(this.rotator, this.player, this.room3ChangeCollisionHandler, null, this);
+    //this.game.physics.arcade.collide(this.rotator, this.player, this.room3ChangeCollisionHandler, null, this);
 
     // Reset the players velocity (movement)
     this.player.body.velocity.x = 0;
@@ -233,10 +263,19 @@ Game.prototype = {
     }
 
 
-
-    //Room transition (might be better to do object collision instead, but refactor later)
-    if (this.player.body.y === 0 && (this.player.body.x > 384 && this.player.body.x < 416)){
-      this.game.state.start('Game2');
+    // Room transition
+    if (this.player.body.y === 0 && (this.player.body.x > 384 && this.player.body.x < 416)) {
+      if (this.puzzled) {
+        if (!this.playerRecord.levelUp) {
+          this.playerRecord.levelUp = true;
+          this.players.arr.$save(this.playerRecord).then(function(ref) {});
+        }
+      }
+    } else {
+      if (this.playerRecord.levelUp) {
+        this.playerRecord.levelUp = false;
+        this.players.arr.$save(this.playerRecord).then(function(ref) {});
+      }
     }
 
   },
@@ -261,9 +300,9 @@ Game.prototype = {
     }
   },
 
-  room3ChangeCollisionHandler: function(player, rotator) {
-    this.game.state.start('Game3');
-  },
+  // room3ChangeCollisionHandler: function(player, rotator) {
+  //   this.game.state.start('Game3');
+  // },
 
   toggleRotate: function(){
     console.log('angle: ', this.rotator.angle);

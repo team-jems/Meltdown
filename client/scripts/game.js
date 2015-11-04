@@ -3,8 +3,8 @@
 angular.module('app.game', [])
 
 .controller('GameController',
-  ['$scope', '$state', 'requestNotificationChannel', 'Panel', 'Players', 'Strike',
-  function($scope, $state, requestNotificationChannel, Panel, Players, Strike) {
+  ['$scope', '$state', 'requestNotificationChannel', 'Panel', 'Players', 'Strike', 'LevelUp',
+  function($scope, $state, requestNotificationChannel, Panel, Players, Strike, LevelUp) {
 
     // Initializes game
     var game = new Phaser.Game(
@@ -19,6 +19,7 @@ angular.module('app.game', [])
       this.requestNotificationChannel = requestNotificationChannel;
       this.players = Players;
       this.strike = Strike;
+      this.levelUp = LevelUp;
     };
 
     Main.prototype = {
