@@ -174,6 +174,10 @@ Game.prototype = {
         .then(function (ref) {
           // reset strike count
           self.strike.child('count').set(0);
+          // close modal if open
+          if (self.Panel.isOn()) {
+            self.Panel.toggle();
+          }
           // navigate to menu screen
           self.game.state.start("GameMenu");
         });
