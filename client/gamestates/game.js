@@ -18,6 +18,7 @@ var Game = function (game) {
   //this.playerName;
 };
 
+
 Game.prototype = {
 
   preload: function(){
@@ -32,6 +33,8 @@ Game.prototype = {
   },
 
   create: function(){
+
+
     //  We're going to be using physics, so enable the Arcade Physics system
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.stage.disableVisibilityChange = true;

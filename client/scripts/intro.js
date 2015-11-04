@@ -4,8 +4,8 @@ angular.module('app.intro', [])
   function($stateProvider) {
     $stateProvider
       .state('intro', {
-        url: '',
-        templateUrl: 'templates/intro.html',
+        url: '/',
+        templateUrl: 'melt.html',
         controller: 'IntroController'
       });
   }

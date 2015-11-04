@@ -4,6 +4,7 @@ var Lobby = function(game){
   this.strike;
   this.keyID;
   this.playerIndex;
+  this.numPlayers;
 };
 
 Lobby.prototype = {
