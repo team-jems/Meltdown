@@ -16,12 +16,12 @@ body {
 
 hr {
     max-width: 50px;
-    border-color: #f05f40;
+    border-color: rgba(81, 100, 84, 0.8);
     border-width: 3px;
 }
 
 hr.light {
-    border-color: #fff;
+    border-color: rgba(255, 255, 255, .5);
 }
 
 a {
@@ -51,24 +51,17 @@ p {
     line-height: 1.5;
 }
 
-.video {
-    text-align: center;
-    vertical-align: center;
-    margin:0;
-    padding: 0;
-}
-
 .bg-primary {
-    background-color: lime;
+    background-color: rgba(11, 112, 154, .40);
 }
 
 .bg-dark {
     color: #fff;
-    background-color: #222;
+    background-color: rgba(196, 255, 251, .6);
 }
 
 .text-faded {
-    color: rgba(255,255,255,.7);
+    color: rgba(255,255,255,.8);
 }
 
 section {
@@ -117,10 +110,12 @@ aside {
     color: #f05f40;
 }
 
+/* color of links text on navbar hen page is scrolled over a particular section */
 .navbar-default .nav > li.active>a,
 .navbar-default .nav>li.active>a:focus {
-    color: green!important; /* color of nav bar word when page scroll is on its section */
+    color: green!important;
     background-color: transparent;
+    size: 14px;
 }
 
 .navbar-default .nav > li.active>a:hover,
@@ -135,7 +130,7 @@ aside {
     }
 
     .navbar-default .navbar-header .navbar-brand {
-        color: purple; /*top left corner ('meltdown')*/
+        color: rgba(255,255,255,.7);
     }
 
     .navbar-default .navbar-header .navbar-brand:hover,
@@ -145,37 +140,38 @@ aside {
 
     .navbar-default .nav > li>a,
     .navbar-default .nav>li>a:focus {
-        color: lime; /*nav bar locations before scrolling page*/
+        color: rgba(255,255,255,.7);
     }
 
     .navbar-default .nav > li>a:hover,
     .navbar-default .nav>li>a:focus:hover {
-        color: purple; /*on hover over nav elements when page is not scrolled down*/
+        color: #fff;
     }
 
     .navbar-default.affix {
         border-color: rgba(34,34,34,.05);
-        background-color: lime; /* navbar cbackground color after scroll down*/
+        background-color: #fff;
     }
 
     .navbar-default.affix .navbar-header .navbar-brand {
         font-size: 14px;
-        color: black; /* color of left top corner (meltdown/home button) after page scroll has begun*/
+        color: #f05f40;
     }
 
     .navbar-default.affix .navbar-header .navbar-brand:hover,
     .navbar-default.affix .navbar-header .navbar-brand:focus {
-        color: white; /* color of top left (meltdown/home)on hover after scroll*/
+        color: #eb3812;
     }
 
     .navbar-default.affix .nav > li>a,
     .navbar-default.affix .nav>li>a:focus {
-        color: black; /*color of nav bar words after the scroll has begun*/
+        color: #222;
     }
 
+/* text on navbar for links when mouse over*/
     .navbar-default.affix .nav > li>a:hover,
     .navbar-default.affix .nav>li>a:focus:hover {
-        color: white; /*color of nav words on hover after scroll has begun*/
+        color: green;
     }
 }
 
@@ -183,9 +179,9 @@ header {
     position: relative;
     width: 100%;
     min-height: auto;
-    text-align: left;
-    color: #A0C582;
-    background-image: url(../img/header.jpg);
+    text-align: center;
+    color: #fff;
+    background-image: url("../assets/homescreen_blank.jpeg");
     background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -211,12 +207,12 @@ header .header-content .header-content-inner hr {
     margin: 30px auto;
 }
 
+/* header color: */
 header .header-content .header-content-inner p {
     margin-bottom: 50px;
     font-size: 16px;
-    font-weight: 300;
-    color: black;
-    /* text paragraph right below header at the top*/
+    font-weight: 400;
+    color: white;
 }
 
 @media(min-width:768px) {

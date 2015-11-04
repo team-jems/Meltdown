@@ -1,49 +1,279 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <title>Save Hack Reactor</title>
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="lib/jquery-ui/themes/vader/jquery-ui.min.css">
-  <link rel="stylesheet" href="styles/style.css">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Meltdown!</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+
+    <!-- Custom Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css" type="text/css">
+
+    <!-- Plugin CSS -->
+    <link rel="stylesheet" href="css/animate.min.css" type="text/css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/creative.css" type="text/css">
+    <link href="css/thumbnail-gallery.css" rel="stylesheet">
+
+    <!-- team JEMS' css -->
+    <link rel="stylesheet" href="styles/style.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
 </head>
 
-<body ng-app="app">
-  <div class="navbar">
-    <div class="navbar-inner">
-      <a class="brand" href="#">Quick Start</a>
-      <ul class="nav">
-        <li><a ui-sref="intro">Home</a></li>
-      </ul>
+<body id="page-top">
+
+    <nav id="mainNav" class="navbar navbar-default navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">MELTDOWN!</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a class="page-scroll" href="#about">About</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#team">Team</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#tech">Tech Stack</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="#learn">JS/CS Resources</a>
+                    </li>
+                    <li>
+                        <a href="melt.html#/game">PLAY</a>
+                    </li>
+                    <!-- <li><a href="/">HOME</a></li> -->
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+
+    <header>
+        <div class="header-content">
+            <div class="header-content-inner">
+            <br><br><br>
+                <h1><span class="fire">Welcome</span> <span class="burn">to</span> <span class="fire">the Melt</span><span class="fire">down!</span></h1>
+                <br><br><br><br><br><br><br><br><br>
+                <h3 class="subhead"><br>Fix the reactor to cool down the core before total meltdown!</h3>
+                <p class="subheadparagraph">Hack your way through the levels with a group of engineers <em>(your friends)</em>! Fix the broken parts of the nuclear reactor by solving javascript puzzles. You can't do it alone though, so depend on your team and remember - don't melt down!</p><br>
+            </div>
+        </div>
+    </header>
+
+    <section class="bg-primary" id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading"></h2>
+                    <h4 class="text-faded">GAME PLAY</h4>
+                    <h4 class="text-faded numplayers">2 - 4 players</h4>
+                    <hr class="light gp">
+                    <p class="text-faded gameplay">Click <em>play</em> to head into the reactor. When you're ready for the madness, join the game. Hold down the go button at the same time as your friends to be sent into level 1 where you have the reactor manual on the right and your game room on the left. This manual is the only way to fix your room's broken part. It consists of the names for the puzzle you and your team of engineers are working on as well as the javascript code you must solve in order to get through the level. Your manual is only partially legible though, so you must work together to fill in the missing pieces. <br><br>In this game, nobody gets left behind - only when everyone is done can you all move to the next level together to solve a new batch of increasingly difficult puzzles. You have a limited amount of mistakes so watch your strikeout count and don't mess up - or melt down - under the pressure! Oh yeah, and you have a time limit. When the time runs out - the reactor overheats and BOOM! . Game Over .<br><br>This is a game of communication so you need to be in the same place as your friends or hop on a <a href="https://hangouts.google.com/" title="google chat" target="_blank">hangout</a> or another form of voice conference to successfully beat the heat and win the game! </p>
+                    <hr class="light">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="team">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">THE TEAM</h2>
+                    <hr class="primary">
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <img class="thumbImage" src="/assets/team/Sanjay.png" alt="Sanjay Chakrapani">
+                        <h3>Sanjay Chakrapani</h3>
+                        <p class="text-muted">Full stack software engineer</p>
+                        <div>
+                            <a class="cardspan" href="https://github.com/shasum" target="_blank"></a>
+                            <a class="cardspan2" href="https://www.linkedin.com/profile/view?id=AAkAAAAIfzQB3R6IYqHz7q8BHG658qjktlOEhms&authType=NAME_SEARCH&authToken=gOch&locale=en_US&trk=tyah&trkInfo=clickedVertical%3Amynetwork%2CclickedEntityId%3A556852%2CauthType%3ANAME_SEARCH%2Cidx%3A1-3-3%2CtarId%3A1446524140414%2Ctas%3ASanjay%20Chakrapani" target="_blank"></a>
+                            <a class="blog" href="https://github.com/shasum" target="_blank"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                    <img class="thumbImage" src="/assets/team/Mike.png" alt="Mike Hsieh">
+                        <h3>Mike Hsieh</h3>
+                        <p class="text-muted">Full stack software engineer</p>
+                        <div>
+                            <a class="cardspan" href="https://github.com/mythsieh" target="_blank"></a>
+                            <a class="cardspan2" href="https://github.com/mythsieh" target="_blank"></a>
+                            <a class="blog" href="https://github.com/shasum" target="_blank"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <img class="thumbImage" src="/assets/team/Erik.png" alt="Erik Hsiao">
+                        <h3>Erik Hsiao</h3>
+                        <p class="text-muted">Full stack software engineer</p>
+                        <div>
+                            <a class="cardspan" href="https://github.com/ErikMHsiao" target="_blank"></a>
+                            <a class="cardspan2" href="https://www.linkedin.com/in/erikmhsiao" target="_blank"></a>
+                            <a class="blog" href="https://github.com/shasum" target="_blank"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 text-center">
+                    <div class="service-box">
+                        <img class="thumbImage" src="/assets/team/Julia.png" alt="Julia">
+                        <h3>Julia Nocera</h3>
+                        <p class="text-muted">Full stack software engineer</p>
+                        <div>
+                        <a class="cardspan" href="https://github.com/JuliaNocera" target="_blank"></a>
+                        <a class="cardspan2" href="https://www.linkedin.com/in/julianocera" target="_blank"></a>
+                        <a class="blog" href="https://github.com/shasum" target="_blank"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="bg-dark" id="tech">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">TECH STACK</h2>
+                <hr class="primary tech">
+            </div>
+
+            <div class="col-lg-4 col-md-5 col-xs-7 thumb">
+                <a class="thumbnail" href="https://angularjs.org/" target="_blank">
+                    <img class="img-responsive" src="/assets/icons/angular.png" alt="AngularJS">
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-5 col-xs-7 thumb">
+                <a class="thumbnail" href="https://nodejs.org/en/" target="_blank">
+                    <img class="img-responsive" src="/assets/icons/nodejs-green.png" alt="NodeJS">
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-5 col-xs-7 thumb">
+                <a class="thumbnail" href="https://www.firebase.com/docs/web/libraries/angular/" target="_blank">
+                    <img class="img-responsive" src="/assets/icons/angularfire.jpg" alt="Angularfire">
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-5 col-xs-7 thumb">
+                <a class="thumbnail" href="https://www.firebase.com/" target="_blank">
+                    <img class="img-responsive" src="/assets/icons/firebase-large.png" alt="Firebase">
+                </a>
+            </div>
+            <div class="col-lg-4 col-md-5 col-xs-7 thumb">
+                <a class="thumbnail" href="http://phaser.io/">
+                    <img class="img-responsive" src="/assets/icons/phaser2.jpeg" target="_blank" alt="Phaser.io">
+                </a>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class='content'>
-    <div ui-view></div>
-  </div>
-  <!-- Load all libraries -->
-  <script type="text/javascript" src="lib/jquery/dist/jquery.min.js"></script>
-  <script type="text/javascript" src="lib/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="lib/jquery-knob/dist/jquery.knob.min.js"></script>
-  <script type="text/javascript" src="lib/angular/angular.min.js"></script>
-  <script type="text/javascript" src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
-  <script type="text/javascript" src="lib/phaser/build/phaser.min.js"></script>
-  <script type="text/javascript" src="lib/firebase/firebase.js"></script>
-  <script type="text/javascript" src="lib/angularfire/dist/angularfire.min.js"></script>
-  <script src="//code.angularjs.org/1.2.20/angular-sanitize.min.js"></script>
-  <!-- Load game scripts -->
-  <script type="text/javascript" src="scripts/app.js"></script>  <!-- App entry point script -->
-  <!-- services -->
-  <script type="text/javascript" src="scripts/services/firebase.js"></script>
-  <script type="text/javascript" src="scripts/services/comm.js"></script>
-  <script type="text/javascript" src="scripts/services/panel.js"></script>
-  <script type="text/javascript" src="scripts/services/angular-knob.js"></script>
-  <script type="text/javascript" src="lib/angular-ui-slider/src/slider.js"></script>
-  <!-- controllers -->
-  <script type="text/javascript" src="scripts/intro.js"></script>
-  <script type="text/javascript" src="scripts/gameFrame.js"></script>
-  <script type="text/javascript" src="scripts/game.js"></script>
-  <script type="text/javascript" src="scripts/manual.js"></script>
+</section>
+
+<section id="learn">
+    <h2 class="section-heading text-center">Resources for Learning</h2>
+    <ul class="text-center learnlinks">
+        <li>
+            <a href="http://eloquentjavascript.net/" title="Eloquent Javascript">Eloquent Javascript</a>
+        </li>
+        <li>
+            <a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-00sc-introduction-to-computer-science-and-programming-spring-2011/" title="Intro to CS (MITopen courseware)">Intro to CS (MIT open course)</a>
+        </li>
+        <li>
+            <a href="https://www.khanacademy.org/computing/computer-programming" title="Khan Academy">Khan Academy</a>
+        </li>
+        <li>
+            <a href="https://www.codeschool.com/" title="Code School">Code School</a>
+        </li>
+        <li>
+            <a href="https://teamtreehouse.com/" title="Treehouse">Treehouse</a>
+        </li>
+        <li>
+            <a href="http://coderbyte.com/" title="Coderbyte">Coderbyte</a>
+        </li>
+        <li>
+            <a href="https://www.hackerrank.com/" title="Hacker Rank">Hacker Rank</a>
+        </li>
+        <li>
+            <a href="https://www.codecademy.com/learn/javascript" title="Codecademy">Codecademy</a>
+        </li>
+        <li>
+            <a href="https://www.youtube.com/user/yuilibrary/" title="Douglas Crockford Youtube Videos">D. Crockford Youtube</a>
+        </li>
+    </ul>
+</section>
+    <footer class=".navbar .navbar-fixed-bottom text-center">Brought to you by <a class="hrname" href="http://www.hackreactor.com/" title="hack reactor">Hack Reactor</a> Graduates</footer>
+
+    <!-- <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 text-center">
+                    <h2 class="section-heading">Let's Get In Touch!</h2>
+                    <hr class="primary">
+                    <p>Ready to start your next project with us? That's great! Give us a call or send us an email and we will get back to you as soon as possible!</p>
+                </div>
+                <div class="col-lg-4 col-lg-offset-2 text-center">
+                    <i class="fa fa-phone fa-3x wow bounceIn"></i>
+                    <p>123-456-6789</p>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <i class="fa fa-envelope-o fa-3x wow bounceIn" data-wow-delay=".1s"></i>
+                    <p><a href="mailto:your-email@your-domain.com">feedback@startbootstrap.com</a></p>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="js/jquery.easing.min.js"></script>
+    <script src="js/jquery.fittext.js"></script>
+    <script src="js/wow.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/creative.js"></script>
 
 </body>
+
 </html>

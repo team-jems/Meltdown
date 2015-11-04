@@ -1,4 +1,5 @@
 var Lobby = function(game){
+<<<<<<< HEAD
   // allPlayers and strike are firebase service
   this.allPlayers;
   this.strike;
@@ -7,9 +8,8 @@ var Lobby = function(game){
   this.numPlayers;
 };
 
-// Room 2
-
 Lobby.prototype = {
+
   preload: function(){
 
     while (this.userID === undefined || this.userID === ""){
@@ -23,9 +23,11 @@ Lobby.prototype = {
     this.game.load.image('room', 'assets/rooms/lobby.jpg');
     this.game.load.image('arrow', 'assets/cutouts/enter.png');
   },
+
   create: function(){
 
     var self = this;
+
     // Pass firebase module to this instance
     this.allPlayers = this.game.state.states['Main'].players;
 
@@ -37,8 +39,10 @@ Lobby.prototype = {
       playerID: self.userID,
       isReady: false
     }).then(function(urldb){
+
       // unique key id of player
       var id = urldb.key();
+
       // store id
       self.keyID = id;
       self.game.state.states['Main'].keyID = id;
@@ -48,8 +52,6 @@ Lobby.prototype = {
 
       // on disconnect, remove player from array
       self.allPlayers.playersRef.child(id).onDisconnect().remove();
-      // self.allPlayers.lobbyRef.onDisconnect().set({numPlayers: self.allPlayers.arr.length, allPlayersReady: false});
-
     }).then(function(urldb){
       // Event listener for change to allPlayersReady on firebase, starts game
       self.allPlayers.lobbyRef.child('status').on('value', function(snapshot){
@@ -101,7 +103,7 @@ Lobby.prototype = {
     this.player.anchor.y = 0.5;
     this.player.animations.frame = 4;
 
-    //Ready Button
+    // Ready Button
     this.rotator = this.game.add.sprite(this.game.world.width/1.22, this.game.world.height * 0.5, 'arrow');
     this.rotator.anchor.x = 0.5;
     this.rotator.anchor.y = 0.5;
@@ -122,20 +124,25 @@ Lobby.prototype = {
   },
 
   update: function(){
+
     var self = this;
 
-  
+    // if rotator is held down
     if (this.rotator.input.checkPointerDown(this.game.input.activePointer)){
       this.toggleRotate();
+
+    // if rotator is not held down
     } else {
 
       // grab index in case index has changed
       var index = self.allPlayers.arr.$indexFor(self.keyID);
       self.playerIndex = index;
 
-
+      // stop animation
       this.player.animations.stop();
       this.player.animations.frame = 4;
+
+      // have rotator fall back and change ready status back to false
       if (this.rotator.angle > 0){
         this.rotator.angle += -2;
 
@@ -156,12 +163,8 @@ Lobby.prototype = {
   },
 
   toggleRotate: function(){
-    var self = this;
 
-    var puzzle;
-    self.allPlayers.puzzleRef.on('value', function(snapshot){
-      puzzle = snapshot.val();
-    });
+    var self = this;
 
     // if rotator has been held to ready status
     if(this.rotator.angle === 174){
@@ -182,16 +185,11 @@ Lobby.prototype = {
         self.allPlayers.arr.$save(self.playerIndex).then(function(ref){
           console.log('ready on database!');
         });
-
       }
-    }
 
-    // twist rotator 
-    if (this.rotator.angle < 174){
-      this.rotator.angle += 6;
+    // if rotator is not at ready status
     } else {
-      this.player.animations.play('right');
+      this.rotator.angle += 6;
     }
   }
 };
-
