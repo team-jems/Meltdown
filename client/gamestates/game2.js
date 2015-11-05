@@ -364,7 +364,11 @@ Game2.prototype = {
     // display players
     var count = 0;
     for (var i=0;  i < this.players.arr.length; i++) {
-      this.game.debug.text(this.players.arr[i].playerID, 2, 30+count, "#0f0");
+      if (this.players.arr[i].playerID === this.playerID) {
+        this.game.debug.text(this.players.arr[i].playerID, 2, 30+count, "#ff0");
+      } else {
+        this.game.debug.text(this.players.arr[i].playerID, 2, 30+count, "#0f0");
+      }
       count+=15;
     }
     // display strikes
