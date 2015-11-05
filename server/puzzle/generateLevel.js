@@ -45,7 +45,7 @@ function generateLevel(numPlayer, level) {
     // A mapping of level to puzzle types. For example, possible puzzle types
     // for level 0 are type 0 (lever puzzle) and type 1 (button puzzle).
     var puzzleTypeMap = [
-      [0, 1],
+      [0, 1, 2, 3],
       [0, 1, 2],
       [0, 1, 2, 3],
       [2, 3],
