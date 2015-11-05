@@ -4,10 +4,23 @@ var slider = require('./generateSliderInfo');
 var password = require('./generatePasswordInfo');
 var sequence = require('./generateSequenceInfo');
 var circuit = require('./generateCircuitInfo');
-
 var generateManuals = require('./generateManuals');
 
-module.exports = generateLevel;
+var levelGenerator = {
+  generateLevel: generateLevel,
+  generateLevels: generateLevels
+};
+
+module.exports = levelGenerator;
+
+function generateLevels(numPlayer) {
+  var levels = _(5)
+    .times(_.partial(generateLevel, numPlayer))
+    .thru(_.spread(_.zip))
+    .value();
+
+  return levels;
+}
 
 /**
  * Generate puzzle infos and manuals based on level and player count
