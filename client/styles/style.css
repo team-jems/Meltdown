@@ -17,6 +17,7 @@
   width: 800px;
 }
 
+/* modal-related */
 .panel {
   position: absolute;
   top: 45px;
@@ -24,7 +25,6 @@
   width: 650px;
   height: 451px;
   border-radius: 30px;
-  background: #EDEBE8;
   background-image: url('/assets/panel/ctrlpanel1.jpg')
 }
 
@@ -42,9 +42,33 @@
   text-align: center;
 }
 
-/* binaryLever */
+.instructions {
+  position: absolute;
+  background: gray;
+  width: 600px;
+  min-height: 100px;
+  bottom: 14px;
+  left: 25px;
+  border-radius: 5px;
+}
+
+p.instructions-header, .instructions > p {
+  margin: 4px 0;
+}
+
+.instructions > p {
+  color: white;
+}
+
+p.instructions-header {
+  background-color: lightgray;
+  color: black;
+  font-weight: bold;
+}
+
+/* slider */
 .meter {
-  padding-top: 50px;
+  padding-top: 20px;
 }
 
 .meter-label {
@@ -71,14 +95,14 @@
 
 .slider-element {
   width: 200px;
-  margin: 0 auto;
+  margin: 0 auto 10px;
 }
 
 .ui-slider a {
   outline: none;
 }
 
-/* buttonSeries */
+/* sequence */
 .displays, .display{
   display: inline-block;
 }
@@ -116,7 +140,7 @@
 }
 
 .vertical {
-  margin: 0 9px;
+  margin: 0 14px;
 }
 
 .current {
@@ -135,6 +159,11 @@
   padding-top: 14px;
 }
 
+.color-button {
+  width: 24px;
+  height: 24px;
+}
+
 /* codex */
 .dragdrop-list {
   display: flex;
@@ -148,7 +177,7 @@ li.dragdrop-listitem {
 }
 
 .password-display {
-  padding-top: 70px;
+  padding-top: 80px;
 }
 
 li.dragdrop-listitem.dragdrop-label {
