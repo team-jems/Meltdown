@@ -66,6 +66,12 @@ angular.module('app.panel', ['ui.slider', 'ui.knob', 'ngDragDrop'])
       $scope.puzzle = Panel.load(index);
       if ($scope.puzzle.type === 'circuit') {
         $scope.state = $scope.copyBoard($scope.puzzle.board);
+        $scope.colors = [
+          {short: 'r', long: 'red'},
+          {short: 'y', long: 'yellow'},
+          {short: 'b', long: 'blue'},
+          {short: 'g', long: 'green'}
+        ]
         $scope.current = [0, 0];
         $scope.previous = 'r';
       } else if ($scope.puzzle.type === 'password') {
@@ -94,21 +100,20 @@ angular.module('app.panel', ['ui.slider', 'ui.knob', 'ngDragDrop'])
     $scope.checkSolution = function(answer) {
       if ($scope.puzzle.type === 'slider') {
         if ($scope.state === $scope.puzzle.solution) {
-          $scope.solved = true;
+          requestNotificationChannel.puzzleSolved(true);
         }  else {
-          console.log('BUZZ!');
+          requestNotificationChannel.puzzleSolved(false);
         }
       }
 
       if ($scope.puzzle.type === 'sequence') {
         if (answer === $scope.puzzle.solution[$scope.state]) {
           $scope.state++;
-          console.log($scope.state);
           if ($scope.state === 4) {
-            $scope.solved = true;
+            requestNotificationChannel.puzzleSolved(true);
           }
         } else {
-          console.log('BUZZ!');
+          requestNotificationChannel.puzzleSolved(false);
         }
       }
 
@@ -118,9 +123,9 @@ angular.module('app.panel', ['ui.slider', 'ui.knob', 'ngDragDrop'])
         });
 
         if ($scope.puzzle.solution.join('') === answer.join('')) {
-          $scope.solved = true;
+          requestNotificationChannel.puzzleSolved(true);
         } else {
-          console.log('BUZZ!');
+          requestNotificationChannel.puzzleSolved(false);
         }
       }
 
@@ -150,10 +155,10 @@ angular.module('app.panel', ['ui.slider', 'ui.knob', 'ngDragDrop'])
         if (rowPath < 0 || rowPath > 4 || colPath < 0 || colPath > 4 || // node out of bound
           $scope.state[rowPath][colPath] === 2 || // broken resistor
           $scope.state[rowTo][colTo] === 1) {     // node already visited
-          console.log('BUZZ!');
+          requestNotificationChannel.puzzleSolved(false);
         } else {
           if ($scope.state[rowTo][colTo] === 3) {
-            $scope.solved = true;
+            requestNotificationChannel.puzzleSolved(true);
           }
 
           $scope.state[row][col] = 1;
@@ -163,7 +168,6 @@ angular.module('app.panel', ['ui.slider', 'ui.knob', 'ngDragDrop'])
           $scope.previous = answer;
         }
       }
-      requestNotificationChannel.puzzleSolved($scope.puzzle.solved);
     };
 
     $scope.reset = function() {

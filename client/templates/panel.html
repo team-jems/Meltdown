@@ -8,9 +8,13 @@
     </div>
     <div class="slider">
       <p>O       I       II      III</p>
-      <div class="slider-element" ui-slider min="0" max="3"
-        ng-model="state" ng-change="checkSolution()"></div>
-      <p ng-show="solved">Solved!</p>
+      <div class="slider-element" ui-slider min="0" max="3" ng-model="state"></div>
+      <button ng-click="checkSolution()">Fire</button>
+    </div>
+    <div class="instructions">
+      <p class="instructions-header">For emergency override, refer to: powerSlider{{puzzle.label}}()</p>
+      <p>Use the function to compute the correct level of power required by the laser.</p>
+      <p>Set the power slider to the correct level and hit the fire button.</p>
     </div>
   </div>
 </div>
@@ -28,10 +32,11 @@
     <div class="buttonSeries">
       <button ng-repeat="button in puzzle.buttons" ng-click="checkSolution(button)">
         {{button}}</button>
-        <br><br><br>
-      <p><strong>Refer to: buttonSequence{{puzzle.label}}(code)</p>
-      <p>From left to right, use the function to figure out the sequence of buttons to push.</strong></p>
-      <p ng-show="solved">Solved!</p>
+    </div>
+    <div class="instructions">
+      <p class="instructions-header">For emergency override, refer to: buttonSequence{{puzzle.label}}(code)</p>
+      <p>From left to right, use the three-digit number as the input code to the function.</p>
+      <p>Press the buttons in sequence of the respective return values.</p>
     </div>
   </div>
 </div>
@@ -43,9 +48,9 @@
         <div class="row" ng-if="$index === 0 || $index === 2 || $index === 4">
           <p ng-class="end" ng-if="row[0] === 3">*</p>
           <p ng-class="{'off': row[0] === 0, 'on': row[0] === 1, 'current': row[0] === 2}" ng-if="row[0] !== 3">O</p>
-          <p ng-class="{'off': row[1] === 0, 'on': row[1] === 1, 'broken': row[1] === 2}">-</p>
+          <p ng-class="{'off': row[1] === 0, 'on': row[1] === 1, 'broken': row[1] === 2}">--</p>
           <p ng-class="{'off': row[2] === 0, 'on': row[2] === 1, 'current': row[2] === 2}">O</p>
-          <p ng-class="{'off': row[3] === 0, 'on': row[3] === 1, 'broken': row[3] === 2}">-</p>
+          <p ng-class="{'off': row[3] === 0, 'on': row[3] === 1, 'broken': row[3] === 2}">--</p>
           <p ng-class="end" ng-if="row[4] === 3">*</p>
           <p ng-class="{'off': row[4] === 0, 'on': row[4] === 1, 'current': row[4] === 2}" ng-if="row[4] !== 3">O</p>
         </div>
@@ -56,15 +61,15 @@
       </div>
     </div>
     <div class="circuit-control">
-      <button ng-repeat="color in ['r', 'y', 'b', 'g']" ng-click="checkSolution(color)">{{color}}</button>
+      <button class="color-button" ng-repeat="color in colors" style="background-color:{{color.long}}" ng-click="checkSolution(color.short)"></button>
       <button ng-click="reset()">Reset</button>
-      <p>Refer to: circuit{{puzzle.label}}(prev, current)</p>
-      <p>Direct the electrical current from the upper left to the spot marked with an asterisk.<br>
-      Use the function to figure out which direction each button would direct the current to.<br>
-      prev is the color of the previous button you pressed.<br>
-      Watch out for broken transistors (marked in red).<br>
-      Do not backtrack or you'll cause a short in the circuit!</p>
-      <p ng-show="solved">Solved!</p>
+    </div>
+    <div class="instructions">
+      <p class="instructions-header">For emergency override, refer to: circuit{{puzzle.label}}(prev, current)</p>
+      <p>Direct the electrical current from the upper left to the spot marked with an asterisk.</p>
+      <p>Use the function to figure out which direction each button would direct the current to.</p>
+      <p>prev is the color of the previous button that has directed the current.</p>
+      <p>Watch out for broken transistors (marked in red) and do not backtrack or you'll cause a short!</p>
     </div>
   </div>
 </div>
@@ -88,6 +93,10 @@
       </li>
     </ul>
     <button ng-click="checkSolution()">Submit</button>
-    <p ng-show="solved">Solved!</p>
+    <div class="instructions">
+      <p class="instructions-header">For emergency override, refer to: password{{puzzle.label}}(scrambled)</p>
+      <p>Use the function to extract the correct password from the scrambled password.</p>
+      <p>Drag the letters to form the correct password and hit the submit button.</p>
+    </div>
   </div>
 </div>
