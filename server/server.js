@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+var _ = require('lodash');
 var express = require('express');
 var path = require('path');
 
@@ -16,7 +17,7 @@ app.use(express.static(staticPath));
 var Firebase = require('firebase');
 var FirebaseRef = new Firebase('https://meltdown.firebaseio.com/');
 
-var generateLevel = require('./puzzle/generateLevel');
+var levelGenerator = require('./puzzle/generateLevel');
 
 // on any player change, recalculate number of players and ready status
 FirebaseRef.child('lobby/players').on('value', function(snapshot) {
@@ -54,10 +55,10 @@ FirebaseRef.child('lobby/status').on('value', function(snapshot) {
   if (snapshot.val() === 'all players ready') {
     FirebaseRef.child('lobby').once('value', function(data) {
       var newData = data.val();
-      var puzzleSet = generateLevel(newData.numPlayers, 2);
+      var puzzleSet = levelGenerator.generateLevels(newData.numPlayers);
 
       for (var key in newData.players) {
-        var thisPlayer = puzzleSet.splice(0, 1)[0];
+        var thisPlayer = _.unzip(puzzleSet.splice(0, 1)[0]);
         newData.players[key].puzzles = thisPlayer[0];
         newData.players[key].manual = thisPlayer[1];
       }

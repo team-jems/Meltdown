@@ -112,11 +112,11 @@ Game2.prototype = {
     this.Panel = this.game.state.states['Main'].panel;
     this.requestNotificationChannel = this.game.state.states['Main'].requestNotificationChannel;
 
-    this.Panel.init(this.game, this.game.state.states['Main'].puzzles);
-    this.requestNotificationChannel.loadManual(this.game.state.states['Main'].manual);
+    this.Panel.init(this.game, this.game.state.states['Main'].puzzles[1]);
+    this.requestNotificationChannel.loadManual(this.game.state.states['Main'].manual[1]);
 
     this.panelKey.onDown.add(function(key) {
-      this.requestNotificationChannel.loadPuzzle(0);
+      this.requestNotificationChannel.loadPuzzle(1);
       this.Panel.toggle();
       this.actionObjs.hasCollided = false;
     }, this);
@@ -200,7 +200,7 @@ Game2.prototype = {
   fbLevelUpListener: function(snap) {
     if(snap.val()) {
       this.levelUp.child('isReady').off('value');
-      self.requestNotificationChannel.clearListeners();
+      this.requestNotificationChannel.clearListeners();
       this.game.state.start('Game3');
     }
   },
