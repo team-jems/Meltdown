@@ -157,13 +157,14 @@ Game2.prototype = {
     var self = this;
     this.playerID = this.game.state.states['Main'].userID;
     this.playerKey = this.game.state.states['Main'].keyID;
-    this.playerRecord = this.players.arr.$getRecord(this.playerKey);
+    this.playerRecord = this.players.arr.$getRecord(this.playerKey)
 
     // Initialize Player's levelUp flag to false in Firebase
     this.playerRecord.levelUp = false;
     this.players.arr.$save(this.playerRecord).then(function(ref) {
       // Register a Level Up Listener
       self.levelUp = self.game.state.states['Main'].levelUp;
+    }).then(function(){
       self.levelUp.child('isReady').on('value', self.fbLevelUpListener, self);
     });
 
