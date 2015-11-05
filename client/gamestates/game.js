@@ -198,6 +198,7 @@ Game.prototype = {
   fbLevelUpListener: function(snap) {
     if(snap.val()) {
       this.levelUp.child('isReady').off('value');
+      self.requestNotificationChannel.clearListeners();
       this.game.state.start('Game2');
     }
   },

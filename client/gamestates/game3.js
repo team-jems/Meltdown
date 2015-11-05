@@ -59,7 +59,7 @@ Game3.prototype = {
     this.givePhysicsTo(panel, true, true, true, true, true);
     panel.tint = 0xff2200;
 
-    // SMALL1 NOZZLE 
+    // SMALL1 NOZZLE
     var small = this.roomObjs.create(this.game.world.width/1.8, 44, 'small');
     this.givePhysicsTo(small, true, true, true, true, true);
 
@@ -75,7 +75,7 @@ Game3.prototype = {
     // SMALL4 NOZZLE
     var small4 = this.roomObjs.create(this.game.world.width - 186 , this.game.world.height-30, 'small');
     this.givePhysicsTo(small4, true, true, true, true, true);
-    
+
     // Top Left Tank
     var topLeftTank = this.roomObjs.create(0, 0, 'topLeftTank');
     this.givePhysicsTo(topLeftTank, true, true, true, true, true);
@@ -200,6 +200,7 @@ Game3.prototype = {
   fbLevelUpListener: function(snap) {
     if(snap.val()) {
       this.levelUp.child('isReady').off('value');
+      self.requestNotificationChannel.clearListeners();
       this.game.state.start('Game4');
     }
   },
