@@ -54,7 +54,7 @@ Game.prototype = {
 
     this.actionObjs = this.game.add.group();
     this.actionObjs.enableBody = true;
-    
+
     //LARGE PANEL
     var panel = this.actionObjs.create(470, 0, 'panel', 3);
     this.givePhysicsTo(panel, true, true, true, true, true);
@@ -105,7 +105,7 @@ Game.prototype = {
 
     //  Our controls.
     this.cursors = this.game.input.keyboard.createCursorKeys();
-    // this.panelKey = this.game.input.keyboard.addKey(Phaser.KeyCode.ESC);
+    this.panelKey = this.game.input.keyboard.addKey(Phaser.KeyCode.ESC);
 
     // passing angular modules from game.js
     this.Panel = this.game.state.states['Main'].panel;
@@ -114,11 +114,11 @@ Game.prototype = {
     this.Panel.init(this.game, this.game.state.states['Main'].puzzles);
     this.requestNotificationChannel.loadManual(this.game.state.states['Main'].manual);
 
-    // this.panelKey.onDown.add(function(key) {
-    //   this.requestNotificationChannel.loadPuzzle(0);
-    //   this.Panel.toggle();
-    //   this.actionObjs.hasCollided = false;
-    // }, this);
+    this.panelKey.onDown.add(function(key) {
+      this.requestNotificationChannel.loadPuzzle(0);
+      this.Panel.toggle();
+      this.actionObjs.hasCollided = false;
+    }, this);
 
     // Game Timer
     this.timer = this.game.time.create();  // Phaser timer
@@ -126,12 +126,6 @@ Game.prototype = {
     this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 10, this.endTimer, this);
     this.timer.start();  // timer display handled in render block
 
-    //this.fbTimer.child('running').on('value', this.fbTimerListener, this);
-    // Timer starts for everybody as soon as anyone hits 'T' key
-    // this.timerKey = this.game.input.keyboard.addKey(Phaser.KeyCode.T);
-    // this.timerKey.onDown.add(function(key) {
-    //   this.fbTimer.child('running').set(true);  // set Firebase timer ON
-    // }, this);
     //Panel color change
     this.redColor = this.game.input.keyboard.addKey(Phaser.KeyCode.R);
     this.greenColor = this.game.input.keyboard.addKey(Phaser.KeyCode.G);
@@ -147,26 +141,30 @@ Game.prototype = {
     this.strike.child('count').on('value', this.fbStrikeCountListener, this);
 
     // Debug: Strike testing, hit 'S' key to increment strikes
-    this.strikeKey = this.game.input.keyboard.addKey(Phaser.KeyCode.S);
-    this.strikeKey.onDown.add(function(key) {
-      var self = this;
-      this.strike.child('count').once('value', function(snap) {
-        var count = snap.val();
-        count++;
-        // self.strike.child('count').set(count);
-        self.strike.update({count: 0});
-      });
-    }, this);
+    // this.strikeKey = this.game.input.keyboard.addKey(Phaser.KeyCode.S);
+    // this.strikeKey.onDown.add(function(key) {
+    //   var self = this;
+    //   this.strike.child('count').once('value', function(snap) {
+    //     var count = snap.val();
+    //     count++;
+    //     // self.strike.child('count').set(count);
+    //     self.strike.update({count: 0});
+    //   });
+    // }, this);
 
     // Player on Firebase
+    var self = this;
     this.playerID = this.game.state.states['Main'].userID;
     this.playerKey = this.game.state.states['Main'].keyID;
     this.playerRecord = this.players.arr.$getRecord(this.playerKey);
-    //console.log('Player Record: ', JSON.stringify(this.playerRecord));
 
     // Initialize Player's levelUp flag to false in Firebase
     this.playerRecord.levelUp = false;
-    this.players.arr.$save(this.playerRecord).then(function(ref) {});
+    this.players.arr.$save(this.playerRecord).then(function(ref) {
+      // Register a Level Up Listener
+      self.levelUp = self.game.state.states['Main'].levelUp;
+      self.levelUp.child('isReady').on('value', self.fbLevelUpListener, self);
+    });
 
     // Initialize Player has not attempted puzzle
     this.puzzled = false;
@@ -175,18 +173,11 @@ Game.prototype = {
     this.puzzledKey = this.game.input.keyboard.addKey(Phaser.KeyCode.P);
     this.puzzledKey.onDown.add(function(key) {
       this.puzzled = true;
-      // var self = this;
-      // self.playerRecord.levelUp = !self.playerRecord.levelUp;
-      // self.players.arr.$save(self.playerRecord).then(function(ref) {});
     }, this);
 
-    // Register a Level Up Listener
-    this.levelUp = this.game.state.states['Main'].levelUp;
-    this.levelUp.child('isReady').on('value', this.fbLevelUpListener, this);
 
     // update puzzled flag based on broadcast from panel and comm
     this.$scope = this.game.state.states['Main'].$scope;
-    var self = this;
     this.requestNotificationChannel.onPuzzleSolved(this.$scope, function(flag){
       self.puzzled = flag;
       if(flag) {
@@ -196,16 +187,17 @@ Game.prototype = {
       if(!flag) {
         self.strike.child('count').transaction(function(currentCount){
           return currentCount + 1;
-        })
+        });
       }
       console.log('self.puzzled:', self.puzzled);
-    }); 
+    });
 
   },
 
 
   fbLevelUpListener: function(snap) {
     if(snap.val()) {
+      this.levelUp.child('isReady').off('value');
       this.game.state.start('Game2');
     }
   },
@@ -220,12 +212,10 @@ Game.prototype = {
   endTimer: function() {
     this.timer.stop();
     var self = this;
-    
+
     // reset strike count
-    console.log("testing before off listener")
     self.strike.child('count').off('value');
     self.strike.update({count: 0});
-    // self.strike.child('count').set(count);
 
     this.requestNotificationChannel.gameOver(true);
     if (!this.Panel.isOn()) {
