@@ -187,6 +187,7 @@ Game4.prototype = {
   fbLevelUpListener: function(snap) {
     if(snap.val()) {
       this.levelUp.child('isReady').off('value');
+      self.requestNotificationChannel.clearListeners();
       alert('You win!!!!');
       this.game.state.start('GameMenu');
     }
@@ -405,7 +406,7 @@ Game4.prototype = {
 //     // panel.body.setSize(100, 50, 0, 0);
 //     this.givePhysicsTo(panel, true, true, true, true, true);
 
-//     // SMALL1 NOZZLE 
+//     // SMALL1 NOZZLE
 //     var small = this.roomObjs.create(this.game.world.width/1.8, 44, 'small');
 //     this.givePhysicsTo(small, true, true, true, true, true);
 
@@ -421,7 +422,7 @@ Game4.prototype = {
 //     // SMALL4 NOZZLE
 //     var small4 = this.roomObjs.create(this.game.world.width - 186 , this.game.world.height-30, 'small');
 //     this.givePhysicsTo(small4, true, true, true, true, true);
-    
+
 //     // Top Left Tank
 //     var topLeftTank = this.roomObjs.create(0, 0, 'topLeftTank');
 //     this.givePhysicsTo(topLeftTank, true, true, true, true, true);
@@ -468,7 +469,7 @@ Game4.prototype = {
 //     var components = this.Puzzle.generatePuzzles();
 //     this.Panel.init(this.game, components.puzzles);
 //     this.requestNotificationChannel.loadManual(components.manuals);
-    
+
 //     this.panelKey.onDown.add(function(key) {
 //       this.requestNotificationChannel.loadPuzzle(0);
 //       this.Panel.toggle();
@@ -543,7 +544,7 @@ Game4.prototype = {
 //     obj.body.checkCollision.up = checkCollUp;
 //   },
 
-//   objCollisionHandler: function(player, roomObjs){  
+//   objCollisionHandler: function(player, roomObjs){
 //     console.log('I hit a room object');
 //     if(!this.roomObjs.hasCollided){
 //       this.requestNotificationChannel.loadPuzzle(0);
