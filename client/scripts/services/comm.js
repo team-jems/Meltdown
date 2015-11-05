@@ -6,7 +6,8 @@ angular.module('app.comm', [])
     var _LOAD_MANUAL_ = '_LOAD_MANUAL_';
     var _LOAD_PUZZLE_ = '_LOAD_PUZZLE_';
     var _GAME_OVER_ = '_GAME_OVER_';
-
+    var _PUZZLE_SOLVED_ = '_PUZZLE_SOLVED_';
+    var listeners = [];
     // publish load manual notification
     var loadManual = function(manuals) {
       $rootScope.$broadcast(_LOAD_MANUAL_, manuals);
@@ -14,9 +15,11 @@ angular.module('app.comm', [])
 
     // subscribe to load manual notification
     var onLoadManual = function($scope, handler) {
-      $scope.$on(_LOAD_MANUAL_, function(event, manual) {
-        handler(manual);
-      });
+      // listeners.push(  
+        $scope.$on(_LOAD_MANUAL_, function(event, manual) {
+          handler(manual);
+        });
+      // );
     };
 
     // publish notification to change modal state
@@ -26,9 +29,11 @@ angular.module('app.comm', [])
 
     // subscribe to load puzzle notification
     var onLoadPuzzle = function($scope, handler) {
-      $scope.$on(_LOAD_PUZZLE_, function(event, index) {
-        handler(index);
-      });
+      // listeners.push(
+        $scope.$on(_LOAD_PUZZLE_, function(event, index) {
+          handler(index);
+        });
+      // ); 
     };
 
     // publish to terminate game
@@ -38,9 +43,29 @@ angular.module('app.comm', [])
 
     // subscribe to terminate game
     var onGameOver = function($scope, handler) {
-      $scope.$on(_GAME_OVER_, function(event, flag) {
-        handler(flag);
-      });
+      // listeners.push(
+        $scope.$on(_GAME_OVER_, function(event, flag) {
+          handler(flag);
+        });
+      // );
+    };
+
+    var puzzleSolved = function(flag) {
+      $rootScope.$broadcast(_PUZZLE_SOLVED_, flag);
+    };
+
+    var onPuzzleSolved = function($scope, handler) {
+      listeners.push(
+        $scope.$on(_PUZZLE_SOLVED_, function(event, flag) {
+          handler(flag);
+        })
+      );
+    };
+
+    var clearListeners = function() {
+      for (var i = 0; i < listeners.length; i++) {
+        listeners[i]();
+      }
     };
 
     return {
@@ -49,7 +74,10 @@ angular.module('app.comm', [])
       loadPuzzle: loadPuzzle,
       onLoadPuzzle: onLoadPuzzle,
       gameOver: gameOver,
-      onGameOver: onGameOver
+      onGameOver: onGameOver, 
+      puzzleSolved: puzzleSolved,
+      onPuzzleSolved: onPuzzleSolved, 
+      clearListeners: clearListeners
     };
   }
 ]);

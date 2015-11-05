@@ -1,4 +1,4 @@
-angular.module('app.panel', ['ui.slider', 'ui.knob'])
+angular.module('app.panel', ['ui.slider', 'ui.knob', 'ngDragDrop'])
 
 .factory('Panel', function() {
   var panels;
@@ -7,7 +7,7 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
   var init = function(game, puzzles) {
     var background = new Phaser.Graphics(game, 0, 0);
     background.beginFill(0x000000, 0.4);
-    background.drawRect(0, 0, 800, 600);
+    background.drawRect(0, 0, 800, 533);
     background.endFill();
 
     mask = game.add.image(0, 0, background.generateTexture());
@@ -33,7 +33,7 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
   };
 
   var load = function(index) {
-    return panels[index];
+    return panels;
   };
 
   var isOn = function() {
@@ -62,9 +62,29 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
       }
     };
 
-
     var onLoadPuzzleHandler = function(index) {
       $scope.puzzle = Panel.load(index);
+      if ($scope.puzzle.type === 'circuit') {
+        $scope.state = $scope.copyBoard($scope.puzzle.board);
+        $scope.colors = [
+          {short: 'r', long: 'red'},
+          {short: 'y', long: 'yellow'},
+          {short: 'b', long: 'blue'},
+          {short: 'g', long: 'green'}
+        ]
+        $scope.current = [0, 0];
+        $scope.previous = 'r';
+      } else if ($scope.puzzle.type === 'password') {
+        $scope.display = $scope.puzzle.letters.join('');
+        $scope.list1 = [];
+        $scope.puzzle.letters.forEach(function(letter) {
+          $scope.list1.push({label: letter, drag: true});
+        });
+        $scope.list2 = [{}, {}, {}, {}, {}];
+      } else {
+        $scope.state = 0;
+      }
+      $scope.solved = false;
       $scope.$apply();
     };
 
@@ -75,44 +95,48 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
       $scope.$apply();
     };
 
-    requestNotificationChannel.onGameOver($scope, onGameOverHandler);
+    var onGameOver = requestNotificationChannel.onGameOver($scope, onGameOverHandler);
 
     $scope.checkSolution = function(answer) {
-      if ($scope.puzzle.type === 'binaryLever') {
-        if ($scope.puzzle.state !== 1) {
-          var answer = $scope.puzzle.state === 2;
-
-          if (answer === $scope.puzzle.solution) {
-            $scope.puzzle.solved = true;
-          } else {
-            $scope.puzzle.solved = false;
-            console.log('BUZZ!');
-          }
+      if ($scope.puzzle.type === 'slider') {
+        if ($scope.state === $scope.puzzle.solution) {
+          requestNotificationChannel.puzzleSolved(true);
+        }  else {
+          requestNotificationChannel.puzzleSolved(false);
         }
       }
 
-      if ($scope.puzzle.type === 'buttonSeries') {
-        if (answer === $scope.puzzle.fbSolution[$scope.puzzle.state]) {
-          $scope.puzzle.displays[$scope.puzzle.state][1] = true;
-
-          if ($scope.puzzle.state === 3) {
-            $scope.puzzle.solved = true;
-          } else {
-            $scope.puzzle.state++;
+      if ($scope.puzzle.type === 'sequence') {
+        if (answer === $scope.puzzle.solution[$scope.state]) {
+          $scope.state++;
+          if ($scope.state === 4) {
+            requestNotificationChannel.puzzleSolved(true);
           }
         } else {
-          console.log('BUZZ!');
+          requestNotificationChannel.puzzleSolved(false);
+        }
+      }
+
+      if ($scope.puzzle.type === 'password') {
+        var answer = $scope.list2.map(function(letter) {
+          return letter.label;
+        });
+
+        if ($scope.puzzle.solution.join('') === answer.join('')) {
+          requestNotificationChannel.puzzleSolved(true);
+        } else {
+          requestNotificationChannel.puzzleSolved(false);
         }
       }
 
       if ($scope.puzzle.type === 'circuit') {
-        var row = $scope.puzzle.current[0];
-        var col = $scope.puzzle.current[1];
+        var row = $scope.current[0];
+        var col = $scope.current[1];
         var rowPath = row;
         var colPath = col;
         var rowTo = row;
         var colTo = col;
-        var move = $scope.puzzle.controls[$scope.puzzle.previous][answer];
+        var move = $scope.puzzle.controls[$scope.previous][answer];
 
         if (move === 'up') {
           rowPath--;
@@ -129,40 +153,40 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
         }
 
         if (rowPath < 0 || rowPath > 4 || colPath < 0 || colPath > 4 || // node out of bound
-          $scope.puzzle.state[rowPath][colPath] === 2 || // broken resistor
-          $scope.puzzle.state[rowTo][colTo] === 1) {     // node already visited
-          console.log('BUZZ!');
+          $scope.state[rowPath][colPath] === 2 || // broken resistor
+          $scope.state[rowTo][colTo] === 1) {     // node already visited
+          requestNotificationChannel.puzzleSolved(false);
         } else {
-          if ($scope.puzzle.state[rowTo][colTo] === 3) {
-            $scope.puzzle.solved = true;
+          if ($scope.state[rowTo][colTo] === 3) {
+            requestNotificationChannel.puzzleSolved(true);
           }
 
-          $scope.puzzle.state[row][col] = 1;
-          $scope.puzzle.state[rowPath][colPath] = 1;
-          $scope.puzzle.state[rowTo][colTo] = 2;
-          $scope.puzzle.current = [rowTo, colTo];
-          $scope.puzzle.previous = answer;
+          $scope.state[row][col] = 1;
+          $scope.state[rowPath][colPath] = 1;
+          $scope.state[rowTo][colTo] = 2;
+          $scope.current = [rowTo, colTo];
+          $scope.previous = answer;
         }
       }
     };
 
     $scope.reset = function() {
-      var copyBoard = function(board) {
-        var copy = [];
-
-        for (var i = 0; i < 5; i++) {
-          copy[i] = board[i].slice();
-        }
-
-        return copy;
-      };
-
       if ($scope.puzzle.type === 'circuit') {
-        $scope.puzzle.state = copyBoard($scope.puzzle.board);
-        $scope.puzzle.current = [0, 0];
-        $scope.puzzle.previous = 'r';
+        $scope.state = $scope.copyBoard($scope.puzzle.board);
+        $scope.current = [0, 0];
+        $scope.previous = 'r';
       }
-    }
+    };
+
+    $scope.copyBoard = function(board) {
+      var copy = [];
+
+      for (var i = 0; i < 5; i++) {
+        copy[i] = board[i].slice();
+      }
+
+      return copy;
+    };
 
     $scope.checkKnob = function() {
       console.log('Knob set at: ', $scope.knobData.value);

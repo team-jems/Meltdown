@@ -1,6 +1,7 @@
 var Lobby = function(game){
-  // allPlayers is the firebase service
+  // allPlayers and strike are firebase service
   this.allPlayers;
+  this.strike;
   this.keyID;
   this.playerIndex;
 };
@@ -9,7 +10,12 @@ Lobby.prototype = {
 
   preload: function(){
 
-    this.userID = prompt("What is your name?");
+    while (this.userID === undefined || this.userID === ""){
+      this.userID = prompt("What is your name?");
+      if (this.userID === null){
+        this.userID = undefined;
+      }
+    }
     this.game.state.states['Main'].userID = this.userID;
     this.game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
     this.game.load.image('room', 'assets/rooms/lobby.jpg');
@@ -23,10 +29,14 @@ Lobby.prototype = {
     // Pass firebase module to this instance
     this.allPlayers = this.game.state.states['Main'].players;
 
+    // Pass firebase Strike to Lobby
+    this.strike = this.game.state.states['Main'].strike;
+
     // Add player to firebase
     this.allPlayers.arr.$add({
       playerID: self.userID,
-      isReady: false
+      isReady: false,
+      levelUp: false
     }).then(function(urldb){
 
       // unique key id of player
@@ -34,6 +44,7 @@ Lobby.prototype = {
 
       // store id
       self.keyID = id;
+      self.game.state.states['Main'].keyID = id;
 
       // player's index in DB
       self.playerIndex = self.allPlayers.arr.$indexFor(id);
@@ -58,9 +69,27 @@ Lobby.prototype = {
             console.log('not ready on database!');
           });
 
+          // reset strike count before starting game
+          self.strike.update({count:0});
+          
           self.game.state.start('Game');
-        };
+        }
       });
+    }).then(function(){
+      // check if game is in progress
+      self.allPlayers.lobbyRef.child('inProgress').once('value', function(snapshot){
+        if(snapshot.val()){
+          self.status = true;
+        }
+        // if more than 4 players, or game in progress, deny access
+        if (self.allPlayers.arr.length > 4 || self.status){
+          // get index in case it has changed
+          var index = self.allPlayers.arr.$indexFor(self.keyID);
+          self.allPlayers.arr.$remove(self.allPlayers.arr[index]).then(function(){
+            self.game.state.start('LobbyFull');
+          });
+        }
+      })
     });
 
     // Room
@@ -119,7 +148,7 @@ Lobby.prototype = {
         if (this.playerIsReady) { // only update the ready status on change
           this.playerIsReady = false;
           // grab index in case index has changed
-          var index = self.allPlayers.arr.$indexFor(self.keyID);
+          index = self.allPlayers.arr.$indexFor(self.keyID);
           self.playerIndex = index;
 
           // change ready status on local
@@ -128,7 +157,7 @@ Lobby.prototype = {
             console.log('not ready on database!');
           });
         }
-      };
+      }
     }
   },
 
@@ -162,4 +191,4 @@ Lobby.prototype = {
       this.rotator.angle += 6;
     }
   }
-}
+};

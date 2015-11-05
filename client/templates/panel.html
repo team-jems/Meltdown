@@ -1,16 +1,20 @@
-<div class="panel-content" ng-show="puzzle.type === 'binaryLever' && !gameOver">
+<div class="panel-content" ng-show="puzzle.type === 'slider' && !gameOver">
   <div class="wrapper panel-center">
     <div class="meter">
       <p class="meter-label">Meter 1                        Meter 2</p>
-      <p class="readings">{{puzzle.readings[0]}}     {{puzzle.readings[1]}}</p>
+      <p class="readings">{{puzzle.meterReadings[0]}}     {{puzzle.meterReadings[1]}}</p>
       <p class="meter-label">Meter 3                        Meter 4</p>
-      <p class="readings">{{puzzle.readings[2]}}     {{puzzle.readings[3]}}</p>
+      <p class="readings">{{puzzle.meterReadings[2]}}     {{puzzle.meterReadings[3]}}</p>
     </div>
     <div class="slider">
-      <p>O                         I</p>
-      <div class="slider-element" ui-slider min="0" max="2"
-        ng-model="puzzle.state" ng-change="checkSolution()"></div>
-      <p ng-show="puzzle.solved">Solved!</p>
+      <p>O       I       II      III</p>
+      <div class="slider-element" ui-slider min="0" max="3" ng-model="state"></div>
+      <button ng-click="checkSolution()">Fire</button>
+    </div>
+    <div class="instructions">
+      <p class="instructions-header">For emergency override, refer to: powerSlider{{puzzle.label}}()</p>
+      <p>Use the function to compute the correct level of power required by the laser.</p>
+      <p>Set the power slider to the correct level and hit the fire button.</p>
     </div>
   </div>
 </div>
@@ -18,19 +22,21 @@
 <div class="panel-content game-over" ng-show="gameOver">
 </div>
 
-<div class="panel-content" ng-show="puzzle.type === 'buttonSeries' && !gameOver">
+<div class="panel-content" ng-show="puzzle.type === 'sequence' && !gameOver">
   <div class="wrapper panel-center">
     <div>
       <div class="displays" ng-repeat="display in puzzle.displays">
-        <p ng-class="['display', {'passed': display[1]}]">{{display[0]}}<p>
+        <p ng-class="['display', {'passed': state > $index}]">{{display}}<p>
       </div>
     </div>
     <div class="buttonSeries">
-      <button ng-repeat="button in puzzle.buttons" ng-click="checkSolution(button[1])">
-        {{button[0]}}</button>
-      <p>Refer to: buttonSeries{{puzzle.label}}(code)</p>
-      <p>From left to right, use the function to figure out the sequence of buttons to push.</p>
-      <p ng-show="puzzle.solved">Solved!</p>
+      <button ng-repeat="button in puzzle.buttons" ng-click="checkSolution(button)">
+        {{button}}</button>
+    </div>
+    <div class="instructions">
+      <p class="instructions-header">For emergency override, refer to: buttonSequence{{puzzle.label}}(code)</p>
+      <p>From left to right, use the three-digit number as the input code to the function.</p>
+      <p>Press the buttons in sequence of the respective return values.</p>
     </div>
   </div>
 </div>
@@ -38,13 +44,13 @@
 <div class="panel-content" ng-show="puzzle.type === 'circuit' && !gameOver">
   <div class="wrapper panel-center">
     <div class="circuit">
-      <div ng-repeat="row in puzzle.state track by $index">
+      <div ng-repeat="row in state track by $index">
         <div class="row" ng-if="$index === 0 || $index === 2 || $index === 4">
           <p ng-class="end" ng-if="row[0] === 3">*</p>
           <p ng-class="{'off': row[0] === 0, 'on': row[0] === 1, 'current': row[0] === 2}" ng-if="row[0] !== 3">O</p>
-          <p ng-class="{'off': row[1] === 0, 'on': row[1] === 1, 'broken': row[1] === 2}">-</p>
+          <p ng-class="{'off': row[1] === 0, 'on': row[1] === 1, 'broken': row[1] === 2}">--</p>
           <p ng-class="{'off': row[2] === 0, 'on': row[2] === 1, 'current': row[2] === 2}">O</p>
-          <p ng-class="{'off': row[3] === 0, 'on': row[3] === 1, 'broken': row[3] === 2}">-</p>
+          <p ng-class="{'off': row[3] === 0, 'on': row[3] === 1, 'broken': row[3] === 2}">--</p>
           <p ng-class="end" ng-if="row[4] === 3">*</p>
           <p ng-class="{'off': row[4] === 0, 'on': row[4] === 1, 'current': row[4] === 2}" ng-if="row[4] !== 3">O</p>
         </div>
@@ -55,23 +61,42 @@
       </div>
     </div>
     <div class="circuit-control">
-      <button ng-repeat="color in ['r', 'y', 'b', 'g']" ng-click="checkSolution(color)">{{color}}</button>
+      <button class="color-button" ng-repeat="color in colors" style="background-color:{{color.long}}" ng-click="checkSolution(color.short)"></button>
       <button ng-click="reset()">Reset</button>
-      <p>Refer to: circuit{{puzzle.label}}(prev, current)</p>
-      <p>Direct the electrical current from the upper left to the spot marked with an asterisk.<br>
-      Use the function to figure out which direction each button would direct the current to.<br>
-      prev is the color of the previous button you pressed.<br>
-      Watch out for broken transistors (marked in red).<br>
-      Do not backtrack or you'll cause a short in the circuit!</p>
-      <p ng-show="puzzle.solved">Solved!</p>
+    </div>
+    <div class="instructions">
+      <p class="instructions-header">For emergency override, refer to: circuit{{puzzle.label}}(prev, current)</p>
+      <p>Direct the electrical current from the upper left to the spot marked with an asterisk.</p>
+      <p>Use the function to figure out which direction each button would direct the current to.</p>
+      <p>prev is the color of the previous button that has directed the current.</p>
+      <p>Watch out for broken transistors (marked in red) and do not backtrack or you'll cause a short!</p>
     </div>
   </div>
 </div>
 
-<div class="panel-content" ng-show="puzzle.type === 'codex' && !gameOver">
+<div class="panel-content" ng-show="puzzle.type === 'password' && !gameOver">
   <div class="wrapper panel-center">
-    <div class="keys-container">
-      <div class="keys" ng-repeat="key in puzzle.keys">{{key}}</div>
+    <div class="password-display">Scrambled Password: {{display}}</div>
+    <ul class="thumbnails dragdrop-list dragdrop-bank">
+      <li class="dragdrop-listitem" ng-repeat="letter in list1">
+        <div class="div-droppable" data-drop="true" ng-model='list1' jqyoui-droppable="{index: {{$index}}}">
+          <div class="btn btn-info btn-draggable" ng-show="letter.label" data-drag="{{letter.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="list1" jqyoui-draggable="{index: {{$index}},placeholder:true}">{{letter.label}}</div>
+        </div>
+      </li>
+    </ul>
+    <ul class="thumbnails dragdrop-list dragdrop-solution">
+      <li class="dragdrop-listitem dragdrop-label">Password: </li>
+      <li class="dragdrop-listitem" ng-repeat="letter in list2">
+        <div class="div-droppable" data-drop="true" ng-model='list2' jqyoui-droppable="{index: {{$index}}}">
+          <div class="btn btn-info btn-draggable" ng-show="letter.label" data-drag="{{letter.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="list2" jqyoui-draggable="{index: {{$index}},placeholder:true}">{{letter.label}}</div>
+        </div>
+      </li>
+    </ul>
+    <button ng-click="checkSolution()">Submit</button>
+    <div class="instructions">
+      <p class="instructions-header">For emergency override, refer to: password{{puzzle.label}}(scrambled)</p>
+      <p>Use the function to extract the correct password from the scrambled password.</p>
+      <p>Drag the letters to form the correct password and hit the submit button.</p>
     </div>
   </div>
 </div>

@@ -5,41 +5,70 @@
 
 .flex{
   display: flex;
+  justify-content: center;
 }
 
+/** border around phaser game view **/
 .game {
-  border: 2px solid black;
+  position: relative;
+  border: 2px solid white;
   padding: 4px;
   margin: 0 4px;
-  margin-left: 40px;
   width: 800px;
 }
 
+/* modal-related */
 .panel {
   position: absolute;
-  top: 108px;
-  left: 93px;
+  top: 45px;
+  left: 79px;
   width: 650px;
-  height: 450px;
+  height: 451px;
   border-radius: 30px;
-  background: #EDEBE8;
+  background-image: url('/assets/panel/ctrlpanel1.jpg')
 }
 
 .panel-content {
   position: absolute;
-  top: 15px;
-  left: 15px;
-  width: 620px;
-  height: 420px;
+  top: 0px;
+  left: 0px;
+  width: 650px;
+  height: 451px;
+  border-radius: 30px;
+  background-color: rgba(255, 247, 207, 0.8);
 }
 
 .panel-center {
   text-align: center;
 }
 
-/* binaryLever */
+.instructions {
+  position: absolute;
+  background: gray;
+  width: 600px;
+  min-height: 100px;
+  bottom: 14px;
+  left: 25px;
+  border-radius: 5px;
+}
+
+p.instructions-header, .instructions > p {
+  margin: 4px 0;
+}
+
+.instructions > p {
+  color: white;
+}
+
+p.instructions-header {
+  background-color: lightgray;
+  color: black;
+  font-weight: bold;
+}
+
+/* slider */
 .meter {
-  padding-top: 50px;
+  padding-top: 20px;
 }
 
 .meter-label {
@@ -66,14 +95,14 @@
 
 .slider-element {
   width: 200px;
-  margin: 0 auto;
+  margin: 0 auto 10px;
 }
 
 .ui-slider a {
   outline: none;
 }
 
-/* buttonSeries */
+/* sequence */
 .displays, .display{
   display: inline-block;
 }
@@ -111,7 +140,7 @@
 }
 
 .vertical {
-  margin: 0 9px;
+  margin: 0 14px;
 }
 
 .current {
@@ -130,27 +159,63 @@
   padding-top: 14px;
 }
 
-/* codex */
-.keys-container {
-  padding-top: 70px;
+.color-button {
+  width: 24px;
+  height: 24px;
 }
 
-.keys {
-  display: inline-block;
-  color: gray;
+/* codex */
+.dragdrop-list {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+li.dragdrop-listitem {
+  margin: 0;
+  line-height: 35px;
+}
+
+.password-display {
+  padding-top: 80px;
+}
+
+li.dragdrop-listitem.dragdrop-label {
+  color: red;
   font-size: 18px;
-  border: 2px solid gray;
+  margin-right: 5px;
+}
+
+.dragdrop-solution {
+  padding-top: 20px;
+}
+
+.btn-draggable {
   width: 30px;
   height: 30px;
+  padding: 0;
   line-height: 30px;
+  font-size: 18px;
+}
+
+.div-droppable {
+  display: inline-block;
+  color: gray;
+  border: 2px solid gray;
+  border-radius: 5px;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
   margin: 5px;
 }
 
 .manual {
+  flex-shrink: 0;
   width: 380px;
   height: 533px;
   overflow: auto;
-  border: 2px solid gray;
+  border: 2px solid rgba(11, 112, 154, .80);
   padding: 4px;
   margin: 0 4px;
   background: black;
@@ -180,3 +245,204 @@
   background-size: cover;
   background-position: center;
 }
+
+/***** Site styling *****/
+body {
+  background-color: black;
+}
+h1 {
+  color: green;
+  /*text-shadow: 5px 5px 5px #ff6a06;*/
+  /*background-image: -webkit-linear-gradient(green, blue);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: rgba(1, 130, 1, 0.30);
+  position:relative;*/
+}
+h2 {
+  color: white;
+}
+h3 {
+  color: white;
+}
+.subhead {
+  text-shadow: 3px 3px 4px #1d4d63;
+}
+.subheadparagraph {
+  text-shadow: 2px 2px 4px #1d4d63;
+}
+/***** LANDING PAGE STYLING *****/ 
+/* navbar when page is scrolled*/ 
+#mainNav {
+  /*background-color: black;*/
+}
+/* navbar text when page is scrolled*/ 
+.navbar-default.affix .navbar-header .navbar-brand {
+  color: green;
+  font-size: 16px;
+}
+/* navbar text page not scrolled*/ 
+.navbar-default .navbar-header .navbar-brand {
+  color: #3c99c3;
+}
+.navbar-default .nav > li>a, .navbar-default .nav>li>a:focus {
+  color: #3c99c3;
+}
+.navbar-default .nav > li.active>a {
+  color: green;
+}
+.gameplay {
+  text-align: left;
+}
+.gp {
+  margin-top: 20px;
+}
+.numplayers {
+  font-size: 90%;
+}
+/* icons for links in team pics */
+.cardspan {
+  width: 20px;
+  height: 20px;
+  background: url("/assets/icons/githubwhite.png") center;
+  display: inline-block;
+  margin-top: 10px;
+}
+.cardspan2 {
+  width: 14px;
+  height: 14px;
+  background: url("/assets/icons/linkedin.png") center;
+  display: inline-block;
+  margin-top: 10px;
+  margin-left: 10%;
+}
+.blog {
+  width: 20px;
+  height: 20px;
+  background: url("/assets/icons/blog.png") center;
+  display: inline-block;
+  margin-top: 10px;
+  margin-left: 10%;
+}
+
+/* styling for tech stack grid */
+.thumb {
+    margin-bottom: 15px;
+}
+.tech {
+  margin-bottom: 30px;
+}
+
+/* learning resource links */
+.learnlinks {
+  list-style: none;
+}
+.hrname {
+  text-decoration: none;
+  color: #565656;
+}
+.hrname:hover {
+  text-decoration: none;
+  color: #b5b5b5;
+}
+
+/******** GAME PLAY VIEW ********/
+/* navbar text on game page */
+.navbar-inverse .nav>li>a {
+  color: #3c99c3;
+  font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+  font-weight: 700;
+}
+/* navbar Game Name text on game page */
+.navbar-inverse .brand {
+  color: #3c99c3;
+  font-family: 'Open Sans','Helvetica Neue',Arial,sans-serif;
+  font-weight: 700;
+}
+
+
+/*** BEGIN HEADER FLAME ANIMATION ***/
+.fire {
+  animation: animation 1s ease-in-out infinite alternate;
+  -moz-animation: animation 1s ease-in-out infinite alternate;
+  -webkit-animation: animation 1s ease-in-out infinite alternate;
+  -o-animation: animation 1s ease-in-out infinite alternate;
+}
+
+.burn {
+  animation: animation .65s ease-in-out infinite alternate;
+  -moz-animation: animation .65s ease-in-out infinite alternate;
+  -webkit-animation: animation .65s ease-in-out infinite alternate;
+  -o-animation: animation .65s ease-in-out infinite alternate;
+}
+
+@keyframes animation {
+0% {text-shadow: 0 0 20px #bbfe10,
+  10px -10px 30px #f3fe0c,
+  -20px -20px 40px #c8ff5a,
+  20px -40px 50px #88ec45,
+  -20px -60px 60px #45cd1e,
+  0 -80px 70px #059733,
+  10px -90px 80px #451b0e;}
+100% {text-shadow: 0 0 20px #bbfe10,
+  10px -10px 30px #bbfe10,
+  -20px -20px 40px #f3fe0c,
+  22px -42px 60px #c8ff5a,
+  -22px -58px 50px #88ec45,
+  0 -82px 80px #45cd1e,
+  10px -90px 80px  #059733;}
+}
+
+@-moz-keyframes animation {
+0% {text-shadow: 0 0 20px #bbfe10,
+  10px -10px 30px #f3fe0c,
+  -20px -20px 40px #c8ff5a,
+  20px -40px 50px #88ec45,
+  -20px -60px 60px #45cd1e,
+  0 -80px 70px #059733,
+  10px -90px 80px #451b0e;}
+100% {text-shadow: 0 0 20px #bbfe10,
+  10px -10px 30px #bbfe10,
+  -20px -20px 40px #f3fe0c,
+  22px -42px 60px #c8ff5a,
+  -22px -58px 50px #88ec45,
+  0 -82px 80px #45cd1e,
+  10px -90px 80px  #059733;}
+}
+
+@-webkit-keyframes animation {
+0% {text-shadow: 0 0 20px #bbfe10,
+  10px -10px 30px #f3fe0c,
+  -20px -20px 40px #c8ff5a,
+  20px -40px 50px #88ec45,
+  -20px -60px 60px #45cd1e,
+  0 -80px 70px #059733,
+  10px -90px 80px #451b0e;}
+100% {text-shadow: 0 0 20px #bbfe10,
+  10px -10px 30px #bbfe10,
+  -20px -20px 40px #f3fe0c,
+  22px -42px 60px #c8ff5a,
+  -22px -58px 50px #88ec45,
+  0 -82px 80px #45cd1e,
+  10px -90px 80px  #059733;}
+}
+
+@-o-keyframes animation {
+0% {text-shadow: 0 0 20px #bbfe10,
+  10px -10px 30px #f3fe0c,
+  -20px -20px 40px #c8ff5a,
+  20px -40px 50px #88ec45,
+  -20px -60px 60px #45cd1e,
+  0 -80px 70px #059733,
+  10px -90px 80px #451b0e;}
+100% {text-shadow: 0 0 20px #bbfe10,
+  10px -10px 30px #bbfe10,
+  -20px -20px 40px #f3fe0c,
+  22px -42px 60px #c8ff5a,
+  -22px -58px 50px #88ec45,
+  0 -82px 80px #45cd1e,
+  10px -90px 80px  #059733;}
+}
+/*** END HEADER FLAME ANIMATION ***/
+
+
+
