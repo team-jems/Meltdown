@@ -5,23 +5,24 @@
 
 .flex{
   display: flex;
+  justify-content: center;
 }
 
 /** border around phaser game view **/
 .game {
+  position: relative;
   border: 2px solid white;
   padding: 4px;
   margin: 0 4px;
-  margin-left: 40px;
   width: 800px;
 }
 
 .panel {
   position: absolute;
-  top: 108px;
-  left: 93px;
+  top: 45px;
+  left: 79px;
   width: 650px;
-  height: 450px;
+  height: 451px;
   border-radius: 30px;
   background: #EDEBE8;
 }
@@ -132,22 +133,53 @@
 }
 
 /* codex */
-.keys-container {
+.dragdrop-list {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+li.dragdrop-listitem {
+  margin: 0;
+  line-height: 35px;
+}
+
+.password-display {
   padding-top: 70px;
 }
 
-.keys {
-  display: inline-block;
-  color: gray;
+li.dragdrop-listitem.dragdrop-label {
+  color: red;
   font-size: 18px;
-  border: 2px solid gray;
+  margin-right: 5px;
+}
+
+.dragdrop-solution {
+  padding-top: 20px;
+}
+
+.btn-draggable {
   width: 30px;
   height: 30px;
+  padding: 0;
   line-height: 30px;
+  font-size: 18px;
+}
+
+.div-droppable {
+  display: inline-block;
+  color: gray;
+  border: 2px solid gray;
+  border-radius: 5px;
+  width: 35px;
+  height: 35px;
+  line-height: 35px;
+  text-align: center;
   margin: 5px;
 }
 
 .manual {
+  flex-shrink: 0;
   width: 380px;
   height: 533px;
   overflow: auto;

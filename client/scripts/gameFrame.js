@@ -1,7 +1,7 @@
 angular.module('app.gameFrame', [])
 
 .config(['$stateProvider',
-  function($stateProvider) {
+  function($stateProvider, Players) {
     $stateProvider
       .state('gameFrame', {
         abstract: true,
