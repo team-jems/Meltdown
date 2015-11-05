@@ -25,14 +25,17 @@
   height: 451px;
   border-radius: 30px;
   background: #EDEBE8;
+  background-image: url('/assets/panel/ctrlpanel1.jpg')
 }
 
 .panel-content {
   position: absolute;
-  top: 15px;
-  left: 15px;
-  width: 620px;
-  height: 420px;
+  top: 0px;
+  left: 0px;
+  width: 650px;
+  height: 451px;
+  border-radius: 30px;
+  background-color: rgba(255, 247, 207, 0.8);
 }
 
 .panel-center {

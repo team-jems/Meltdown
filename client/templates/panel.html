@@ -28,8 +28,9 @@
     <div class="buttonSeries">
       <button ng-repeat="button in puzzle.buttons" ng-click="checkSolution(button)">
         {{button}}</button>
-      <p>Refer to: buttonSequence{{puzzle.label}}(code)</p>
-      <p>From left to right, use the function to figure out the sequence of buttons to push.</p>
+        <br><br><br>
+      <p><strong>Refer to: buttonSequence{{puzzle.label}}(code)</p>
+      <p>From left to right, use the function to figure out the sequence of buttons to push.</strong></p>
       <p ng-show="solved">Solved!</p>
     </div>
   </div>
