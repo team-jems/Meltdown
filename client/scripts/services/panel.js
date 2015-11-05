@@ -75,7 +75,7 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
       $scope.$apply();
     };
 
-    requestNotificationChannel.onGameOver($scope, onGameOverHandler);
+    var onGameOver = requestNotificationChannel.onGameOver($scope, onGameOverHandler);
 
     $scope.checkSolution = function(answer) {
       if ($scope.puzzle.type === 'binaryLever') {
@@ -144,6 +144,7 @@ angular.module('app.panel', ['ui.slider', 'ui.knob'])
           $scope.puzzle.previous = answer;
         }
       }
+      requestNotificationChannel.puzzleSolved($scope.puzzle.solved);
     };
 
     $scope.reset = function() {

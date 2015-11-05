@@ -70,8 +70,8 @@ Lobby.prototype = {
           });
 
           // reset strike count before starting game
-          self.strike.child('count').set(0);
-
+          self.strike.update({count:0});
+          
           self.game.state.start('Game');
         }
       });

@@ -42,7 +42,7 @@ angular.module('app.firebase', [])
 
 .factory('LevelUp', [
   function() {
-    var levelUpRef = new Firebase('https://meltdown.firebaseio.com/levelUp');
+    var levelUpRef = new Firebase('https://jewels-dev.firebaseio.com/levelUp');
     return levelUpRef;
   }
 ]);

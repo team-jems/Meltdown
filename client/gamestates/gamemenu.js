@@ -50,6 +50,10 @@ GameMenu.prototype = {
       this.game.state.start('Lobby');
     }, this);
 
+    // cleans out listeners on return to main menu after game over
+    this.requestNotificationChannel = this.game.state.states['Main'].requestNotificationChannel;
+    self.requestNotificationChannel.clearListeners();
+
 
     // this.addMenuOption('Start', function () {
     //   self.game.state.start('Game');
