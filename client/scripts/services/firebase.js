@@ -23,8 +23,8 @@ angular.module('app.firebase', [])
 
 .factory('Players', ['$firebaseArray',
   function($firebaseArray) {
-    var lobbyRef = new Firebase('https://jewels-dev.firebaseio.com/lobby');
-    var playersRef = new Firebase('https://jewels-dev.firebaseio.com/lobby/players');
+    var lobbyRef = new Firebase('https://meltdown.firebaseio.com/lobby');
+    var playersRef = new Firebase('https://meltdown.firebaseio.com/lobby/players');
     return {
       arr: $firebaseArray(playersRef),
       playersRef: playersRef,
@@ -35,7 +35,7 @@ angular.module('app.firebase', [])
 
 .factory('Strike', [
   function() {
-    var strikeRef = new Firebase('https://jewels-dev.firebaseio.com/strike');
+    var strikeRef = new Firebase('https://meltdown.firebaseio.com/strike');
     return strikeRef;
   }
 ])

@@ -14,7 +14,7 @@ var staticPath = path.join(__dirname, '../client');
 app.use(express.static(staticPath));
 
 var Firebase = require('firebase');
-var FirebaseRef = new Firebase("https://jewels-dev.firebaseio.com/");
+var FirebaseRef = new Firebase("https://meltdown.firebaseio.com/");
 
 var generatePuzzles = require('./puzzle');
 

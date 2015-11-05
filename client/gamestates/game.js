@@ -105,7 +105,7 @@ Game.prototype = {
 
     //  Our controls.
     this.cursors = this.game.input.keyboard.createCursorKeys();
-    this.panelKey = this.game.input.keyboard.addKey(Phaser.KeyCode.ESC);
+    // this.panelKey = this.game.input.keyboard.addKey(Phaser.KeyCode.ESC);
 
     // passing angular modules from game.js
     this.Panel = this.game.state.states['Main'].panel;
@@ -114,11 +114,11 @@ Game.prototype = {
     this.Panel.init(this.game, this.game.state.states['Main'].puzzles);
     this.requestNotificationChannel.loadManual(this.game.state.states['Main'].manual[0]);
 
-    this.panelKey.onDown.add(function(key) {
-      this.requestNotificationChannel.loadPuzzle(0);
-      this.Panel.toggle();
-      this.actionObjs.hasCollided = false;
-    }, this);
+    // this.panelKey.onDown.add(function(key) {
+    //   this.requestNotificationChannel.loadPuzzle(0);
+    //   this.Panel.toggle();
+    //   this.actionObjs.hasCollided = false;
+    // }, this);
 
     // Game Timer
     this.timer = this.game.time.create();  // Phaser timer
@@ -153,7 +153,8 @@ Game.prototype = {
       this.strike.child('count').once('value', function(snap) {
         var count = snap.val();
         count++;
-        self.strike.child('count').set(count);
+        // self.strike.child('count').set(count);
+        self.strike.update({count: 0});
       });
     }, this);
 
@@ -188,6 +189,10 @@ Game.prototype = {
     var self = this;
     this.requestNotificationChannel.onPuzzleSolved(this.$scope, function(flag){
       self.puzzled = flag;
+      if(flag) {
+        panel.tint = 0x2fff18;
+        self.Panel.toggle();
+      }
       if(!flag) {
         self.strike.child('count').transaction(function(currentCount){
           return currentCount + 1;
@@ -207,20 +212,26 @@ Game.prototype = {
 
   fbStrikeCountListener: function(snap) {
     this.strikeCount = snap.val();
-    if(this.strikeCount === 3) {
+    if(this.strikeCount === 10) {
       this.endTimer();
     }
   },
 
   endTimer: function() {
     this.timer.stop();
+    var self = this;
+    
+    // reset strike count
+    console.log("testing before off listener")
+    self.strike.child('count').off('value');
+    self.strike.update({count: 0});
+    // self.strike.child('count').set(count);
 
     this.requestNotificationChannel.gameOver(true);
     if (!this.Panel.isOn()) {
       this.Panel.toggle();
     }
 
-    var self = this;
     setTimeout(function () {
       self.Panel.toggle();
     }, 7000);
@@ -234,8 +245,6 @@ Game.prototype = {
       // remove player from firebase array
       self.players.arr.$remove(player)
         .then(function (ref) {
-          // reset strike count
-          self.strike.child('count').set(0);
           // close modal if open
           if (self.Panel.isOn()) {
             self.Panel.toggle();
@@ -247,6 +256,8 @@ Game.prototype = {
               self.players.lobbyRef.update({inProgress: false});
             }
           });
+          // turn off game over flag
+          self.requestNotificationChannel.gameOver(false);
           // navigate to menu screen
           self.game.state.start("GameMenu");
         });
