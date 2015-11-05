@@ -1,16 +1,16 @@
-<div class="panel-content" ng-show="puzzle.type === 'binaryLever' && !gameOver">
+<div class="panel-content" ng-show="puzzle.type === 'slider' && !gameOver">
   <div class="wrapper panel-center">
     <div class="meter">
       <p class="meter-label">Meter 1                        Meter 2</p>
-      <p class="readings">{{puzzle.readings[0]}}     {{puzzle.readings[1]}}</p>
+      <p class="readings">{{puzzle.meterReadings[0]}}     {{puzzle.meterReadings[1]}}</p>
       <p class="meter-label">Meter 3                        Meter 4</p>
-      <p class="readings">{{puzzle.readings[2]}}     {{puzzle.readings[3]}}</p>
+      <p class="readings">{{puzzle.meterReadings[2]}}     {{puzzle.meterReadings[3]}}</p>
     </div>
     <div class="slider">
-      <p>O                         I</p>
-      <div class="slider-element" ui-slider min="0" max="2"
-        ng-model="puzzle.state" ng-change="checkSolution()"></div>
-      <p ng-show="puzzle.solved">Solved!</p>
+      <p>O       I       II      III</p>
+      <div class="slider-element" ui-slider min="0" max="3"
+        ng-model="state" ng-change="checkSolution()"></div>
+      <p ng-show="solved">Solved!</p>
     </div>
   </div>
 </div>
@@ -18,19 +18,19 @@
 <div class="panel-content game-over" ng-show="gameOver">
 </div>
 
-<div class="panel-content" ng-show="puzzle.type === 'buttonSeries' && !gameOver">
+<div class="panel-content" ng-show="puzzle.type === 'sequence' && !gameOver">
   <div class="wrapper panel-center">
     <div>
       <div class="displays" ng-repeat="display in puzzle.displays">
-        <p ng-class="['display', {'passed': display[1]}]">{{display[0]}}<p>
+        <p ng-class="['display', {'passed': state > $index}]">{{display}}<p>
       </div>
     </div>
     <div class="buttonSeries">
-      <button ng-repeat="button in puzzle.buttons" ng-click="checkSolution(button[1])">
-        {{button[0]}}</button>
-      <p>Refer to: buttonSeries{{puzzle.label}}(code)</p>
+      <button ng-repeat="button in puzzle.buttons" ng-click="checkSolution(button)">
+        {{button}}</button>
+      <p>Refer to: buttonSequence{{puzzle.label}}(code)</p>
       <p>From left to right, use the function to figure out the sequence of buttons to push.</p>
-      <p ng-show="puzzle.solved">Solved!</p>
+      <p ng-show="solved">Solved!</p>
     </div>
   </div>
 </div>
@@ -38,7 +38,7 @@
 <div class="panel-content" ng-show="puzzle.type === 'circuit' && !gameOver">
   <div class="wrapper panel-center">
     <div class="circuit">
-      <div ng-repeat="row in puzzle.state track by $index">
+      <div ng-repeat="row in state track by $index">
         <div class="row" ng-if="$index === 0 || $index === 2 || $index === 4">
           <p ng-class="end" ng-if="row[0] === 3">*</p>
           <p ng-class="{'off': row[0] === 0, 'on': row[0] === 1, 'current': row[0] === 2}" ng-if="row[0] !== 3">O</p>
@@ -63,15 +63,30 @@
       prev is the color of the previous button you pressed.<br>
       Watch out for broken transistors (marked in red).<br>
       Do not backtrack or you'll cause a short in the circuit!</p>
-      <p ng-show="puzzle.solved">Solved!</p>
+      <p ng-show="solved">Solved!</p>
     </div>
   </div>
 </div>
 
-<div class="panel-content" ng-show="puzzle.type === 'codex' && !gameOver">
+<div class="panel-content" ng-show="puzzle.type === 'password' && !gameOver">
   <div class="wrapper panel-center">
-    <div class="keys-container">
-      <div class="keys" ng-repeat="key in puzzle.keys">{{key}}</div>
-    </div>
+    <div class="password-display">Scrambled Password: {{display}}</div>
+    <ul class="thumbnails dragdrop-list dragdrop-bank">
+      <li class="dragdrop-listitem" ng-repeat="letter in list1">
+        <div class="div-droppable" data-drop="true" ng-model='list1' jqyoui-droppable="{index: {{$index}}}">
+          <div class="btn btn-info btn-draggable" ng-show="letter.label" data-drag="{{letter.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="list1" jqyoui-draggable="{index: {{$index}},placeholder:true}">{{letter.label}}</div>
+        </div>
+      </li>
+    </ul>
+    <ul class="thumbnails dragdrop-list dragdrop-solution">
+      <li class="dragdrop-listitem dragdrop-label">Password: </li>
+      <li class="dragdrop-listitem" ng-repeat="letter in list2">
+        <div class="div-droppable" data-drop="true" ng-model='list2' jqyoui-droppable="{index: {{$index}}}">
+          <div class="btn btn-info btn-draggable" ng-show="letter.label" data-drag="{{letter.drag}}" data-jqyoui-options="{revert: 'invalid'}" ng-model="list2" jqyoui-draggable="{index: {{$index}},placeholder:true}">{{letter.label}}</div>
+        </div>
+      </li>
+    </ul>
+    <button ng-click="checkSolution()">Submit</button>
+    <p ng-show="solved">Solved!</p>
   </div>
 </div>

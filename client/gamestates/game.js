@@ -112,7 +112,7 @@ Game.prototype = {
     this.requestNotificationChannel = this.game.state.states['Main'].requestNotificationChannel;
 
     this.Panel.init(this.game, this.game.state.states['Main'].puzzles);
-    this.requestNotificationChannel.loadManual(this.game.state.states['Main'].manual[0]);
+    this.requestNotificationChannel.loadManual(this.game.state.states['Main'].manual);
 
     // this.panelKey.onDown.add(function(key) {
     //   this.requestNotificationChannel.loadPuzzle(0);
