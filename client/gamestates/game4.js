@@ -25,7 +25,7 @@ Game4.prototype = {
 
   preload: function(){
     this.game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
-    this.game.load.image('room', 'assets/rooms/greenRoom.jpg')
+    this.game.load.image('room', 'assets/rooms/green.jpg')
     this.game.load.image('arrow', 'assets/cutouts/arrowCorner.png');
     this.game.load.image('panel', 'assets/cutouts/controlPanelRight.png');
     this.game.load.image('holes', 'assets/cutouts/holeCorner.png');
