@@ -1,6 +1,6 @@
-# hrgame
+# Meltdown
 
-> Show your coding chops and save Hack Reactor
+> Show your coding chops and save the reactor
 
 ## Team
 
@@ -26,7 +26,6 @@
 
 - Node 0.12.x
 - Bower 1.5.x
-- Grunt 0.1.x
 
 ## Development
 
@@ -37,12 +36,11 @@ From within the root directory:
 ```sh
 npm install
 bower install
-grunt build
 ```
 
 ### Roadmap
 
-View the project roadmap [here](https://github.com/team-jems/hrgame/issues)
+View the project roadmap [here](https://github.com/team-jems/Meltdown/issues)
 
 
 ## Contributing

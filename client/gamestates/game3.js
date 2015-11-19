@@ -124,7 +124,7 @@ Game3.prototype = {
     // Game Timer
     this.timer = this.game.time.create();  // Phaser timer
     //this.timerEvent = this.timer.add(Phaser.Timer.SECOND * 30, this.endTimer, this);
-    this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 10, this.endTimer, this);
+    this.timerEvent = this.timer.add(Phaser.Timer.MINUTE * 4, this.endTimer, this);
     this.timer.start();  // timer display handled in render block
 
     //Panel color change
@@ -207,7 +207,7 @@ Game3.prototype = {
 
   fbStrikeCountListener: function(snap) {
     this.strikeCount = snap.val();
-    if(this.strikeCount === 10) {
+    if(this.strikeCount === 3) {
       this.endTimer();
     }
   },
