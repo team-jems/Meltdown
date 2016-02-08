@@ -6,7 +6,7 @@
 
   - __Product Owner__: Julia Nocera
   - __Scrum Master__: Sanjay Chakrapani
-  - __Development Team Members__: Erik Hsiao, Mike Hsieh
+  - __Development Team Members__: Erik Hsiao, Mike Hsieh, Julia Nocera, Sanjay Chakrapani
 
 ## Table of Contents
 
