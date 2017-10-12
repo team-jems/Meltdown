@@ -48,6 +48,7 @@ FirebaseRef.child('lobby/players').on('value', function(snapshot) {
   } else {
     FirebaseRef.child('lobby').update({numPlayers: playerIDs.length, status: 'waiting'});
   }
+console.log(playerIDs)
 });
 
 // generate and distribute puzzles and manuals when all players are ready

@@ -1,4 +1,6 @@
 angular.module('app.intro', [])
+  
+console.log('Not building lib folder ')
 
 .config(['$stateProvider',
   function($stateProvider) {
